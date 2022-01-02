@@ -30,7 +30,7 @@ City building game about climate change, which we are doing for a polish game ma
   
 ## **Technologies Used**
 
-- Unity 2020.3.25
+- Unity 2020.3.25f1
 - ...
 
 ## **Developer Notes**
