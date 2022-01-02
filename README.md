@@ -31,7 +31,7 @@ City building game about climate change, which we are doing for a polish game ma
 ## **Technologies Used**
 
 - Unity 2020.3.25f1
-- Blender
+- Blender 3.0
 
 ## **Developer Notes**
 
