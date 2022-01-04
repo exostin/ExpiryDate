@@ -1,6 +1,6 @@
 # **ExpiryDate**
 
-City building game about climate change, which we are doing for a polish game making tournament ([Turniej Trójgamiczny](https://www.t3g.pl/)).
+City builder game set during a climatic calamity with a hint of fantasy, created in a team of ten as part of a Polish game development championship - [Turniej Trójgamiczny](https://www.t3g.pl/).
 
 ## Table of Contents
 
