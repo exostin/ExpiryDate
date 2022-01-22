@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenuController : MonoBehaviour
+namespace Controllers
 {
-    public void PlayButton()
+    public class StartMenuController : MonoBehaviour
     {
-        SceneManager.LoadScene(1);
-    }
+        public void PlayButton()
+        {
+            SceneManager.LoadScene(1);
+        }
 
-    public void ExitButton()
-    {
-        Application.Quit();
+        public void ExitButton()
+        {
+            Application.Quit();
+        }
     }
 }
