@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Classes;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -40,9 +38,9 @@ namespace Controllers
                 battleQueue[i] = character;
                 i++;
             }
-            
-            // Array.Sort(battleQueue); ???
-            // Sort the battleQueue array descending by the character.Statistics.Initiative value
+
+            // Sort the battle queue
+            battleQueue = battleQueue.OrderByDescending(c => c.Statistics.Initiative).ToArray();
         }
         private void MakeTurn()
         {
@@ -54,8 +52,8 @@ namespace Controllers
                 }
                 else
                 {
-                    // TODO: Need to implement strategic character choice by AI instead of random from 1 to 4
-                    enemy.MakeMove(character, player.Characters[Random.Range(1,4)]);
+                    var randomTargetIndex = Random.Range(0, 3);
+                    enemy.MakeAttack(characterUsedForAttack:character, player.Characters[randomTargetIndex]);
                 }
             }
         }
