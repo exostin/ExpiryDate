@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Classes;
+using ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,56 +9,64 @@ namespace Controllers
 {
     public class BattleMenuController : MonoBehaviour
     {
-        private Player player;
-        private Enemy enemy;
+        public Character[] playerCharacters;
+        public Character[] enemyCharacters;
+        private Enemy enemy = new Enemy();
         private Character[] battleQueue;
 
         private void Start()
         {
+            battleQueue = new Character[8];
             CreateQueue();
+            while (CheckIfAnyoneAlive())
+            {
+                MakeTurn();
+            }
         }
 
-        private void Update()
+        private bool CheckIfAnyoneAlive()
         {
-            MakeTurn();
+            // returns `true` if any character's health is over 0, and `false` if there are none
+            return battleQueue.Any(character => character.health > 0);
         }
 
         private void CreateQueue()
         {
             var i = 0;
-            foreach (var character in player.Characters)
+            foreach (var character in playerCharacters)
             {
                 battleQueue[i] = character;
-                character.IsOwnedByPlayer = true;
                 i++;
             }
-            
-            i = 0;
-            foreach (var character in enemy.Characters)
+            foreach (var character in enemyCharacters)
             {
                 battleQueue[i] = character;
                 i++;
             }
 
-            // Sort the battle queue
-            battleQueue = battleQueue.OrderByDescending(c => c.Statistics.Initiative).ToArray();
+            // Sort the battle queue by initiative
+            battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToArray();
         }
         private void MakeTurn()
         {
             foreach (var character in battleQueue)
             {
-                if (character.IsOwnedByPlayer)
+                if (character.health > 0) continue;
+                if (character.isOwnedByPlayer)
                 {
                     // TODO: Wait until player does his turn, then continue (State machine?)
+                    
+                    // --- TEMPORARY
+                    var randomTargetIndex = Random.Range(0, 3);
+                    enemy.MakeAttack(characterUsedForAttack:character, target:enemyCharacters[randomTargetIndex]);
+                    // ---
                 }
                 else
                 {
                     var randomTargetIndex = Random.Range(0, 3);
-                    enemy.MakeAttack(characterUsedForAttack:character, player.Characters[randomTargetIndex]);
+                    enemy.MakeAttack(characterUsedForAttack:character, target:playerCharacters[randomTargetIndex]);
                 }
             }
         }
-        
-        
     }
 }

@@ -1,16 +1,14 @@
-using System;
+using ScriptableObjects;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Classes
 {
-    public class Enemy : Player
+    public class Enemy
     {
         public void MakeAttack(Character characterUsedForAttack, Character target)
         {
-            // TODO: Need to implement strategic ability choice by AI instead of randomAbilityIndex
-            var randomAbilityIndex = Random.Range(1, 4);
-            target.Statistics.Health -= characterUsedForAttack.Abilities[randomAbilityIndex].Damage;
+            var randomAbilityIndex = Random.Range(0, 3);
+            target.health -= characterUsedForAttack.abilities[randomAbilityIndex].damage;
         }
     }
 }
