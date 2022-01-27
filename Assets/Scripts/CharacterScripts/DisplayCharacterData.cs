@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.CompilerServices;
-using Controllers;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;

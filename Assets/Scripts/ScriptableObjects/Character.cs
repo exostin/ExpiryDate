@@ -1,6 +1,4 @@
-using Classes;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ScriptableObjects
 {
