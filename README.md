@@ -60,43 +60,14 @@ Once you're done working on an issue submit a pull request, and link it to that 
 
 ## **Mechanics**
 
----
+### **Custom Scriptable Objects creation**
 
-### ***Example of a well documented mechanic:***
+1. Right click in the destination folder
+2. Press Create
+3. Choose what object you want to create (Character/Ability)
 
----
+![scriptable objects creation image](https://i.ibb.co/hRTgWT7/Custom-Scriptable-Objects-Creation.jpg)
 
-### **Highlight Mechanic**
+4. Once you create your object, head on to Inspector to modify it's values (Character name, health etc.)
 
-#### **How to use**
-
-1. Attach this script to the `GameObject` you want to highlight.
-
-2. Create a highlight prefab and assign it to the `GameObject` like so. Keep clone empty.
-
-![prefab image](https://i.ibb.co/fY3Rbrt/Edited-Grid-Generator.png)
-
-- `Main Cam`: The camera, whereby the player sees the scene
-- `Player`: The y-component if the position of this object will be used when generating the grid and instantiate the  `highlight` object
-- `Take Object Transform`: An option to take the position of the game object, which has the script, as the start position
-- `Destroy`: An option to destroy the `highlight` objects
-- `Gridstart` The start position of the grid(lower right corner)
-- `GridSize`: The size of the grid
-- `Layer`: Every object with this layer will be ignored
-- `SelectionKey`: The button that must be pressed so that the selected tiles are not destroyed
-- `Clear SelectionKey`: The button that muss be pressed to delete all selected tiles
-
-Note: The y-value of the `Gridstart` variable will be ignored, because we using the y-value of the `Player`s position, if the `take object transform` option is false
-
-Note: In sone function, you has to use a argument of the type `TypesofValue`. This is a enum set, which contains two values:
-
-- `relative`: the instantiated `highlight` objects adapt to the rotation of the player
-- `absolute`: the instantiated `highlight` object wont adapt to the rotation of the player
-
-#### **How it works**
-
-Once the scene is started, a grid is created from EditedInvisGridTile objects. Now the script checks whether the player presses a certain mouse button. If this is the case, a raycast is sent from the camera. As soon as this raycast hits an object, it checks whether it is an "EditedInvisGridTile" object. If so, a clone of the 'Hightlight' object is instantiated to the position of the EditedInvisGridTile object.
-
-In this case, I am cloning a quad that is emissive (looks like a highlight).
-
-![highlight image](https://i.ibb.co/6vX1CkF/Screenshot-2020-12-05-144732.png)
+![ScriptableObject inspector image](https://i.ibb.co/b6r1Wj1/Scriptable-Object-Inspector.jpg)
