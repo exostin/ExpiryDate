@@ -85,6 +85,7 @@ fabric.properties
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
+#
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -93,11 +94,7 @@ fabric.properties
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
-# Asset meta data should only be ignored when the corresponding asset is also ignored
-!/[Aa]ssets/**/*.meta
-
-# TextMesh Pro files
-[Aa]ssets/TextMesh*Pro/
+/[Aa]ssets/TextMesh*Pro/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -151,6 +148,7 @@ sysinfo.txt
 *.app
 
 # Crashlytics generated file
+crashlytics-build.properties
 
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
