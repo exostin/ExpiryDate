@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Special attack
   m_EditorClassIdentifier: 
   abilityName: Electrocute
-  cost: 0
-  damage: 0
+  cost: 5
+  damage: 300

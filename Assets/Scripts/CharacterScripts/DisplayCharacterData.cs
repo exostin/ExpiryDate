@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using Controllers;
 using ScriptableObjects;
@@ -12,11 +13,17 @@ namespace CharacterScripts
         [SerializeField] private Character character;
 
         [SerializeField] private RawImage image;
-        [SerializeField] private TMP_Text textContainer;
+        [SerializeField] private TMP_Text nameTextContainer;
+        [SerializeField] private TMP_Text healthTextContainer;
         
         void Start()
         {
-            textContainer.text = character.characterName;
+            nameTextContainer.text = character.characterName;
+        }
+
+        private void Update()
+        {
+            healthTextContainer.text = character.health.ToString() + " " + "HP";
         }
     }
 }

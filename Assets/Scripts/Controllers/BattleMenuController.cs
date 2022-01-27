@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Classes;
 using ScriptableObjects;
@@ -9,62 +10,74 @@ namespace Controllers
 {
     public class BattleMenuController : MonoBehaviour
     {
-        public Character[] playerCharacters;
-        public Character[] enemyCharacters;
+        public List<Character> playerCharacters;
+        public List<Character> enemyCharacters;
+
+        private List<Character> targetsForEnemyPool = new List<Character>();
+        private List<Character> targetsForPlayerPool = new List<Character>();
+
+        private List<Character> battleQueue = new List<Character>();
+        
         private Enemy enemy = new Enemy();
-        private Character[] battleQueue;
 
         private void Start()
         {
-            battleQueue = new Character[8];
+            targetsForPlayerPool.AddRange(enemyCharacters);
+            targetsForEnemyPool.AddRange(playerCharacters);
+            
             CreateQueue();
-            while (CheckIfAnyoneAlive())
+            while (!CheckIfAnySideWon())
             {
                 MakeTurn();
             }
         }
 
-        private bool CheckIfAnyoneAlive()
+        private bool CheckIfAnySideWon()
         {
-            // returns `true` if any character's health is over 0, and `false` if there are none
-            return battleQueue.Any(character => character.health > 0);
+            // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
+            return playerCharacters.Any(character => character.health > 0) && enemyCharacters.All(character => character.health <= 0) ||
+                   playerCharacters.All(character => character.health <= 0) && enemyCharacters.Any(character => character.health > 0);
         }
 
         private void CreateQueue()
         {
-            var i = 0;
-            foreach (var character in playerCharacters)
-            {
-                battleQueue[i] = character;
-                i++;
-            }
-            foreach (var character in enemyCharacters)
-            {
-                battleQueue[i] = character;
-                i++;
-            }
-
+            // Merge playerCharacters and enemyCharacters into one array
+            battleQueue = playerCharacters.Concat(enemyCharacters).ToList();
             // Sort the battle queue by initiative
-            battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToArray();
+            battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
         }
+
         private void MakeTurn()
         {
-            foreach (var character in battleQueue)
+            // using `.ToList()` here to avoid "Collection was modified; enumeration operation may not execute." error
+            // https://stackoverflow.com/a/27851493
+            foreach (var character in battleQueue.ToList())
             {
-                if (character.health > 0) continue;
+                if (character.health <= 0)
+                {
+                    if (character.isOwnedByPlayer)
+                    {
+                        targetsForEnemyPool.Remove(character);
+                    }
+                    else
+                    {
+                        targetsForPlayerPool.Remove(character);
+                    }
+                    battleQueue.Remove(character);
+                    continue;
+                }
                 if (character.isOwnedByPlayer)
                 {
                     // TODO: Wait until player does his turn, then continue (State machine?)
-                    
                     // --- TEMPORARY
-                    var randomTargetIndex = Random.Range(0, 3);
-                    enemy.MakeAttack(characterUsedForAttack:character, target:enemyCharacters[randomTargetIndex]);
+                    var randomTargetIndex = Random.Range(0, targetsForPlayerPool.Count);
+                    enemy.MakeAttack(characterUsedForAttack:character, target:targetsForPlayerPool[randomTargetIndex]);
                     // ---
                 }
                 else
                 {
-                    var randomTargetIndex = Random.Range(0, 3);
-                    enemy.MakeAttack(characterUsedForAttack:character, target:playerCharacters[randomTargetIndex]);
+                    var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
+                    enemy.MakeAttack(characterUsedForAttack:character, target:targetsForEnemyPool[randomTargetIndex]);
                 }
             }
         }

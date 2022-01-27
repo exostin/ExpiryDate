@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b9f7c4723e4dfd86cdad5ed2804dc7, type: 3}
   m_Name: Shooter
   m_EditorClassIdentifier: 
-  name: Shooter
+  characterName: Shooter
   health: 1000
-  initiative: 7
+  initiative: 4
   abilities:
-  - {fileID: 11400000, guid: 8e4b044d87d53d04983efdaded24a024, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
   isOwnedByPlayer: 1

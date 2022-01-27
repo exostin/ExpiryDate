@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b9f7c4723e4dfd86cdad5ed2804dc7, type: 3}
   m_Name: Crabtopus
   m_EditorClassIdentifier: 
+  characterName: Crabtopus
   health: 1000
-  initiative: 9
+  initiative: 2
   abilities:
   - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
+  - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
+  - {fileID: 11400000, guid: 06794f2b5ecbd0647ae5da7c0772ef79, type: 2}
+  - {fileID: 11400000, guid: 6ee1127a5c5dae042be193006823c641, type: 2}
   isOwnedByPlayer: 0

@@ -7,7 +7,7 @@ namespace Classes
     {
         public void MakeAttack(Character characterUsedForAttack, Character target)
         {
-            var randomAbilityIndex = Random.Range(0, 3);
+            var randomAbilityIndex = Random.Range(0, characterUsedForAttack.abilities.Length);
             target.health -= characterUsedForAttack.abilities[randomAbilityIndex].damage;
         }
     }

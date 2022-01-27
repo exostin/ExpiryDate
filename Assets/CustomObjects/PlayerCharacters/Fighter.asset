@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b9f7c4723e4dfd86cdad5ed2804dc7, type: 3}
   m_Name: Fighter
   m_EditorClassIdentifier: 
-  name: Fighter
+  characterName: Fighter
   health: 1000
-  initiative: 8
+  initiative: 9
   abilities:
-  - {fileID: 11400000, guid: 5b55d97a8fc614b4aa8552b9356099e7, type: 2}
-  - {fileID: 11400000, guid: aeb8bb4d2a0989240bbbcb29f99f617e, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
   isOwnedByPlayer: 1

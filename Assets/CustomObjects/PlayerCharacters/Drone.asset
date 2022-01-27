@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b9f7c4723e4dfd86cdad5ed2804dc7, type: 3}
   m_Name: Drone
   m_EditorClassIdentifier: 
-  name: Drone
-  health: 0
-  initiative: 0
+  characterName: Drone
+  health: 1000
+  initiative: 10
   abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
   isOwnedByPlayer: 1

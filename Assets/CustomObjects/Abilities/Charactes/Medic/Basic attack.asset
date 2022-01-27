@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: Basic attack
   m_EditorClassIdentifier: 
-  abilityName: 
-  cost: 0
-  damage: 0
+  abilityName: Basic attack
+  cost: 5
+  damage: 100
