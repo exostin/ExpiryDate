@@ -92,6 +92,11 @@ fabric.properties
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+!/[Aa]ssets/**/*.meta
+
+# TextMesh Pro files
 [Aa]ssets/TextMesh*Pro/
 
 # MemoryCaptures can get excessive in size.
