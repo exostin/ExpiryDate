@@ -6,7 +6,8 @@ namespace ScriptableObjects
     public class Ability : ScriptableObject
     {
         public string abilityName;
-        public int cost;
         public int damage;
+        public string description;
+        public Sprite artwork;
     }
 }

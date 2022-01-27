@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Basic attack
   m_EditorClassIdentifier: 
   abilityName: Basic attack
-  cost: 5
   damage: 100
+  description: 
+  artwork: {fileID: 21300000, guid: 5ded869c628d9684eab3f2365e682167, type: 3}

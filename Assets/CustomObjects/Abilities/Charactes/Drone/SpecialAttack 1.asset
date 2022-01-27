@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SpecialAttack 1
   m_EditorClassIdentifier: 
   abilityName: Special attack
-  cost: 5
   damage: 200
+  description: Drop grenades on enemy
+  artwork: {fileID: 21300000, guid: 5ded869c628d9684eab3f2365e682167, type: 3}

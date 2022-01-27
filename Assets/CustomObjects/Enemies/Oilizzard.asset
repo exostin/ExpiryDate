@@ -21,3 +21,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06794f2b5ecbd0647ae5da7c0772ef79, type: 2}
   - {fileID: 11400000, guid: 6ee1127a5c5dae042be193006823c641, type: 2}
   isOwnedByPlayer: 0
+  artwork: {fileID: 21300000, guid: 38c53555f4b877e4b80a3151ede9e1fe, type: 3}
