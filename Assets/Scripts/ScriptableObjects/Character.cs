@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ScriptableObjects
 {
@@ -10,5 +11,6 @@ namespace ScriptableObjects
         public int initiative;
         public Ability[] abilities;
         public bool isOwnedByPlayer;
+        public Sprite artwork;
     }
 }
