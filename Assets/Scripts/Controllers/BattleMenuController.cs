@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Classes;
 using ScriptableObjects;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,6 +19,9 @@ namespace Controllers
         private List<Character> battleQueue = new List<Character>();
         
         private Enemy enemy = new Enemy();
+
+        private int turnCounter = 0;
+        [SerializeField] private TMP_Text turnCounterText;
 
         private void Start()
         {
@@ -48,6 +52,9 @@ namespace Controllers
 
         private void MakeTurn()
         {
+            turnCounter++;
+            turnCounterText.text = "Turn: " + turnCounter.ToString();
+            
             // using `.ToList()` here to avoid "Collection was modified; enumeration operation may not execute." error
             // https://stackoverflow.com/a/27851493
             foreach (var character in battleQueue.ToList())
