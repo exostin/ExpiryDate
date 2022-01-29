@@ -24,6 +24,7 @@ namespace Controllers
 
             if (kb.f2Key.wasReleasedThisFrame)
             {
+                gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                 SceneManager.LoadScene(2);
             }
         }
