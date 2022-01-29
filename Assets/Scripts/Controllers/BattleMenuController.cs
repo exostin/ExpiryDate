@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Classes;
@@ -23,13 +24,20 @@ namespace Controllers
         private int turnCounter = 0;
         [SerializeField] private TMP_Text turnCounterText;
 
+        private GameManager gm;
+        
         private void Start()
         {
+            gm = FindObjectOfType<GameManager>();
             targetsForPlayerPool.AddRange(enemyCharacters);
             targetsForEnemyPool.AddRange(playerCharacters);
             
             CreateQueue();
-            while (!CheckIfAnySideWon())
+        }
+
+        void Update()
+        {
+            if (!CheckIfAnySideWon())
             {
                 MakeTurn();
             }
@@ -74,6 +82,7 @@ namespace Controllers
                 }
                 if (character.isOwnedByPlayer)
                 {
+                    gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     // TODO: Wait until player does his turn, then continue (State machine?)
                     // --- TEMPORARY
                     var randomTargetIndex = Random.Range(0, targetsForPlayerPool.Count);
@@ -82,6 +91,7 @@ namespace Controllers
                 }
                 else
                 {
+                    gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(characterUsedForAttack:character, target:targetsForEnemyPool[randomTargetIndex]);
                 }
