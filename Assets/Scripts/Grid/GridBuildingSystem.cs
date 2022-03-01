@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -66,6 +67,18 @@ namespace Grid
                         }
                     }
                 }
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (temp.CanBePlaced())
+                {
+                    temp.Place();
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ClearArea();
+                Destroy(temp.gameObject);
             }
         }
 
@@ -147,7 +160,28 @@ namespace Grid
             tempTilemap.SetTilesBlock(buildingArea, tileArray);
             prevArea = buildingArea;
         }
-        
+
+        public bool CanTakeArea(BoundsInt area)
+        {
+            TileBase[] baseArray = GetTilesBlock(area, mainTilemap);
+            foreach (var b in baseArray)
+            {
+                if (b != tileBases[TileType.Gray])
+                {
+                    Debug.Log("Cannot place here");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void TakeArea(BoundsInt area)
+        {
+            SetTilesBlock(area,TileType.Empty, tempTilemap);
+            SetTilesBlock(area,TileType.Green, mainTilemap);
+            
+        }
         #endregion
     }
 
