@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 namespace Controllers
 {
     public class GameManager : MonoBehaviour

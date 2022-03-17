@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
+
 
 namespace Controllers
 {
@@ -20,12 +20,6 @@ namespace Controllers
             if (kb.escapeKey.wasReleasedThisFrame)
             {
                 gm.TogglePauseMenu();
-            }
-
-            if (kb.f2Key.wasReleasedThisFrame)
-            {
-                gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                SceneManager.LoadScene(2);
             }
         }
     }
