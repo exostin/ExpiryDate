@@ -17,12 +17,15 @@ City builder game set during a climatic calamity with a hint of fantasy, created
 - **Game development path:**
   - Damian Dorosz (team leader)
   - Bartosz Podgórski
+  - Jakub Jakubowski
   - ~~Bartosz Kapusta~~
   - ~~Adam Strzelczyk~~
+ 
 - **Game design path:**
+  - Agata Musiał
   - Jakub Sadowski
   - ~~Filip Łatka~~
-  - Agata Musiał
+  
 - **Experience design path:**
   - Olga Ślifirczyk
   - Maciej Trzmiel
