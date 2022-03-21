@@ -25,12 +25,13 @@ City builder game set during a climatic calamity with a hint of fantasy, created
 - **Game design path:**
   - Agata Musiał
   - Jakub Sadowski
+  - Bartłomiej Kazirodek
   - ~~Filip Łatka~~
   
 - **Experience design path:**
   - Olga Ślifirczyk
   - Maciej Trzmiel
-  - Bartłomiej Kazirodek
+  - Kacper Krzyżanowski
   
 ## **Technologies Used**
 
