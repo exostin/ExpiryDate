@@ -1,4 +1,5 @@
-﻿using TMPro;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -11,10 +12,10 @@ namespace Controllers
 
         [Header("Settings fields")]
         [SerializeField] private TMP_Dropdown fullScreenModeDropdown;
-        [SerializeField] private Slider masterVolumeSlider, musicSlider, soundSlider;
+        [SerializeField] private Slider masterVolumeSlider, musicVolumeSlider, soundsVolumeSlider;
 
         private int usedFullScreenMode;
-        private float usedMasterVolume, usedMusicVolume, usedSoundVolume;
+        private float usedMasterVolume, usedMusicVolume, usedSoundsVolume;
 
         private void Awake()
         {
@@ -23,12 +24,12 @@ namespace Controllers
                 PlayerPrefs.SetInt("FullScreenMode", 0);
                 PlayerPrefs.SetFloat("MasterVolume", 0f);
                 PlayerPrefs.SetFloat("MusicVolume", -10f);
-                PlayerPrefs.SetFloat("SoundVolume", 0f);
+                PlayerPrefs.SetFloat("SoundsVolume", 0f);
                 PlayerPrefs.Save();
             }
             usedMasterVolume = PlayerPrefs.GetFloat("MasterVolume");
             usedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
-            usedSoundVolume = PlayerPrefs.GetFloat("SoundVolume");
+            usedSoundsVolume = PlayerPrefs.GetFloat("SoundsVolume");
             usedFullScreenMode = PlayerPrefs.GetInt("FullScreenMode");
 
             UpdateFullScreenMode();
@@ -38,8 +39,8 @@ namespace Controllers
 
             fullScreenModeDropdown.value = usedFullScreenMode;
             masterVolumeSlider.value = usedMasterVolume;
-            musicSlider.value = usedMusicVolume;
-            soundSlider.value = usedSoundVolume;
+            musicVolumeSlider.value = usedMusicVolume;
+            soundsVolumeSlider.value = usedSoundsVolume;
         }
 
         // ---- Methods that set the settings value
@@ -50,17 +51,20 @@ namespace Controllers
         }
         public void SetMasterVolumeValue(float value)
         {
+            if (Math.Abs(value - masterVolumeSlider.minValue) < 1) value = -80;
             usedMasterVolume = value;
             UpdateMasterVolume();
         }
         public void SetMusicVolumeValue(float value)
         {
+            if (Math.Abs(value - musicVolumeSlider.minValue) < 1) value = -80;
             usedMusicVolume = value;
             UpdateMusicVolume();
         }
         public void SetSoundsVolumeValue(float value)
         {
-            usedSoundVolume = value;
+            if (Math.Abs(value - soundsVolumeSlider.minValue) < 1) value = -80;
+            usedSoundsVolume = value;
             UpdateSoundsVolume();
         }
 
@@ -94,7 +98,7 @@ namespace Controllers
 
         private void UpdateSoundsVolume()
         {
-            masterMixer.SetFloat("SoundsVolume", usedSoundVolume);
+            masterMixer.SetFloat("SoundsVolume", usedSoundsVolume);
         }
 
         public void SavePreferences()
@@ -102,7 +106,7 @@ namespace Controllers
             PlayerPrefs.SetInt("FullScreenMode", usedFullScreenMode);
             PlayerPrefs.SetFloat("MasterVolume", usedMasterVolume);
             PlayerPrefs.SetFloat("MusicVolume", usedMusicVolume);
-            PlayerPrefs.SetFloat("SoundVolume", usedSoundVolume);
+            PlayerPrefs.SetFloat("SoundVolume", usedSoundsVolume);
             PlayerPrefs.Save();
         }
     }
