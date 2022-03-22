@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 using System;
-=======
-﻿using System;
->>>>>>> 40-sound-bar-sensivity
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -33,11 +29,7 @@ namespace Controllers
             }
             usedMasterVolume = PlayerPrefs.GetFloat("MasterVolume");
             usedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
-<<<<<<< HEAD
             usedSoundsVolume = PlayerPrefs.GetFloat("SoundsVolume");
-=======
-            usedSoundsVolume = PlayerPrefs.GetFloat("SoundVolume");
->>>>>>> 40-sound-bar-sensivity
             usedFullScreenMode = PlayerPrefs.GetInt("FullScreenMode");
 
             UpdateFullScreenMode();
