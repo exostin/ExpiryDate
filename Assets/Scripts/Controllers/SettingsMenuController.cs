@@ -106,7 +106,7 @@ namespace Controllers
             PlayerPrefs.SetInt("FullScreenMode", usedFullScreenMode);
             PlayerPrefs.SetFloat("MasterVolume", usedMasterVolume);
             PlayerPrefs.SetFloat("MusicVolume", usedMusicVolume);
-            PlayerPrefs.SetFloat("SoundVolume", usedSoundsVolume);
+            PlayerPrefs.SetFloat("SoundsVolume", usedSoundsVolume);
             PlayerPrefs.Save();
         }
     }
