@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Controllers
@@ -13,6 +14,8 @@ namespace Controllers
         [Header("Settings fields")]
         [SerializeField] private TMP_Dropdown fullScreenModeDropdown;
         [SerializeField] private Slider masterVolumeSlider, musicVolumeSlider, soundsVolumeSlider;
+        
+        [SerializeField] private UnityEvent onBackButtonClick;
 
         private int usedFullScreenMode;
         private float usedMasterVolume, usedMusicVolume, usedSoundsVolume;
@@ -41,6 +44,11 @@ namespace Controllers
             masterVolumeSlider.value = usedMasterVolume;
             musicVolumeSlider.value = usedMusicVolume;
             soundsVolumeSlider.value = usedSoundsVolume;
+        }
+
+        private void OnEnable()
+        {
+            Awake(); //TODO: Do it smarter
         }
 
         // ---- Methods that set the settings value
@@ -101,13 +109,20 @@ namespace Controllers
             masterMixer.SetFloat("SoundsVolume", usedSoundsVolume);
         }
 
-        public void SavePreferences()
+        private void SavePreferences()
         {
             PlayerPrefs.SetInt("FullScreenMode", usedFullScreenMode);
             PlayerPrefs.SetFloat("MasterVolume", usedMasterVolume);
             PlayerPrefs.SetFloat("MusicVolume", usedMusicVolume);
-            PlayerPrefs.SetFloat("SoundVolume", usedSoundsVolume);
+            PlayerPrefs.SetFloat("SoundsVolume", usedSoundsVolume);
             PlayerPrefs.Save();
+        }
+
+        public void GoBack()
+        {
+            SavePreferences();
+            gameObject.SetActive(false);
+            onBackButtonClick?.Invoke();
         }
     }
 }
