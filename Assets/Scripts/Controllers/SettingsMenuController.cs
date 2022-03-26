@@ -36,14 +36,7 @@ namespace Controllers
 
         public void Initialize()
         {
-            if (!PlayerPrefs.HasKey("FullScreenMode"))
-            {
-                PlayerPrefs.SetInt("FullScreenMode", 0);
-                PlayerPrefs.SetFloat("MasterVolume", 0f);
-                PlayerPrefs.SetFloat("MusicVolume", -10f);
-                PlayerPrefs.SetFloat("SoundsVolume", 0f);
-                PlayerPrefs.Save();
-            }
+            if (!PlayerPrefs.HasKey("FullScreenMode")) RestoreDefaults();
 
             usedMasterVolume = PlayerPrefs.GetFloat("MasterVolume");
             usedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
@@ -134,6 +127,16 @@ namespace Controllers
             SavePreferences();
             gameObject.SetActive(false);
             onBackButtonClick?.Invoke();
+        }
+
+        public void RestoreDefaults()
+        {
+            PlayerPrefs.SetInt("FullScreenMode", 0);
+            PlayerPrefs.SetFloat("MasterVolume", 0f);
+            PlayerPrefs.SetFloat("MusicVolume", -10f);
+            PlayerPrefs.SetFloat("SoundsVolume", 0f);
+            PlayerPrefs.Save();
+            OnEnable();
         }
     }
 }
