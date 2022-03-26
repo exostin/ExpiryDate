@@ -11,16 +11,30 @@ namespace Controllers
     {
         [SerializeField] private AudioMixer masterMixer;
 
-        [Header("Settings fields")]
-        [SerializeField] private TMP_Dropdown fullScreenModeDropdown;
+        [Header("Settings fields")] [SerializeField]
+        private TMP_Dropdown fullScreenModeDropdown;
+
         [SerializeField] private Slider masterVolumeSlider, musicVolumeSlider, soundsVolumeSlider;
-        
+
         [SerializeField] private UnityEvent onBackButtonClick;
 
         private int usedFullScreenMode;
         private float usedMasterVolume, usedMusicVolume, usedSoundsVolume;
 
-        private void Awake()
+        private void OnEnable()
+        {
+            usedMasterVolume = PlayerPrefs.GetFloat("MasterVolume");
+            usedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            usedSoundsVolume = PlayerPrefs.GetFloat("SoundsVolume");
+            usedFullScreenMode = PlayerPrefs.GetInt("FullScreenMode");
+
+            fullScreenModeDropdown.value = usedFullScreenMode;
+            masterVolumeSlider.value = usedMasterVolume;
+            musicVolumeSlider.value = usedMusicVolume;
+            soundsVolumeSlider.value = usedSoundsVolume;
+        }
+
+        public void Initialize()
         {
             if (!PlayerPrefs.HasKey("FullScreenMode"))
             {
@@ -30,6 +44,7 @@ namespace Controllers
                 PlayerPrefs.SetFloat("SoundsVolume", 0f);
                 PlayerPrefs.Save();
             }
+
             usedMasterVolume = PlayerPrefs.GetFloat("MasterVolume");
             usedMusicVolume = PlayerPrefs.GetFloat("MusicVolume");
             usedSoundsVolume = PlayerPrefs.GetFloat("SoundsVolume");
@@ -39,16 +54,6 @@ namespace Controllers
             UpdateMasterVolume();
             UpdateMusicVolume();
             UpdateSoundsVolume();
-
-            fullScreenModeDropdown.value = usedFullScreenMode;
-            masterVolumeSlider.value = usedMasterVolume;
-            musicVolumeSlider.value = usedMusicVolume;
-            soundsVolumeSlider.value = usedSoundsVolume;
-        }
-
-        private void OnEnable()
-        {
-            Awake(); //TODO: Do it smarter
         }
 
         // ---- Methods that set the settings value
@@ -57,18 +62,21 @@ namespace Controllers
             usedFullScreenMode = value;
             UpdateFullScreenMode();
         }
+
         public void SetMasterVolumeValue(float value)
         {
             if (Math.Abs(value - masterVolumeSlider.minValue) < 1) value = -80;
             usedMasterVolume = value;
             UpdateMasterVolume();
         }
+
         public void SetMusicVolumeValue(float value)
         {
             if (Math.Abs(value - musicVolumeSlider.minValue) < 1) value = -80;
             usedMusicVolume = value;
             UpdateMusicVolume();
         }
+
         public void SetSoundsVolumeValue(float value)
         {
             if (Math.Abs(value - soundsVolumeSlider.minValue) < 1) value = -80;
@@ -82,12 +90,14 @@ namespace Controllers
             switch (usedFullScreenMode)
             {
                 case 0:
-                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.ExclusiveFullScreen);
+                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height,
+                        FullScreenMode.ExclusiveFullScreen);
                     break;
 
                 case 1:
                     Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, FullScreenMode.FullScreenWindow);
+                    Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height,
+                        FullScreenMode.FullScreenWindow);
                     break;
                 case 2:
                     Screen.SetResolution(1280, 720, FullScreenMode.Windowed);
@@ -99,6 +109,7 @@ namespace Controllers
         {
             masterMixer.SetFloat("MasterVolume", usedMasterVolume);
         }
+
         private void UpdateMusicVolume()
         {
             masterMixer.SetFloat("MusicVolume", usedMusicVolume);
