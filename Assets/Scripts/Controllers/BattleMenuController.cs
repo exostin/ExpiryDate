@@ -31,10 +31,13 @@ namespace Controllers
         private GameManager gm;
 
         [SerializeField] private GameObject[] skillButtons;
-        
-        public Character playerSelectedTarget;
-        public Ability playerSelectedAbility;
-        
+
+        [HideInInspector] public Character playerSelectedTarget = null;
+        [HideInInspector] public Ability playerSelectedAbility = null;
+
+        [SerializeField] private TMP_Text selectedTarget;
+        [SerializeField] private TMP_Text selectedAbility;
+
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -80,6 +83,8 @@ namespace Controllers
             // https://stackoverflow.com/a/27851493
             foreach (var character in battleQueue.ToList())
             {
+                UpdateSelectedAbilityText();
+                UpdateSelectedTargetText();
                 if (character.health <= 0)
                 {
                     if (character.isOwnedByPlayer)
@@ -101,7 +106,14 @@ namespace Controllers
                     
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() => gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
-                    player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                    
+                    if (playerSelectedAbility != null && playerSelectedTarget != null)
+                    {
+                        player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                    }
+                    
+                    playerSelectedAbility = null;
+                    playerSelectedTarget = null;
                 }
                 else
                 {
@@ -116,7 +128,8 @@ namespace Controllers
 
         public void EndPlayerTurn()
         {
-            gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+            if (playerSelectedAbility != null && playerSelectedTarget != null) gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+            else Debug.Log("Player didn't correctly end turn! (No ability and/or target chosen!)");
         }
 
         public void StartTargetSelectionState()
@@ -132,6 +145,16 @@ namespace Controllers
                 skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
                 skillButtons[i].GetComponent<DisplayAbilityData>().UpdateAbilityDisplay();
             }
+        }
+
+        public void UpdateSelectedAbilityText()
+        {
+            selectedAbility.text = playerSelectedAbility != null ? $"Selected ability: {playerSelectedAbility.abilityName}" : $"Selected ability: none";
+        }
+
+        public void UpdateSelectedTargetText()
+        {
+            selectedTarget.text = playerSelectedTarget != null ? $"Selected target: {playerSelectedTarget.characterName}" : $"Selected target: none";
         }
     }
 }
