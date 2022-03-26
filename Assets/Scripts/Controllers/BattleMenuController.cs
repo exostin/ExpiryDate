@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +5,9 @@ using Classes;
 using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
-using UnityEditor.U2D;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -22,7 +22,7 @@ namespace Controllers
 
         private List<Character> battleQueue = new List<Character>();
         
-        private Enemy enemy = new Enemy();
+        private BattleMenuEnemy enemy = new BattleMenuEnemy();
         private BattleMenuPlayer player = new BattleMenuPlayer();
 
         private int turnCounter = 0;
@@ -35,8 +35,9 @@ namespace Controllers
         [HideInInspector] public Character playerSelectedTarget = null;
         [HideInInspector] public Ability playerSelectedAbility = null;
 
-        [SerializeField] private TMP_Text selectedTarget;
-        [SerializeField] private TMP_Text selectedAbility;
+        [SerializeField] private TMP_Text selectedTargetSign;
+        [SerializeField] private TMP_Text selectedAbilitySign;
+        [SerializeField] private TMP_Text currentCharacterSign;
 
         private void Start()
         {
@@ -71,11 +72,13 @@ namespace Controllers
                 yield return new WaitUntil(
                     () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
             }
+            
+            Debug.Log($"Game end!");
+            StartCoroutine(GameEnd());
         }
         
         private IEnumerator MakeTurn()
         {
-            // if (!CheckIfAnySideWon()) ;
             turnCounter++;
             turnCounterText.text = "Turn: " + turnCounter.ToString();
             
@@ -103,17 +106,15 @@ namespace Controllers
                     UpdateSkillButtons(character);
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     Debug.Log($"{character.characterName} turn!");
-                    
+                    currentCharacterSign.text = $"It's currently: {character.characterName} turn!";
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() => gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
-                    
                     if (playerSelectedAbility != null && playerSelectedTarget != null)
                     {
                         player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                        playerSelectedAbility = null;
+                        playerSelectedTarget = null;
                     }
-                    
-                    playerSelectedAbility = null;
-                    playerSelectedTarget = null;
                 }
                 else
                 {
@@ -128,8 +129,16 @@ namespace Controllers
 
         public void EndPlayerTurn()
         {
-            if (playerSelectedAbility != null && playerSelectedTarget != null) gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
-            else Debug.Log("Player didn't correctly end turn! (No ability and/or target chosen!)");
+            if (playerSelectedAbility != null && playerSelectedTarget != null &&
+                gm.stateController.fsm.State == StateController.States.SelectingTarget &&
+                targetsForPlayerPool.Contains(playerSelectedTarget))
+            {
+                gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+            }
+            else
+            {
+                Debug.Log("Player didn't correctly end turn! (No ability and/or target chosen!)");
+            }
         }
 
         public void StartTargetSelectionState()
@@ -149,12 +158,19 @@ namespace Controllers
 
         public void UpdateSelectedAbilityText()
         {
-            selectedAbility.text = playerSelectedAbility != null ? $"Selected ability: {playerSelectedAbility.abilityName}" : $"Selected ability: none";
+            selectedAbilitySign.text = playerSelectedAbility != null ? $"Selected ability: {playerSelectedAbility.abilityName}" : $"Selected ability: none";
         }
 
         public void UpdateSelectedTargetText()
         {
-            selectedTarget.text = playerSelectedTarget != null ? $"Selected target: {playerSelectedTarget.characterName}" : $"Selected target: none";
+            selectedTargetSign.text = playerSelectedTarget != null ? $"Selected target: {playerSelectedTarget.characterName}" : $"Selected target: none";
+        }
+
+        private IEnumerator GameEnd()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.Playing);
+            yield return new WaitForSecondsRealtime(2f);
+            SceneManager.LoadScene(1);
         }
     }
 }
