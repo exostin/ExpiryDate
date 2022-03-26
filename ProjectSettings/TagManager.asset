@@ -6,6 +6,7 @@ TagManager:
   tags:
   - StateController
   - AnimationController
+  - PauseMenuSettingsMenu
   layers:
   - Default
   - TransparentFX

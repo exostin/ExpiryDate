@@ -1,5 +1,6 @@
+using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 namespace Controllers
 {
     public class GameManager : MonoBehaviour
@@ -11,19 +12,26 @@ namespace Controllers
 
         private void Start()
         {
+            Resources.FindObjectsOfTypeAll<SettingsMenuController>()
+                .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
+                .GetComponent<SettingsMenuController>()
+                .Initialize();
             stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
         }
 
         public void TogglePauseMenu()
         {
             if (!pauseMenu.activeInHierarchy)
-            {
                 stateController.fsm.ChangeState(StateController.States.Pause);
-            }
             else
-            {
                 stateController.fsm.ChangeState(StateController.States.Playing);
-            }
+
+            pauseMenu.transform.Find("Settings menu").gameObject.SetActive(false);
+            pauseMenu.transform.Find("Start menu").gameObject.SetActive(true);
+            if (pauseMenu.activeSelf)
+                Resources.FindObjectsOfTypeAll<SettingsMenuController>()
+                    .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
+                    .GetComponent<SettingsMenuController>().SavePreferences();
             pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
     }
