@@ -1,9 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Classes;
+using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
+using UnityEditor.U2D;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,11 +23,17 @@ namespace Controllers
         private List<Character> battleQueue = new List<Character>();
         
         private Enemy enemy = new Enemy();
+        private BattleMenuPlayer player = new BattleMenuPlayer();
 
         private int turnCounter = 0;
         [SerializeField] private TMP_Text turnCounterText;
 
         private GameManager gm;
+
+        [SerializeField] private GameObject[] skillButtons;
+        
+        public Character playerSelectedTarget;
+        public Ability playerSelectedAbility;
         
         private void Start()
         {
@@ -33,14 +42,7 @@ namespace Controllers
             targetsForEnemyPool.AddRange(playerCharacters);
             
             CreateQueue();
-        }
-
-        void Update()
-        {
-            if (!CheckIfAnySideWon())
-            {
-                MakeTurn();
-            }
+            StartCoroutine(PlayBattle());
         }
 
         private bool CheckIfAnySideWon()
@@ -58,8 +60,19 @@ namespace Controllers
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
         }
 
-        private void MakeTurn()
+        private IEnumerator PlayBattle()
         {
+            while (!CheckIfAnySideWon())
+            {
+                StartCoroutine(MakeTurn());
+                yield return new WaitUntil(
+                    () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
+            }
+        }
+        
+        private IEnumerator MakeTurn()
+        {
+            // if (!CheckIfAnySideWon()) ;
             turnCounter++;
             turnCounterText.text = "Turn: " + turnCounter.ToString();
             
@@ -82,19 +95,42 @@ namespace Controllers
                 }
                 if (character.isOwnedByPlayer)
                 {
+                    UpdateSkillButtons(character);
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                    // TODO: Wait until player does his turn, then continue (State machine?)
-                    // --- TEMPORARY
-                    var randomTargetIndex = Random.Range(0, targetsForPlayerPool.Count);
-                    enemy.MakeAttack(characterUsedForAttack:character, target:targetsForPlayerPool[randomTargetIndex]);
-                    // ---
+                    Debug.Log($"{character.characterName} turn!");
+                    
+                    // Wait until player does his turn and then continue
+                    yield return new WaitUntil(() => gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
+                    player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
                 }
                 else
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(characterUsedForAttack:character, target:targetsForEnemyPool[randomTargetIndex]);
+                    yield return new WaitForSecondsRealtime(0.5f);
                 }
+            }
+            gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
+        }
+
+        public void EndPlayerTurn()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+        }
+
+        public void StartTargetSelectionState()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.SelectingTarget);
+        }
+
+        private void UpdateSkillButtons(Character currentCharacter)
+        {
+            for (int i = 0; i <= 3; i++)
+            {
+                Debug.Log($"Updating ability no. {i}");
+                skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
+                skillButtons[i].GetComponent<DisplayAbilityData>().UpdateAbilityDisplay();
             }
         }
     }

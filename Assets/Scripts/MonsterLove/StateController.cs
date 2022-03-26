@@ -9,8 +9,11 @@ public class StateController : MonoBehaviour
 		Playing,
 		Pause,
 		PlayerTurn,
+		PlayerFinalizedHisMove,
 		EnemyTurn,
-		Countdown
+		Countdown,
+		ReadyForNextTurn,
+		SelectingTarget
 	}
 	// should be private
 	public StateMachine<States, StateDriverUnity> fsm;
