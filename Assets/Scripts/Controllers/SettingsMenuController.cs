@@ -120,7 +120,7 @@ namespace Controllers
             masterMixer.SetFloat("SoundsVolume", usedSoundsVolume);
         }
 
-        private void SavePreferences()
+        public void SavePreferences()
         {
             PlayerPrefs.SetInt("FullScreenMode", usedFullScreenMode);
             PlayerPrefs.SetFloat("MasterVolume", usedMasterVolume);

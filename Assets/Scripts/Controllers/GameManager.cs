@@ -25,6 +25,13 @@ namespace Controllers
                 stateController.fsm.ChangeState(StateController.States.Pause);
             else
                 stateController.fsm.ChangeState(StateController.States.Playing);
+
+            pauseMenu.transform.Find("Settings menu").gameObject.SetActive(false);
+            pauseMenu.transform.Find("Start menu").gameObject.SetActive(true);
+            if (pauseMenu.activeSelf)
+                Resources.FindObjectsOfTypeAll<SettingsMenuController>()
+                    .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
+                    .GetComponent<SettingsMenuController>().SavePreferences();
             pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
     }
