@@ -103,7 +103,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.7760665, g: 0.9245283, b: 0.2660199, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -122,7 +122,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 746794389264152436}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6326303411437516166}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: SelectAsAbilityForUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6326303411437516166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +151,7 @@ MonoBehaviour:
   image: {fileID: 746794389264152436}
   nameTextContainer: {fileID: 221350195356151396}
   damageTextContainer: {fileID: 1202648735973984572}
+  battleMenuController: {fileID: 0}
 --- !u!1 &1016730038661661213
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,7 +389,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.7760665, g: 0.9245283, b: 0.2660199, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -395,7 +408,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8402646820804738011}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8576855816720260788}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: SelectAsAbilityForUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8576855816720260788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +449,7 @@ MonoBehaviour:
   image: {fileID: 8402646820804738011}
   nameTextContainer: {fileID: 2808659643086947567}
   damageTextContainer: {fileID: 7540295114962701475}
+  battleMenuController: {fileID: 0}
 --- !u!1 &1920735862500350063
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +821,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.7760665, g: 0.9245283, b: 0.2660199, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -802,7 +840,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8254679564441248257}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4786706219022257111}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: SelectAsAbilityForUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4786706219022257111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,6 +881,7 @@ MonoBehaviour:
   image: {fileID: 8254679564441248257}
   nameTextContainer: {fileID: 2746243566264224889}
   damageTextContainer: {fileID: 7392361444166389337}
+  battleMenuController: {fileID: 0}
 --- !u!1 &7464697381225619000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1426,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.7760665, g: 0.9245283, b: 0.2660199, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1382,7 +1445,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2426741586542139582}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1309849179708729584}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: SelectAsAbilityForUse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DisplayObjectData.DisplayAbilityData, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1309849179708729584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,6 +1486,7 @@ MonoBehaviour:
   image: {fileID: 2426741586542139582}
   nameTextContainer: {fileID: 1666896893800968977}
   damageTextContainer: {fileID: 5193839088181296172}
+  battleMenuController: {fileID: 0}
 --- !u!1 &8802949034567940065
 GameObject:
   m_ObjectHideFlags: 0

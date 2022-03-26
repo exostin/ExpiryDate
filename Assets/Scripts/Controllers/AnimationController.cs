@@ -43,9 +43,9 @@ namespace Controllers
             else
             {
                 // Play backwards
-                notification["ShowNotification"].time = buildingShop["ShowNotification"].length;
-                notification["ShowNotification"].speed = -1;
-                notification.Play("ShowNotification");
+                // notification["ShowNotification"].time = buildingShop["ShowNotification"].length;
+                // notification["ShowNotification"].speed = -1;
+                // notification.Play("ShowNotification");
             }
             notificationActivated = !notificationActivated;
         }

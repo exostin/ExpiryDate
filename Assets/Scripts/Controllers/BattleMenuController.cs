@@ -1,10 +1,12 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Classes;
+using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -19,13 +21,23 @@ namespace Controllers
 
         private List<Character> battleQueue = new List<Character>();
         
-        private Enemy enemy = new Enemy();
+        private BattleMenuEnemy enemy = new BattleMenuEnemy();
+        private BattleMenuPlayer player = new BattleMenuPlayer();
 
         private int turnCounter = 0;
         [SerializeField] private TMP_Text turnCounterText;
 
         private GameManager gm;
-        
+
+        [SerializeField] private GameObject[] skillButtons;
+
+        [HideInInspector] public Character playerSelectedTarget = null;
+        [HideInInspector] public Ability playerSelectedAbility = null;
+
+        [SerializeField] private TMP_Text selectedTargetSign;
+        [SerializeField] private TMP_Text selectedAbilitySign;
+        [SerializeField] private TMP_Text currentCharacterSign;
+
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -33,14 +45,7 @@ namespace Controllers
             targetsForEnemyPool.AddRange(playerCharacters);
             
             CreateQueue();
-        }
-
-        void Update()
-        {
-            if (!CheckIfAnySideWon())
-            {
-                MakeTurn();
-            }
+            StartCoroutine(PlayBattle());
         }
 
         private bool CheckIfAnySideWon()
@@ -58,7 +63,20 @@ namespace Controllers
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
         }
 
-        private void MakeTurn()
+        private IEnumerator PlayBattle()
+        {
+            while (!CheckIfAnySideWon())
+            {
+                StartCoroutine(MakeTurn());
+                yield return new WaitUntil(
+                    () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
+            }
+            
+            Debug.Log($"Game end!");
+            StartCoroutine(GameEnd());
+        }
+        
+        private IEnumerator MakeTurn()
         {
             turnCounter++;
             turnCounterText.text = "Turn: " + turnCounter.ToString();
@@ -67,6 +85,8 @@ namespace Controllers
             // https://stackoverflow.com/a/27851493
             foreach (var character in battleQueue.ToList())
             {
+                UpdateSelectedAbilityText();
+                UpdateSelectedTargetText();
                 if (character.health <= 0)
                 {
                     if (character.isOwnedByPlayer)
@@ -82,20 +102,74 @@ namespace Controllers
                 }
                 if (character.isOwnedByPlayer)
                 {
+                    UpdateSkillButtons(character);
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                    // TODO: Wait until player does his turn, then continue (State machine?)
-                    // --- TEMPORARY
-                    var randomTargetIndex = Random.Range(0, targetsForPlayerPool.Count);
-                    enemy.MakeAttack(characterUsedForAttack:character, target:targetsForPlayerPool[randomTargetIndex]);
-                    // ---
+                    Debug.Log($"{character.characterName} turn!");
+                    currentCharacterSign.text = $"It's currently: {character.characterName} turn!";
+                    // Wait until player does his turn and then continue
+                    yield return new WaitUntil(() => gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
+                    if (playerSelectedAbility != null && playerSelectedTarget != null)
+                    {
+                        player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                        playerSelectedAbility = null;
+                        playerSelectedTarget = null;
+                    }
                 }
                 else
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(characterUsedForAttack:character, target:targetsForEnemyPool[randomTargetIndex]);
+                    yield return new WaitForSecondsRealtime(0.5f);
                 }
             }
+            gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
+        }
+
+        public void EndPlayerTurn()
+        {
+            if (playerSelectedAbility != null && playerSelectedTarget != null &&
+                gm.stateController.fsm.State == StateController.States.SelectingTarget &&
+                targetsForPlayerPool.Contains(playerSelectedTarget))
+            {
+                gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+            }
+            else
+            {
+                Debug.Log("Player didn't correctly end turn! (No ability and/or target chosen!)");
+            }
+        }
+
+        public void StartTargetSelectionState()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.SelectingTarget);
+        }
+
+        private void UpdateSkillButtons(Character currentCharacter)
+        {
+            for (int i = 0; i <= 3; i++)
+            {
+                Debug.Log($"Updating ability no. {i}");
+                skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
+                skillButtons[i].GetComponent<DisplayAbilityData>().UpdateAbilityDisplay();
+            }
+        }
+
+        public void UpdateSelectedAbilityText()
+        {
+            selectedAbilitySign.text = playerSelectedAbility != null ? $"Selected ability: {playerSelectedAbility.abilityName}" : $"Selected ability: none";
+        }
+
+        public void UpdateSelectedTargetText()
+        {
+            selectedTargetSign.text = playerSelectedTarget != null ? $"Selected target: {playerSelectedTarget.characterName}" : $"Selected target: none";
+        }
+
+        private IEnumerator GameEnd()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.Playing);
+            yield return new WaitForSecondsRealtime(2f);
+            SceneManager.LoadScene(1);
         }
     }
 }
