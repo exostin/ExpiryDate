@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Classes
 {
-    public class Enemy
+    public class BattleMenuEnemy
     {
         public void MakeAttack(Character characterUsedForAttack, Character target)
         {
