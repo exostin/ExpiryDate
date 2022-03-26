@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Classes;
@@ -33,14 +34,11 @@ namespace Controllers
             targetsForEnemyPool.AddRange(playerCharacters);
             
             CreateQueue();
+            StartCoroutine(PlayBattle());
         }
 
         void Update()
         {
-            if (!CheckIfAnySideWon())
-            {
-                MakeTurn();
-            }
         }
 
         private bool CheckIfAnySideWon()
@@ -58,8 +56,19 @@ namespace Controllers
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
         }
 
-        private void MakeTurn()
+        private IEnumerator PlayBattle()
         {
+            while (!CheckIfAnySideWon())
+            {
+                StartCoroutine(MakeTurn());
+                yield return new WaitUntil(
+                    () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
+            }
+        }
+        
+        private IEnumerator MakeTurn()
+        {
+            // if (!CheckIfAnySideWon()) ;
             turnCounter++;
             turnCounterText.text = "Turn: " + turnCounter.ToString();
             
@@ -83,19 +92,28 @@ namespace Controllers
                 if (character.isOwnedByPlayer)
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                    // TODO: Wait until player does his turn, then continue (State machine?)
-                    // --- TEMPORARY
-                    var randomTargetIndex = Random.Range(0, targetsForPlayerPool.Count);
-                    enemy.MakeAttack(characterUsedForAttack:character, target:targetsForPlayerPool[randomTargetIndex]);
-                    // ---
+                    Debug.Log($"{character.characterName} turn!");
+                    // Wait until player does his turn and then continue
+                    yield return new WaitUntil(() => gm.stateController.fsm.State == StateController.States.EnemyTurn);
+                    
+                    // // --- TEMPORARY
+                    // var randomTargetIndex = Random.Range(0, targetsForPlayerPool.Count);
+                    // enemy.MakeAttack(characterUsedForAttack:character, target:targetsForPlayerPool[randomTargetIndex]);
+                    // // ---
                 }
                 else
                 {
-                    gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(characterUsedForAttack:character, target:targetsForEnemyPool[randomTargetIndex]);
+                    yield return new WaitForSecondsRealtime(0.5f);
                 }
             }
+            gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
+        }
+
+        public void EndPlayerTurn()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
         }
     }
 }

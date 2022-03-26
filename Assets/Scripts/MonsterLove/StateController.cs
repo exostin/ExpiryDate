@@ -10,7 +10,8 @@ public class StateController : MonoBehaviour
 		Pause,
 		PlayerTurn,
 		EnemyTurn,
-		Countdown
+		Countdown,
+		ReadyForNextTurn
 	}
 	// should be private
 	public StateMachine<States, StateDriverUnity> fsm;
