@@ -1977,6 +1977,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateController: {fileID: 309716534}
   pauseMenu: {fileID: 1417582643}
+  citybuildingMainCamp: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingTitanGenerator: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingEnergyGenerator: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingWaterGenerator: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingFoodGenerator: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingFighterSchool: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingShooterSchool: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingDroneSchool: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingMedicSchool: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
+  citybuildingRobotSchool: {fileID: 11400000, guid: 3b20340e39321a34f9dfda0307fe7ce4, type: 2}
 --- !u!1 &1181191831
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ namespace Controllers
     {
         public void PlayButton()
         {
+            var gm = FindObjectOfType<GameManager>();
+            gm.cbm.Load();
             SceneManager.LoadScene(1);
         }
 
