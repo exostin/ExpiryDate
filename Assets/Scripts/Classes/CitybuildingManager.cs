@@ -67,7 +67,7 @@ namespace Classes
             throw new NotImplementedException();
         }
 
-        public void Update() // Called when skipping to the next day
+        public void NextDay()
         {
             foreach (var building in PlayerBuildings) PlayerResources += building.output;
         }

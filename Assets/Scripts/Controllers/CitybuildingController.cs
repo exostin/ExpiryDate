@@ -82,7 +82,7 @@ namespace Controllers
 
         public void NextDay()
         {
-            cbm.Update();
+            cbm.NextDay();
             EnterBattleMode();
         }
     }
