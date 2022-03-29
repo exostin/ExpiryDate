@@ -67,8 +67,6 @@ namespace Controllers
                 else if (colliderGameObject == titanGenerator) cbm.UpgradeTitanGenerator();
                 else if (colliderGameObject == waterGenerator) cbm.UpgradeWaterGenerator();
                 else if (colliderGameObject == droneSchool) cbm.UpgradeDroneSchool();
-
-                Debug.Log($"{colliderGameObject.name} was probably upgraded");
             }
 
             #endregion
