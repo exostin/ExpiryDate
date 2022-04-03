@@ -85,6 +85,7 @@ namespace Controllers
             // https://stackoverflow.com/a/27851493
             foreach (var character in battleQueue.ToList())
             {
+                if (CheckIfAnySideWon()) break;
                 UpdateSelectedAbilityText();
                 UpdateSelectedTargetText();
                 if (character.health <= 0)
