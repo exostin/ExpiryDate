@@ -79,9 +79,7 @@ namespace Classes
             PlayerMedicSchool = MedicSchool.upgrades[PlayerPrefs.GetInt("PlayerBuildings/MedicSchool", 0)];
             PlayerRobotSchool = RobotSchool.upgrades[PlayerPrefs.GetInt("PlayerBuildings/RobotSchool", 0)];
         }
-
         
-
         public void NextDay()
         {
             foreach (var building in PlayerBuildings) PlayerResources += building.output;
