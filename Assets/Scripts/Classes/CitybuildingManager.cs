@@ -39,7 +39,25 @@ namespace Classes
                 };
             }
         }
-
+        public void Save() 
+        {
+            Debug.Log("Saving settings");
+            PlayerPrefs.SetInt("PlayerBuildings/MainCamp", PlayerMainCamp.level);
+            PlayerPrefs.SetInt("PlayerBuildings/TitanGenerator", PlayerTitanGenerator.level);
+            PlayerPrefs.SetInt("PlayerBuildings/EnergyGenerator", PlayerEnergyGenerator.level);
+            PlayerPrefs.SetInt("PlayerBuildings/WaterGenerator", PlayerWaterGenerator.level);
+            PlayerPrefs.SetInt("PlayerBuildings/FoodGenerator", PlayerFoodGenerator.level);
+            PlayerPrefs.SetInt("PlayerBuildings/FighterSchool", PlayerFighterSchool.level);
+            PlayerPrefs.SetInt("PlayerBuildings/ShooterSchool", PlayerShooterSchool.level);
+            PlayerPrefs.SetInt("PlayerBuildings/DroneSchool", PlayerDroneSchool.level);
+            PlayerPrefs.SetInt("PlayerBuildings/MedicSchool", PlayerMedicSchool.level);
+            PlayerPrefs.SetInt("PlayerBuildings/RobotSchool", PlayerRobotSchool.level);
+            PlayerPrefs.SetInt("PlayerResources/Energy", PlayerResources.energy);
+            PlayerPrefs.SetInt("PlayerResources/Titan", PlayerResources.titan);
+            PlayerPrefs.SetInt("PlayerResources/Water", PlayerResources.water);
+            PlayerPrefs.SetInt("PlayerResources/Food", PlayerResources.food);
+            PlayerPrefs.Save();
+        }
         public void Load() // Called by the GM when loading the game
         {
             PlayerResources = new Resources
@@ -62,10 +80,7 @@ namespace Classes
             PlayerRobotSchool = RobotSchool.upgrades[PlayerPrefs.GetInt("PlayerBuildings/RobotSchool", 0)];
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public void NextDay()
         {
