@@ -74,6 +74,7 @@ namespace Controllers
 
         public void EnterBattleMode()
         {
+            cbm.Save();
             gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
             SceneManager.LoadScene(2);
         }
