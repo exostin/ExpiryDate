@@ -5,6 +5,10 @@ namespace Controllers
 {
     public class StartMenuController : MonoBehaviour
     {
+        #pragma warning disable CS0414
+        private readonly string webPlayerQuitURL = "https://www.google.com";
+        #pragma warning restore CS0414
+        
         public void PlayButton()
         {
             var gm = FindObjectOfType<GameManager>();
@@ -14,7 +18,13 @@ namespace Controllers
 
         public void ExitButton()
         {
-            Application.Quit();
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #elif UNITY_WEBPLAYER
+                Application.OpenURL(webPlayerQuitURL);
+            #else
+                Application.Quit();
+            #endif
         }
     }
 }

@@ -51,10 +51,9 @@ namespace Controllers
 
         public void TogglePauseMenu()
         {
-            if (!pauseMenu.activeInHierarchy)
-                stateController.fsm.ChangeState(StateController.States.Pause);
-            else
-                stateController.fsm.ChangeState(StateController.States.Playing);
+            stateController.fsm.ChangeState(!pauseMenu.activeInHierarchy
+                ? StateController.States.Pause
+                : StateController.States.Playing);
 
             pauseMenu.transform.Find("Settings menu").gameObject.SetActive(false);
             pauseMenu.transform.Find("Start menu").gameObject.SetActive(true);
