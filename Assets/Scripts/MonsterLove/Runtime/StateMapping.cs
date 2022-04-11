@@ -22,34 +22,32 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace MonsterLove.StateMachine
 {
-	internal class StateMapping<TState, TDriver> where TState : struct, IConvertible, IComparable
-		where TDriver : class, new()
-	{
-		public TState state;
+    internal class StateMapping<TState, TDriver> where TState : struct, IConvertible, IComparable
+        where TDriver : class, new()
+    {
+        public Action EnterCall = StateMachineRunner.DoNothing;
+        public Func<IEnumerator> EnterRoutine = StateMachineRunner.DoNothingCoroutine;
+        public Action ExitCall = StateMachineRunner.DoNothing;
+        public Func<IEnumerator> ExitRoutine = StateMachineRunner.DoNothingCoroutine;
 
-		public bool hasEnterRoutine;
-		public Action EnterCall = StateMachineRunner.DoNothing;
-		public Func<IEnumerator> EnterRoutine = StateMachineRunner.DoNothingCoroutine;
+        public Action Finally = StateMachineRunner.DoNothing;
+        private StateMachine<TState, TDriver> fsm;
 
-		public bool hasExitRoutine;
-		public Action ExitCall = StateMachineRunner.DoNothing;
-		public Func<IEnumerator> ExitRoutine = StateMachineRunner.DoNothingCoroutine;
+        public bool hasEnterRoutine;
 
-		public Action Finally = StateMachineRunner.DoNothing;
+        public bool hasExitRoutine;
+        public TState state;
 
-		private Func<TState> stateProviderCallback;
-		private StateMachine<TState, TDriver> fsm;
+        private Func<TState> stateProviderCallback;
 
-		public StateMapping(StateMachine<TState, TDriver> fsm, TState state, Func<TState> stateProvider)
-		{
-			this.fsm = fsm;
-			this.state = state;
-			stateProviderCallback = stateProvider;
-		}
-	}
+        public StateMapping(StateMachine<TState, TDriver> fsm, TState state, Func<TState> stateProvider)
+        {
+            this.fsm = fsm;
+            this.state = state;
+            stateProviderCallback = stateProvider;
+        }
+    }
 }

@@ -4,10 +4,10 @@ namespace Grid
 {
     public class GridSystem : MonoBehaviour
     {
-        public GridCell[,] GridCells { get; set; }
         [SerializeField] private GameObject tilePrefab, gridParent;
 
         [SerializeField] private int gridHorizontalSize, gridVerticalSize;
+        public GridCell[,] GridCells { get; set; }
 
         public void PopulateGrid()
         {

@@ -39,7 +39,8 @@ namespace Classes
                 };
             }
         }
-        public void Save() 
+
+        public void Save()
         {
             Debug.Log("Saving settings");
             PlayerPrefs.SetInt("PlayerBuildings/MainCamp", PlayerMainCamp.level);
@@ -58,6 +59,7 @@ namespace Classes
             PlayerPrefs.SetInt("PlayerResources/Food", PlayerResources.food);
             PlayerPrefs.Save();
         }
+
         public void Load() // Called by the GM when loading the game
         {
             PlayerResources = new Resources
@@ -79,7 +81,7 @@ namespace Classes
             PlayerMedicSchool = MedicSchool.upgrades[PlayerPrefs.GetInt("PlayerBuildings/MedicSchool", 0)];
             PlayerRobotSchool = RobotSchool.upgrades[PlayerPrefs.GetInt("PlayerBuildings/RobotSchool", 0)];
         }
-        
+
         public void NextDay()
         {
             foreach (var building in PlayerBuildings) PlayerResources += building.output;

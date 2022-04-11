@@ -1,4 +1,3 @@
-using System;
 using Controllers;
 using ScriptableObjects;
 using TMPro;
@@ -15,17 +14,18 @@ namespace DisplayObjectData
         [SerializeField] private TMP_Text nameTextContainer;
         [SerializeField] private TMP_Text damageTextContainer;
         [SerializeField] private BattleMenuController battleMenuController;
+
         public void UpdateAbilityDisplay()
         {
             nameTextContainer.text = ability.abilityName;
             image.sprite = ability.artwork;
-            damageTextContainer.text = ability.damage.ToString() + " DMG";
+            damageTextContainer.text = ability.damage + " DMG";
         }
-        
+
         public void SelectAsAbilityForUse()
         {
             Debug.Log($"Selected: {ability.name}");
-            battleMenuController.playerSelectedAbility = this.ability;
+            battleMenuController.playerSelectedAbility = ability;
         }
     }
 }

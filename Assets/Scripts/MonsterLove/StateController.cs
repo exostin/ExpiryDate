@@ -1,80 +1,79 @@
-using UnityEngine;
 using System.Collections;
 using MonsterLove.StateMachine;
+using UnityEngine;
 
 public class StateController : MonoBehaviour
 {
-	public enum States
-	{
-		Playing,
-		Pause,
-		PlayerTurn,
-		PlayerFinalizedHisMove,
-		EnemyTurn,
-		Countdown,
-		ReadyForNextTurn,
-		SelectingTarget
-	}
-	// should be private
-	public StateMachine<States, StateDriverUnity> fsm;
+    public enum States
+    {
+        Playing,
+        Pause,
+        PlayerTurn,
+        PlayerFinalizedHisMove,
+        EnemyTurn,
+        Countdown,
+        ReadyForNextTurn,
+        SelectingTarget
+    }
 
-	private void Awake()
-	{
-		//Initialize State Machine Engine		
-		fsm = new StateMachine<States, StateDriverUnity>(this);
-		fsm.ChangeState(States.Playing);
-	}
+    // should be private
+    public StateMachine<States, StateDriverUnity> fsm;
 
-	void Update()
-	{
-		fsm.Driver.Update.Invoke();
-	}
+    private void Awake()
+    {
+        //Initialize State Machine Engine		
+        fsm = new StateMachine<States, StateDriverUnity>(this);
+        fsm.ChangeState(States.Playing);
+    }
 
-	//We can return a coroutine, this is useful animations and the like
-	IEnumerator Countdown_Enter()
-	{
-		yield return new WaitForSecondsRealtime(1f);
+    private void Update()
+    {
+        fsm.Driver.Update.Invoke();
+    }
 
-		fsm.ChangeState(States.Playing);
-	}
-	
-	void Playing_Enter()
-	{
-		
-	}
+    //We can return a coroutine, this is useful animations and the like
+    private IEnumerator Countdown_Enter()
+    {
+        yield return new WaitForSecondsRealtime(1f);
 
-	void Playing_Update()
-	{
-		
-	}
+        fsm.ChangeState(States.Playing);
+    }
 
-	void Play_Exit()
-	{
-		Debug.Log("Game Over");
-	}
+    private void Playing_Enter()
+    {
+    }
 
-	void Lose_Enter()
-	{
-		Debug.Log("Lost");
-	}
-	
-	void Win_Enter()
-	{
-		Debug.Log("Won");
-	}
+    private void Playing_Update()
+    {
+    }
 
-	void Pause_Enter()
-	{
-		Time.timeScale = 0f;
-	}
+    private void Play_Exit()
+    {
+        Debug.Log("Game Over");
+    }
 
-	void Pause_Exit()
-	{
-		Time.timeScale = 1f;
-	}
+    private void Lose_Enter()
+    {
+        Debug.Log("Lost");
+    }
 
-	void PlayerTurn_Enter()
-	{
-		Time.timeScale = 0f;
-	}
+    private void Win_Enter()
+    {
+        Debug.Log("Won");
+    }
+
+    private void Pause_Enter()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void Pause_Exit()
+    {
+        Time.timeScale = 1f;
+    }
+
+    private void PlayerTurn_Enter()
+    {
+        Time.timeScale = 0f;
+    }
 }

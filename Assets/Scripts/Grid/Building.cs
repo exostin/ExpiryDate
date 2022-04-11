@@ -4,32 +4,29 @@ namespace Grid
 {
     public class Building : MonoBehaviour
     {
-        public bool Placed { get; private set; }
         public BoundsInt area;
-        void Start()
+        public bool Placed { get; private set; }
+
+        private void Start()
         {
-            
         }
 
         #region Build Methods
 
         public bool CanBePlaced()
         {
-            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
-            BoundsInt areaTemp = area;
+            var positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
+            var areaTemp = area;
             areaTemp.position = positionInt;
-            if (GridBuildingSystem.current.CanTakeArea(areaTemp))
-            {
-                return true;
-            }
+            if (GridBuildingSystem.current.CanTakeArea(areaTemp)) return true;
 
             return false;
         }
 
         public void Place()
         {
-            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
-            BoundsInt areaTemp = area;
+            var positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
+            var areaTemp = area;
             areaTemp.position = positionInt;
             Placed = true;
 
