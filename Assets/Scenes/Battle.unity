@@ -1608,7 +1608,7 @@ PrefabInstance:
     - target: {fileID: 5569147763304218032, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 11400000, guid: 18a0cbc4401521f4bb31f426f1431c69, type: 2}
+      objectReference: {fileID: 11400000, guid: 07e9c47f9ee8ffb4aab3c93988b5f1b1, type: 2}
     - target: {fileID: 5569147763304218032, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: battleMenuController
       value: 
@@ -2868,7 +2868,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31019430c41a14c47ace8e500f4ec064, type: 2}
   - {fileID: 11400000, guid: 93de91982900e554ea4502a157a8d6ac, type: 2}
   enemyCharacters:
-  - {fileID: 11400000, guid: 18a0cbc4401521f4bb31f426f1431c69, type: 2}
+  - {fileID: 11400000, guid: 07e9c47f9ee8ffb4aab3c93988b5f1b1, type: 2}
   - {fileID: 11400000, guid: 18a0cbc4401521f4bb31f426f1431c69, type: 2}
   - {fileID: 11400000, guid: 3046b8fce85cb52408725d27c1571325, type: 2}
   turnCounterText: {fileID: 1083909377}
