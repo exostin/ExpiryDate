@@ -42,10 +42,8 @@ namespace Controllers
         private bool CheckIfAnySideWon()
         {
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return playerCharacters.Any(character => character.health > 0) &&
-                   enemyCharacters.All(character => character.health <= 0)
-                   || playerCharacters.All(character => character.health <= 0) &&
-                   enemyCharacters.Any(character => character.health > 0);
+            return (playerCharacters.Any(character => character.health > 0) && enemyCharacters.All(character => character.health <= 0))
+                   || (playerCharacters.All(character => character.health <= 0) && enemyCharacters.Any(character => character.health > 0));
         }
 
         private void CreateQueue()
