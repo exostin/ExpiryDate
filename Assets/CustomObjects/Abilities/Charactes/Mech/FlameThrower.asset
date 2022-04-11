@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Basic attack
+  m_Name: FlameThrower
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
-  cost: 5
-  damage: 100
+  abilityName: Flamethrower
+  damage: 150
+  description: 
+  artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
