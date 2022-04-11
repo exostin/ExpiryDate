@@ -1,26 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 namespace Controllers
 {
     public class InputController : MonoBehaviour
     {
-        private Keyboard kb;
         private GameManager gm;
+        private Keyboard kb;
 
-        void Start()
+        private void Start()
         {
             gm = FindObjectOfType<GameManager>();
             kb = InputSystem.GetDevice<Keyboard>();
         }
-    
-        void Update()
+
+        private void Update()
         {
-            if (kb.escapeKey.wasReleasedThisFrame)
-            {
-                gm.TogglePauseMenu();
-            }
+            if (kb.escapeKey.wasReleasedThisFrame) gm.TogglePauseMenu();
         }
     }
 }

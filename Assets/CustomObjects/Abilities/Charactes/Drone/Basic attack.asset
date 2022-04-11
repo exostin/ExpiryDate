@@ -15,4 +15,4 @@ MonoBehaviour:
   abilityName: Basic attack
   damage: 100
   description: 
-  artwork: {fileID: 21300000, guid: 797174aea906bf645bb4c5fae27492ad, type: 3}
+  artwork: {fileID: 21300000, guid: 69cc5a37216ca494ebfe770a6ff71e03, type: 3}

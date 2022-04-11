@@ -1,61 +1,56 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using MonsterLove.StateMachine;
+using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
 {
-	public enum States
-	{
-		Blue, 
-		Green, 
-		Red
-	}
+    public enum States
+    {
+        Blue,
+        Green,
+        Red
+    }
 
-	public float interval;
+    public float interval;
 
-	private Camera cam;
+    private Camera cam;
 
-	private StateMachine<States> fsm;
+    private StateMachine<States> fsm;
 
-	void Awake()
-	{
-		cam = Camera.main;
+    private void Awake()
+    {
+        cam = Camera.main;
 
-		fsm = StateMachine<States>.Initialize(this);
-	}
+        fsm = StateMachine<States>.Initialize(this);
+    }
 
-	IEnumerator Blue_Enter()
-	{
-		cam.backgroundColor = Color.blue * 0.5f;
-		yield return new WaitForSeconds(interval);
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(Screen.width - 150, 50, 100, 20), "Disco Time!"))
+            fsm.ChangeState(States.Blue, StateTransition.Overwrite);
+    }
 
-		fsm.ChangeState(States.Red);
-	}
+    private IEnumerator Blue_Enter()
+    {
+        cam.backgroundColor = Color.blue * 0.5f;
+        yield return new WaitForSeconds(interval);
 
-	IEnumerator Red_Enter()
-	{
-		cam.backgroundColor = Color.red * 0.5f;
-		yield return new WaitForSeconds(interval);
+        fsm.ChangeState(States.Red);
+    }
 
-		fsm.ChangeState(States.Green);
-	}
+    private IEnumerator Red_Enter()
+    {
+        cam.backgroundColor = Color.red * 0.5f;
+        yield return new WaitForSeconds(interval);
 
-	IEnumerator Green_Enter()
-	{
-		cam.backgroundColor = Color.green * 0.5f;
-		yield return new WaitForSeconds(interval);
+        fsm.ChangeState(States.Green);
+    }
 
-		fsm.ChangeState(States.Blue);
-	}
+    private IEnumerator Green_Enter()
+    {
+        cam.backgroundColor = Color.green * 0.5f;
+        yield return new WaitForSeconds(interval);
 
-	void OnGUI()
-	{
-		if(GUI.Button(new Rect(Screen.width - 150, 50, 100, 20), "Disco Time!"))
-		{
-			fsm.ChangeState(States.Blue, StateTransition.Overwrite);
-		}
-
-	}
+        fsm.ChangeState(States.Blue);
+    }
 }
