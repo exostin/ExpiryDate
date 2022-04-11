@@ -7,7 +7,6 @@ using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 namespace Controllers
 {
@@ -15,35 +14,27 @@ namespace Controllers
     {
         public List<Character> playerCharacters;
         public List<Character> enemyCharacters;
-
-        private List<Character> targetsForEnemyPool = new List<Character>();
-        private List<Character> targetsForPlayerPool = new List<Character>();
-
-        private List<Character> battleQueue = new List<Character>();
-        
-        private BattleMenuEnemy enemy = new BattleMenuEnemy();
-        private BattleMenuPlayer player = new BattleMenuPlayer();
-
-        private int turnCounter = 0;
         [SerializeField] private TMP_Text turnCounterText;
-
-        private GameManager gm;
-
         [SerializeField] private GameObject[] skillButtons;
-
-        [HideInInspector] public Character playerSelectedTarget = null;
-        [HideInInspector] public Ability playerSelectedAbility = null;
-
+        [HideInInspector] public Character playerSelectedTarget;
+        [HideInInspector] public Ability playerSelectedAbility;
         [SerializeField] private TMP_Text selectedTargetSign;
         [SerializeField] private TMP_Text selectedAbilitySign;
         [SerializeField] private TMP_Text currentCharacterSign;
+        private readonly BattleMenuEnemy enemy = new BattleMenuEnemy();
+        private readonly BattleMenuPlayer player = new BattleMenuPlayer();
+        private readonly List<Character> targetsForEnemyPool = new List<Character>();
+        private readonly List<Character> targetsForPlayerPool = new List<Character>();
+        private List<Character> battleQueue = new List<Character>();
+        private GameManager gm;
+        private int turnCounter;
 
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
             targetsForPlayerPool.AddRange(enemyCharacters);
             targetsForEnemyPool.AddRange(playerCharacters);
-            
+
             CreateQueue();
             StartCoroutine(PlayBattle());
         }
@@ -51,8 +42,10 @@ namespace Controllers
         private bool CheckIfAnySideWon()
         {
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return (playerCharacters.Any(character => character.health > 0) && enemyCharacters.All(character => character.health <= 0)) 
-                   || (playerCharacters.All(character => character.health <= 0) && enemyCharacters.Any(character => character.health > 0));
+            return playerCharacters.Any(character => character.health > 0) &&
+                   enemyCharacters.All(character => character.health <= 0)
+                   || playerCharacters.All(character => character.health <= 0) &&
+                   enemyCharacters.Any(character => character.health > 0);
         }
 
         private void CreateQueue()
@@ -71,16 +64,16 @@ namespace Controllers
                 yield return new WaitUntil(
                     () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
             }
-            
-            Debug.Log($"Game end!");
+
+            Debug.Log("Game end!");
             StartCoroutine(GameEnd());
         }
-        
+
         private IEnumerator MakeTurn()
         {
             turnCounter++;
-            turnCounterText.text = "Turn: " + turnCounter.ToString();
-            
+            turnCounterText.text = "Turn: " + turnCounter;
+
             // using `.ToList()` here to avoid "Collection was modified; enumeration operation may not execute." error
             // https://stackoverflow.com/a/27851493
             foreach (var character in battleQueue.ToList())
@@ -91,16 +84,13 @@ namespace Controllers
                 if (character.health <= 0)
                 {
                     if (character.isOwnedByPlayer)
-                    {
                         targetsForEnemyPool.Remove(character);
-                    }
                     else
-                    {
                         targetsForPlayerPool.Remove(character);
-                    }
                     battleQueue.Remove(character);
                     continue;
                 }
+
                 if (character.isOwnedByPlayer)
                 {
                     UpdateSkillButtons(character);
@@ -108,7 +98,8 @@ namespace Controllers
                     Debug.Log($"{character.characterName} turn!");
                     currentCharacterSign.text = $"It's currently: {character.characterName} turn!";
                     // Wait until player does his turn and then continue
-                    yield return new WaitUntil(() => gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
+                    yield return new WaitUntil(() =>
+                        gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     if (playerSelectedAbility != null && playerSelectedTarget != null)
                     {
                         player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
@@ -120,10 +111,11 @@ namespace Controllers
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
-                    enemy.MakeAttack(characterUsedForAttack:character, target:targetsForEnemyPool[randomTargetIndex]);
+                    enemy.MakeAttack(character, targetsForEnemyPool[randomTargetIndex]);
                     yield return new WaitForSecondsRealtime(0.5f);
                 }
             }
+
             gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
 
@@ -132,13 +124,9 @@ namespace Controllers
             if (playerSelectedAbility != null && playerSelectedTarget != null &&
                 gm.stateController.fsm.State == StateController.States.SelectingTarget &&
                 targetsForPlayerPool.Contains(playerSelectedTarget))
-            {
                 gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
-            }
             else
-            {
                 Debug.Log("Player didn't correctly end turn! (No ability and/or target chosen!)");
-            }
         }
 
         public void StartTargetSelectionState()
@@ -148,7 +136,7 @@ namespace Controllers
 
         private void UpdateSkillButtons(Character currentCharacter)
         {
-            for (int i = 0; i <= 3; i++)
+            for (var i = 0; i <= 3; i++)
             {
                 Debug.Log($"Updating ability no. {i}");
                 skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
@@ -158,12 +146,16 @@ namespace Controllers
 
         public void UpdateSelectedAbilityText()
         {
-            selectedAbilitySign.text = playerSelectedAbility != null ? $"Selected ability: {playerSelectedAbility.abilityName}" : $"Selected ability: none";
+            selectedAbilitySign.text = playerSelectedAbility != null
+                ? $"Selected ability: {playerSelectedAbility.abilityName}"
+                : "Selected ability: none";
         }
 
         public void UpdateSelectedTargetText()
         {
-            selectedTargetSign.text = playerSelectedTarget != null ? $"Selected target: {playerSelectedTarget.characterName}" : $"Selected target: none";
+            selectedTargetSign.text = playerSelectedTarget != null
+                ? $"Selected target: {playerSelectedTarget.characterName}"
+                : "Selected target: none";
         }
 
         private IEnumerator GameEnd()

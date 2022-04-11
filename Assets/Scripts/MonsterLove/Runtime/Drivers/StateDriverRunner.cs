@@ -22,10 +22,10 @@
 
 namespace MonsterLove.StateMachine
 {
-	public class StateDriverRunner
-	{
-		public StateEvent FixedUpdate;
-		public StateEvent Update;
-		public StateEvent LateUpdate;
-	}
+    public class StateDriverRunner
+    {
+        public StateEvent FixedUpdate;
+        public StateEvent LateUpdate;
+        public StateEvent Update;
+    }
 }

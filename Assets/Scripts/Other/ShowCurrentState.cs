@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ namespace Other
     public class ShowCurrentState : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI currentStateText;
+
         // Definitely could be done better, but the milestone is approaching and I had to do it ad hoc
         private GameObject stateController;
 
@@ -17,7 +17,7 @@ namespace Other
 
         private void Update()
         {
-            currentStateText.text = "CURRENT STATE: " + stateController.GetComponent<StateController>().fsm.State.ToString();
+            currentStateText.text = "CURRENT STATE: " + stateController.GetComponent<StateController>().fsm.State;
         }
     }
 }

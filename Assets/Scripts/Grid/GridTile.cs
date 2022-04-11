@@ -8,10 +8,7 @@ namespace Grid
     {
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                Debug.Log("Tile was clicked! (OnPointerClick)");
-            }
+            if (eventData.button == PointerEventData.InputButton.Left) Debug.Log("Tile was clicked! (OnPointerClick)");
         }
 
         public void Click()
