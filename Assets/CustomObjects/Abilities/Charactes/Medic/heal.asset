@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Basic attack
+  m_Name: heal
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
-  damage: 100
+  abilityName: Heal
+  damage: 0
   description: 
-  artwork: {fileID: 21300000, guid: 69cc5a37216ca494ebfe770a6ff71e03, type: 3}
+  artwork: {fileID: 21300000, guid: 0d0c261ea6b5f37418a01ac3d15d8154, type: 3}

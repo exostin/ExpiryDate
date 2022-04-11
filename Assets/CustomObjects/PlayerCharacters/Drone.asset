@@ -17,8 +17,8 @@ MonoBehaviour:
   initiative: 10
   abilities:
   - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
-  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
-  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
-  - {fileID: 11400000, guid: 8356290975583294eb40820c8aeabbe4, type: 2}
+  - {fileID: 11400000, guid: e323d12b5d15b844da6a7d120875c158, type: 2}
+  - {fileID: 11400000, guid: 63b649bb46f9aec4397490ced7768d21, type: 2}
+  - {fileID: 11400000, guid: ffee4a4f83507b0468e7efdc117ddc41, type: 2}
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: 5ded869c628d9684eab3f2365e682167, type: 3}
