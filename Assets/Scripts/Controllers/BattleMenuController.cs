@@ -107,10 +107,12 @@ namespace Controllers
                 }
                 else
                 {
+                    ToggleSkillButtonsVisibility();
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(character, targetsForEnemyPool[randomTargetIndex]);
                     yield return new WaitForSecondsRealtime(0.5f);
+                    ToggleSkillButtonsVisibility();
                 }
             }
 
@@ -139,6 +141,15 @@ namespace Controllers
                 Debug.Log($"Updating ability no. {i}");
                 skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
                 skillButtons[i].GetComponent<DisplayAbilityData>().UpdateAbilityDisplay();
+            }
+        }
+
+        private void ToggleSkillButtonsVisibility()
+        {
+            for (var i = 0; i <= 3; i++)
+            {
+                Debug.Log($"Hiding ability no. {i}");
+                skillButtons[i].gameObject.SetActive(!skillButtons[i].gameObject.activeSelf);
             }
         }
 
