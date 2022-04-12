@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Oilizzard
   m_EditorClassIdentifier: 
   characterName: Oilizard
-  health: 1000
+  health: 900
   initiative: 1
   abilities:
   - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
