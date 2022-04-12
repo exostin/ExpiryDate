@@ -25,14 +25,11 @@ City builder game set during a climatic calamity with a hint of fantasy, created
   - Jakub Jakubowski
   - Michał Cebula
   - Bartosz Podgórski
-  - ~~Bartosz Kapusta~~
-  - ~~Adam Strzelczyk~~
  
 - **Game design path:**
   - Agata Musiał
   - Jakub Sadowski
   - Bartłomiej Kazirodek
-  - ~~Filip Łatka~~
   
 - **Experience design path:**
   - Olga Ślifirczyk
@@ -41,7 +38,7 @@ City builder game set during a climatic calamity with a hint of fantasy, created
   
 ## **Technologies Used**
 
-- Unity 2020.3.25f1
+- Unity 2021.3.0f1 (Unity 2020.3.25f1 before v0.2.5)
 
 ## **Developer Notes**
 
