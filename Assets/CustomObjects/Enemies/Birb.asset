@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Phoenix
   health: 1200
+  maxHealth: 1200
   initiative: 16
   abilities:
   - {fileID: 11400000, guid: f85e539896d4d0a4a93e794934ab3e03, type: 2}
   isOwnedByPlayer: 0
+  isDead: 0
   artwork: {fileID: 21300000, guid: da363323e97122441af90089207a7f40, type: 3}
