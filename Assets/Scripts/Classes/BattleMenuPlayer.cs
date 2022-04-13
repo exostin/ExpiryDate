@@ -7,7 +7,20 @@ namespace Classes
     {
         public void MakeAttack(Character characterUsedForAttack, Character target, Ability selectedAbility)
         {
-            target.health -= selectedAbility.damage;
+            if (target.health - selectedAbility.damage <= 0)
+            {
+                target.health = 0;
+                target.isDead = true;
+            }
+            else if (target.health - selectedAbility.damage > target.maxHealth)
+            {
+                target.health = target.maxHealth;
+            }
+            else
+            {
+                target.health -= selectedAbility.damage;
+            }
+
             Debug.Log($"{characterUsedForAttack.name} has dealt {selectedAbility.damage} damage to {target.name}!");
         }
     }

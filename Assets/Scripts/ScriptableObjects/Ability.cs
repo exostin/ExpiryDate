@@ -9,5 +9,9 @@ namespace ScriptableObjects
         public int damage;
         public string description;
         public Sprite artwork;
+        public AudioClip soundEffect;
+
+        public bool canOnlyTargetAllies;
+        //public bool usedOnSelf;
     }
 }

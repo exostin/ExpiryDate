@@ -16,3 +16,5 @@ MonoBehaviour:
   damage: 0
   description: 
   artwork: {fileID: 21300000, guid: 5e6a8d7180a3cd44492e8a38c8ac7de5, type: 3}
+  soundEffect: {fileID: 0}
+  canOnlyTargetAllies: 1
