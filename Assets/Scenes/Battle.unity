@@ -2934,6 +2934,7 @@ MonoBehaviour:
   playerSelectedAbility: {fileID: 0}
   targetIndicator: {fileID: 357549155}
   abilityIndicator: {fileID: 102363672}
+  delayBetweenActions: 0.8
 --- !u!1 &1764379367
 GameObject:
   m_ObjectHideFlags: 0

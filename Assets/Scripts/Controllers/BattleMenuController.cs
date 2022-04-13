@@ -25,6 +25,7 @@ namespace Controllers
         [HideInInspector] public Ability playerSelectedAbility;
         [SerializeField] private GameObject targetIndicator;
         [SerializeField] private GameObject abilityIndicator;
+        [SerializeField] private float delayBetweenActions;
         private readonly BattleMenuEnemy enemy = new();
         private readonly BattleMenuPlayer player = new();
         private readonly List<Character> targetsForEnemyPool = new();
@@ -52,7 +53,7 @@ namespace Controllers
         }
 
         /// <summary>
-        ///     Extract character scriptable objects data from their game objects
+        /// Extract character scriptable objects data from their game objects
         /// </summary>
         private void ExtractCharactersData()
         {
@@ -98,7 +99,6 @@ namespace Controllers
 
         private IEnumerator MakeTurn()
         {
-            yield return new WaitForSecondsRealtime(1.5f);
             UpdateTurnCounter();
 
             foreach (var character in battleQueue.ToList())
@@ -116,32 +116,36 @@ namespace Controllers
 
                 Debug.Log($"{character.characterName} turn!");
                 var currentChar = FindCharactersGameObjectByName(character);
-                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter();
-                yield return new WaitForSecondsRealtime(1f);
+
+                // AD HOC, TO BE CHANGED ASAP
+                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
 
                 if (character.isOwnedByPlayer)
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
+                    yield return new WaitForSecondsRealtime(delayBetweenActions);
                     ToggleSkillButtonsVisibility(true);
                     UpdateSkillButtons(character);
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() =>
                         gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    ToggleSkillButtonsVisibility(false);
                     player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                    ToggleSkillButtonsVisibility(false);
                     playerSelectedAbility = null;
                     playerSelectedTarget = null;
                 }
                 else
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
+                    yield return new WaitForSecondsRealtime(delayBetweenActions);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(character, targetsForEnemyPool[randomTargetIndex]);
                 }
 
                 DisableSelectionIndicators();
                 LetPlayerChooseTarget(false);
+                yield return new WaitForSecondsRealtime(delayBetweenActions);
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
 
