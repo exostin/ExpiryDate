@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 57.037}
+  m_AnchoredPosition: {x: -0.000015258789, y: 57.035965}
   m_SizeDelta: {x: 0, y: -214.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &49733209320868190
@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 8334568649884542259}
   - component: {fileID: 5569147763304218032}
   - component: {fileID: 5165604296157246782}
+  - component: {fileID: 9154881126928865205}
   m_Layer: 5
   m_Name: Character
   m_TagString: Untagged
@@ -512,10 +513,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.7924528, g: 0.35510856, b: 0.35510856, a: 0.53333336}
-    m_PressedColor: {r: 0.6886792, g: 0.10720008, b: 0.10720008, a: 0.6666667}
-    m_SelectedColor: {r: 1, g: 0.47843137, b: 0.39215687, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -546,6 +547,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9154881126928865205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930149751661933923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f9081d10fb191841b5650c9454b6776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8574839139210441453
 GameObject:
   m_ObjectHideFlags: 0

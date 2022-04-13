@@ -6,14 +6,14 @@ namespace Controllers
     {
         [SerializeField] private Animation buildingShop;
         [SerializeField] private Animation notification;
-        private bool shopActivated = false;
-        private bool notificationActivated = false;
+        private bool notificationActivated;
+        private bool shopActivated;
 
-        void Start()
+        private void Start()
         {
             ToggleNotificationVisibility();
         }
-        
+
         public void ToggleShopVisibility()
         {
             if (!shopActivated)
@@ -29,9 +29,10 @@ namespace Controllers
                 buildingShop["ShowShop"].speed = -1;
                 buildingShop.Play("ShowShop");
             }
+
             shopActivated = !shopActivated;
         }
-        
+
         public void ToggleNotificationVisibility()
         {
             if (!notificationActivated)
@@ -40,13 +41,7 @@ namespace Controllers
                 notification["ShowNotification"].speed = 1;
                 notification.Play("ShowNotification");
             }
-            else
-            {
-                // Play backwards
-                // notification["ShowNotification"].time = buildingShop["ShowNotification"].length;
-                // notification["ShowNotification"].speed = -1;
-                // notification.Play("ShowNotification");
-            }
+
             notificationActivated = !notificationActivated;
         }
     }

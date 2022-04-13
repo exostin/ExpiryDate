@@ -20,7 +20,7 @@ namespace Classes
             {
                 target.health -= selectedAbility.damage;
             }
-            
+
             Debug.Log($"{characterUsedForAttack.name} has dealt {selectedAbility.damage} damage to {target.name}!");
         }
     }

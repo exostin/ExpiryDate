@@ -9,7 +9,7 @@ namespace Grid
     {
         public static GridBuildingSystem current;
 
-        private static readonly Dictionary<TileType, TileBase> tileBases = new Dictionary<TileType, TileBase>();
+        private static readonly Dictionary<TileType, TileBase> tileBases = new();
 
         public GridLayout gridLayout;
         public Tilemap mainTilemap;

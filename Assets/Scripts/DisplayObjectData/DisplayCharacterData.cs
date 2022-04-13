@@ -33,9 +33,8 @@ namespace DisplayObjectData
 
         public void SelectAsATarget()
         {
-            Debug.Log($"Selected: {character.name}");
+            Debug.Log($"Target selected: {character.name}, ending turn");
             battleMenuController.playerSelectedTarget = character;
-            Debug.Log("Ending player turn");
             battleMenuController.EndPlayerTurn();
         }
     }

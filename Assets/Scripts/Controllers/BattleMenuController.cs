@@ -7,55 +7,81 @@ using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Controllers
 {
     public class BattleMenuController : MonoBehaviour
     {
-        public List<Character> playerCharacters;
-        public List<Character> enemyCharacters;
+        public List<GameObject> playerCharacters;
+        public List<GameObject> enemyCharacters;
+
+        // so - scriptable object
+        [HideInInspector] public List<Character> soPlayerCharacters;
+        [HideInInspector] public List<Character> soEnemyCharacters;
         [SerializeField] private TMP_Text turnCounterText;
         [SerializeField] private GameObject[] skillButtons;
         [HideInInspector] public Character playerSelectedTarget;
         [HideInInspector] public Ability playerSelectedAbility;
-        [SerializeField] private TMP_Text selectedTargetSign;
-        [SerializeField] private TMP_Text selectedAbilitySign;
-        [SerializeField] private TMP_Text currentCharacterSign;
-        private readonly BattleMenuEnemy enemy = new BattleMenuEnemy();
-        private readonly BattleMenuPlayer player = new BattleMenuPlayer();
-        private readonly List<Character> targetsForEnemyPool = new List<Character>();
-        private readonly List<Character> targetsForPlayerPool = new List<Character>();
-        private List<Character> battleQueue = new List<Character>();
-        private GameManager gm;
-        private int turnCounter;
-        
         [SerializeField] private GameObject targetIndicator;
         [SerializeField] private GameObject abilityIndicator;
+        private readonly BattleMenuEnemy enemy = new();
+        private readonly BattleMenuPlayer player = new();
+        private readonly List<Character> targetsForEnemyPool = new();
+        private readonly List<Character> targetsForPlayerPool = new();
+        private List<GameObject> allCharacters;
+        private List<Character> battleQueue = new();
+        private GameManager gm;
+        private int turnCounter;
 
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
-            targetsForPlayerPool.AddRange(enemyCharacters);
-            targetsForEnemyPool.AddRange(playerCharacters);
 
+            allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
+
+            ExtractCharactersData();
+
+            CreateTargetPools();
             CreateQueue();
-            StartCoroutine(PlayBattle());
+
+            LetPlayerChooseTarget(false);
             ToggleSkillButtonsVisibility(false);
+
+            StartCoroutine(PlayBattle());
         }
 
-        private bool CheckIfAnySideWon()
+        /// <summary>
+        ///     Extract character scriptable objects data from their game objects
+        /// </summary>
+        private void ExtractCharactersData()
         {
-            // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return (playerCharacters.Any(character => character.health > 0) && enemyCharacters.All(character => character.health <= 0))
-                   || (playerCharacters.All(character => character.health <= 0) && enemyCharacters.Any(character => character.health > 0));
+            foreach (var g in playerCharacters)
+                soPlayerCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
+            foreach (var g in enemyCharacters) soEnemyCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
+        }
+
+        private void CreateTargetPools()
+        {
+            targetsForPlayerPool.AddRange(soEnemyCharacters);
+            targetsForEnemyPool.AddRange(soPlayerCharacters);
         }
 
         private void CreateQueue()
         {
             // Merge playerCharacters and enemyCharacters into one array
-            battleQueue = playerCharacters.Concat(enemyCharacters).ToList();
+            battleQueue = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
             // Sort the battle queue by initiative
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
+        }
+
+        private bool CheckIfAnySideWon()
+        {
+            // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
+            return soPlayerCharacters.Any(character => character.health > 0) &&
+                   soEnemyCharacters.All(character => character.health <= 0)
+                   || soPlayerCharacters.All(character => character.health <= 0) &&
+                   soEnemyCharacters.Any(character => character.health > 0);
         }
 
         private IEnumerator PlayBattle()
@@ -67,22 +93,17 @@ namespace Controllers
                     () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
             }
 
-            Debug.Log("Game end!");
             StartCoroutine(GameEnd());
         }
 
         private IEnumerator MakeTurn()
         {
-            turnCounter++;
-            turnCounterText.text = "Turn: " + turnCounter;
+            yield return new WaitForSecondsRealtime(1.5f);
+            UpdateTurnCounter();
 
-            // using `.ToList()` here to avoid "Collection was modified; enumeration operation may not execute." error
-            // https://stackoverflow.com/a/27851493
             foreach (var character in battleQueue.ToList())
             {
                 if (CheckIfAnySideWon()) break;
-                UpdateSelectedAbilityText();
-                UpdateSelectedTarget();
                 if (character.isDead)
                 {
                     if (character.isOwnedByPlayer)
@@ -92,18 +113,21 @@ namespace Controllers
                     battleQueue.Remove(character);
                     continue;
                 }
-                
+
                 Debug.Log($"{character.characterName} turn!");
-                currentCharacterSign.text = $"It's currently: {character.characterName} turn!";
-                
+                var currentChar = FindCharactersGameObjectByName(character);
+                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter();
+                yield return new WaitForSecondsRealtime(1f);
+
                 if (character.isOwnedByPlayer)
                 {
+                    gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     ToggleSkillButtonsVisibility(true);
                     UpdateSkillButtons(character);
-                    gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() =>
                         gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
+                    Debug.Log("Player finalized his move!");
                     ToggleSkillButtonsVisibility(false);
                     player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
                     playerSelectedAbility = null;
@@ -112,46 +136,90 @@ namespace Controllers
                 else
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
-                    yield return new WaitForSecondsRealtime(1f);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(character, targetsForEnemyPool[randomTargetIndex]);
-                    yield return new WaitForSecondsRealtime(1f);
                 }
+
+                DisableSelectionIndicators();
+                LetPlayerChooseTarget(false);
+                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
-            DisableSelectionIndicators();
+
             gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
+        }
+
+        private void UpdateTurnCounter()
+        {
+            turnCounter++;
+            turnCounterText.text = "Turn: " + turnCounter;
+        }
+
+        private GameObject FindCharactersGameObjectByName(Character character)
+        {
+            // search through all character GameObjects, and return the one which DisplayCharacterData Character has the same name as the chosen character
+            // in short - find characters corresponding GameObject
+            foreach (var g in allCharacters.Where(g =>
+                         g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
+                return g;
+            // if nothing could be found:
+            Debug.Log($"Could not find that character! FindGameObjectWithMatchingName({character.characterName})");
+            return null;
         }
 
         public void EndPlayerTurn()
         {
-            if 
-            (
-                // if player is in selecting target state
-                gm.stateController.fsm.State == StateController.States.SelectingTarget &&
-                // and he selected both a target and an ability
-                (playerSelectedAbility != null && playerSelectedTarget != null) &&
-                // and the target is either a targetable foe
-                ((targetsForPlayerPool.Contains(playerSelectedTarget) ||
-                // OR an ally WHEN the ability can target allies
-                (playerSelectedTarget.isOwnedByPlayer && playerSelectedAbility.canTargetAllies)))
-            )
+            if (gm.stateController.fsm.State == StateController.States.SelectingTarget &&
+                playerSelectedAbility != null && playerSelectedTarget != null && !playerSelectedTarget.isDead)
             {
-                gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                if (targetsForPlayerPool.Contains(playerSelectedTarget) && !playerSelectedAbility.canOnlyTargetAllies)
+                {
+                    Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
+                    gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                }
+                else
+                {
+                    if (playerSelectedTarget.isOwnedByPlayer && playerSelectedAbility.canOnlyTargetAllies)
+                    {
+                        Debug.Log(
+                            "Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove");
+                        gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                    }
+                    else
+                    {
+                        Debug.Log(playerSelectedTarget.isDead
+                            ? "You somehow selected a dead target!"
+                            : "Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
+                    }
+                }
             }
             else
             {
-                Debug.Log("Player didn't correctly end turn! (No ability and/or target chosen!)");
+                Debug.Log("No ability and/or target chosen!");
             }
         }
 
         public void StartTargetSelectionState()
         {
             gm.stateController.fsm.ChangeState(StateController.States.SelectingTarget);
+            LetPlayerChooseTarget(true);
+        }
+
+        /// <summary>
+        ///     Disable/Enable interactability of all characters buttons
+        /// </summary>
+        /// <param name="choice">true/false</param>
+        private void LetPlayerChooseTarget(bool choice)
+        {
+            Debug.Log($"Setting interactability with characters to: {choice}");
+            foreach (var character in battleQueue)
+            foreach (var g in allCharacters.Where(g =>
+                         g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
+                g.GetComponent<Button>().interactable = choice;
         }
 
         private void UpdateSkillButtons(Character currentCharacter)
         {
-            Debug.Log($"Updating ability info");
+            Debug.Log("Updating ability info");
             for (var i = 0; i <= 3; i++)
             {
                 skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
@@ -162,27 +230,10 @@ namespace Controllers
         private void ToggleSkillButtonsVisibility(bool enable)
         {
             Debug.Log($"Setting visibility of abilities to {enable}");
-            for (var i = 0; i <= 3; i++)
-            {
-                skillButtons[i].gameObject.SetActive(enable);
-            }
+            for (var i = 0; i <= 3; i++) skillButtons[i].gameObject.SetActive(enable);
         }
 
-        public void UpdateSelectedAbilityText()
-        {
-            selectedAbilitySign.text = playerSelectedAbility != null
-                ? $"Selected ability: {playerSelectedAbility.abilityName}"
-                : "Selected ability: none";
-        }
-
-        public void UpdateSelectedTarget()
-        {
-            selectedTargetSign.text = playerSelectedTarget != null
-                ? $"Selected target: {playerSelectedTarget.characterName}"
-                : "Selected target: none";
-        }
-
-        public void DisableSelectionIndicators()
+        private void DisableSelectionIndicators()
         {
             targetIndicator.SetActive(false);
             abilityIndicator.SetActive(false);

@@ -10,6 +10,8 @@ namespace ScriptableObjects
         public string description;
         public Sprite artwork;
         public AudioClip soundEffect;
-        public bool canTargetAllies;
+
+        public bool canOnlyTargetAllies;
+        //public bool usedOnSelf;
     }
 }
