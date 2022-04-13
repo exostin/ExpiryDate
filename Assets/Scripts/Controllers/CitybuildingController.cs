@@ -1,4 +1,5 @@
 using Classes;
+using Classes.Citybuilding;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,18 +8,17 @@ namespace Controllers
 {
     public class CitybuildingController : MonoBehaviour
     {
-        [Header("Buildings GameObjects")] [SerializeField]
         private GameObject droneSchool;
 
-        [SerializeField] private GameObject energyGenerator;
-        [SerializeField] private GameObject fighterSchool;
-        [SerializeField] private GameObject foodGenerator;
-        [SerializeField] private GameObject mainCamp;
-        [SerializeField] private GameObject medicSchool;
-        [SerializeField] private GameObject robotSchool;
-        [SerializeField] private GameObject shooterSchool;
-        [SerializeField] private GameObject titanGenerator;
-        [SerializeField] private GameObject waterGenerator;
+        private GameObject energyGenerator;
+        private GameObject fighterSchool;
+        private GameObject foodGenerator;
+        private GameObject mainCamp;
+        private GameObject medicSchool;
+        private GameObject robotSchool;
+        private GameObject shooterSchool;
+        private GameObject titanGenerator;
+        private GameObject waterGenerator;
 
         [Header("Resources UI GameObjects")] [SerializeField]
         private GameObject titanAmount;
@@ -27,7 +27,7 @@ namespace Controllers
         [SerializeField] private GameObject energyAmount;
         [SerializeField] private GameObject foodAmount;
 
-        private CitybuildingManager cbm;
+        private Manager cbm;
         private GameManager gm;
         private Camera mainCamera;
 

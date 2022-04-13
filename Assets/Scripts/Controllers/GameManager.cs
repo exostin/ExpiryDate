@@ -1,6 +1,5 @@
 using System.Linq;
-using Classes;
-using ScriptableObjects;
+using Classes.Citybuilding;
 using UnityEngine;
 using Resources = UnityEngine.Resources;
 
@@ -13,19 +12,7 @@ namespace Controllers
 
         [SerializeField] private GameObject pauseMenu;
 
-        [Header("Citybuilding ScriptableObjects")] [SerializeField]
-        private Building citybuildingMainCamp;
-
-        [SerializeField] private Building citybuildingTitanGenerator;
-        [SerializeField] private Building citybuildingEnergyGenerator;
-        [SerializeField] private Building citybuildingWaterGenerator;
-        [SerializeField] private Building citybuildingFoodGenerator;
-        [SerializeField] private Building citybuildingFighterSchool;
-        [SerializeField] private Building citybuildingShooterSchool;
-        [SerializeField] private Building citybuildingDroneSchool;
-        [SerializeField] private Building citybuildingMedicSchool;
-        [SerializeField] private Building citybuildingRobotSchool;
-        public CitybuildingManager cbm;
+        public Manager cbm;
 
         private void Start()
         {
@@ -34,19 +21,7 @@ namespace Controllers
                 .GetComponent<SettingsMenuController>()
                 .Initialize();
             stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
-            cbm = new CitybuildingManager
-            {
-                MainCamp = citybuildingMainCamp,
-                TitanGenerator = citybuildingTitanGenerator,
-                EnergyGenerator = citybuildingEnergyGenerator,
-                WaterGenerator = citybuildingWaterGenerator,
-                FoodGenerator = citybuildingFoodGenerator,
-                FighterSchool = citybuildingFighterSchool,
-                ShooterSchool = citybuildingShooterSchool,
-                DroneSchool = citybuildingDroneSchool,
-                MedicSchool = citybuildingMedicSchool,
-                RobotSchool = citybuildingRobotSchool
-            };
+            cbm = new Manager();
         }
 
         public void TogglePauseMenu()
