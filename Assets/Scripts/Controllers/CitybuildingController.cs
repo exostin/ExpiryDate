@@ -122,9 +122,16 @@ namespace Controllers
                 (from building in cbm.Simulation.Buildings from upgrade in building.Upgrades select upgrade.ModelName)
                 .ToList();
 
+            foreach (var modelName in allBuildingsModelNames)
+                if (citybuilding.transform.Find(modelName) is null)
+                    Debug.LogWarning($"{modelName} is missing!");
+
             foreach (Transform child in citybuilding.transform)
                 if (allBuildingsModelNames.Contains(child.name))
+                {
                     child.gameObject.SetActive(false);
+                    Debug.Log("Hiding " + child.name);
+                }
 
             #endregion
 
@@ -136,6 +143,8 @@ namespace Controllers
             foreach (Transform child in citybuilding.transform)
                 if (usedBuildingsModelNames.Contains(child.name))
                 {
+                    Debug.Log($"Showing {child.name}");
+
                     child.gameObject.SetActive(true);
                     if (child.name.StartsWith("DroneSchool")) droneSchool = child.gameObject;
                     else if (child.name.StartsWith("EnergyGenerator")) energyGenerator = child.gameObject;
@@ -158,9 +167,10 @@ namespace Controllers
                 mainCamp == null || medicSchool == null || robotSchool == null || shooterSchool == null ||
                 titanGenerator == null || waterGenerator == null || mainCamp == null)
                 Debug.LogError("Not all buildings were found.");
-            Debug.Log(cbm.DebugStatus);
 
             #endregion
+
+            Debug.Log(cbm.DebugStatus);
         }
 
         public void EnterBattleMode()
