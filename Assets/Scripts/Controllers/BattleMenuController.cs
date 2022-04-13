@@ -6,6 +6,7 @@ using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -35,10 +36,23 @@ namespace Controllers
         private List<Character> battleQueue = new();
         private GameManager gm;
         private int turnCounter;
+        [SerializeField] private Volume postprocessingVolume;
+        private UnityEngine.Rendering.Universal.Vignette vignette;
+        private UnityEngine.Rendering.Universal.ChromaticAberration chromaticAberration;
+        [SerializeField] private float defaultVignetteIntensity;
+        [SerializeField] private float enemyTurnVignetteIntensity;
+        [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
+        [SerializeField] private Color defaultVignete;
+        [SerializeField] private Color enemyTurnVignete;
 
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
+            
+            VolumeProfile postprocessingVolumeProfile = postprocessingVolume.GetComponent<Volume>()?.profile;
+            if(!postprocessingVolumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
+            if(!postprocessingVolumeProfile.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
+            if(!postprocessingVolumeProfile.TryGet(out chromaticAberration)) throw new System.NullReferenceException(nameof(chromaticAberration));
 
             allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
 
@@ -121,7 +135,6 @@ namespace Controllers
 
                 // AD HOC, TO BE CHANGED ASAP
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
-
                 if (character.isOwnedByPlayer)
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
@@ -133,6 +146,7 @@ namespace Controllers
                         gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
                     player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                    StartCoroutine(MakeAttackPostEffects());
                     ToggleSkillButtonsVisibility(false);
                     playerSelectedAbility = null;
                     playerSelectedTarget = null;
@@ -140,18 +154,42 @@ namespace Controllers
                 else
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
+                    ToggleEnemyTurnPostEffects();
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     enemy.MakeAttack(character, targetsForEnemyPool[randomTargetIndex]);
+                    StartCoroutine(MakeAttackPostEffects());
                 }
 
                 DisableSelectionIndicators();
                 LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
+                ToggleEnemyTurnPostEffects();
             }
 
             gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
+        }
+
+        private void ToggleEnemyTurnPostEffects()
+        {
+            vignette.intensity.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignetteIntensity : defaultVignetteIntensity);
+            vignette.color.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignete : defaultVignete);
+        }
+
+        private IEnumerator MakeAttackPostEffects()
+        {
+            for (float i = 0; i < attackChromaticAberrationIntensity; i += 0.05f)
+            {
+                Debug.Log($"Setting chromatic aberration to: {i}, actual: {attackChromaticAberrationIntensity}");
+                chromaticAberration.intensity.Override(i);
+                yield return new WaitForSecondsRealtime(0.02f);
+            }
+            for(var i = attackChromaticAberrationIntensity; i > 0; i -= 0.05f)
+            {
+                chromaticAberration.intensity.Override(i);
+                yield return new WaitForSecondsRealtime(0.02f);
+            }
         }
 
         private void UpdateTurnCounter()
