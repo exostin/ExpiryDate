@@ -26,6 +26,7 @@ namespace Controllers
         [SerializeField] private GameObject targetIndicator;
         [SerializeField] private GameObject abilityIndicator;
         [SerializeField] private float delayBetweenActions;
+        [SerializeField] private float timeBeforeBattleStart;
         private readonly BattleMenuEnemy enemy = new();
         private readonly BattleMenuPlayer player = new();
         private readonly List<Character> targetsForEnemyPool = new();
@@ -87,6 +88,7 @@ namespace Controllers
 
         private IEnumerator PlayBattle()
         {
+            yield return new WaitForSecondsRealtime(timeBeforeBattleStart);
             while (!CheckIfAnySideWon())
             {
                 StartCoroutine(MakeTurn());
