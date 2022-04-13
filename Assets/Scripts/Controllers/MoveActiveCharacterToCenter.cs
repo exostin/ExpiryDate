@@ -13,10 +13,12 @@ namespace Controllers
 
             originalPosition = self.transform.position;
         }
-
-        public void MoveToCenter()
+        
+        
+        public void MoveToCenter(int option)
         {
-            self.transform.localPosition = new Vector2(897, self.transform.localPosition.y);
+            // AD HOC, TO BE CHANGED ASAP
+            self.transform.localPosition = option == 1 ? new Vector2(897, self.transform.localPosition.y) : new Vector2(-810, self.transform.localPosition.y);
         }
 
         public void MoveBack()
