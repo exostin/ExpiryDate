@@ -19,7 +19,23 @@ namespace DisplayObjectData
         {
             nameTextContainer.text = ability.abilityName;
             image.sprite = ability.artwork;
-            damageTextContainer.text = ability.damage + " DMG";
+            
+
+            if (ability.damage < 0)
+            {
+                damageTextContainer.color = Color.green;
+                damageTextContainer.text = $"Heal {-ability.damage}";
+            }
+            else if (ability.damage == 0)
+            {
+                damageTextContainer.color = Color.yellow;
+                damageTextContainer.text = "Buff";
+            }
+            else
+            {
+                damageTextContainer.color = Color.red;
+                damageTextContainer.text = ability.damage + " DMG";
+            }
         }
 
         public void SelectAsAbilityForUse()

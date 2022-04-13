@@ -138,6 +138,7 @@ namespace Controllers
                 if (character.isOwnedByPlayer)
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
+                    ToggleEnemyTurnPostEffects();
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     ToggleSkillButtonsVisibility(true);
                     UpdateSkillButtons(character);
@@ -165,7 +166,6 @@ namespace Controllers
                 LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
-                ToggleEnemyTurnPostEffects();
             }
 
             gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
