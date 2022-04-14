@@ -60,6 +60,11 @@ namespace Controllers
 
             CreateTargetPools();
             CreateQueue();
+            
+            foreach(var character in battleQueue)
+            {
+                character.health = character.maxHealth;
+            }
 
             LetPlayerChooseTarget(false);
             ToggleSkillButtonsVisibility(false);

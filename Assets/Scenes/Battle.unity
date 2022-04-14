@@ -3069,7 +3069,7 @@ PrefabInstance:
     - target: {fileID: 5569147763304218032, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 11400000, guid: 3046b8fce85cb52408725d27c1571325, type: 2}
+      objectReference: {fileID: 11400000, guid: 97b6032e05548a8419760745064adf1b, type: 2}
     - target: {fileID: 5569147763304218032, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: battleMenuController
       value: 
