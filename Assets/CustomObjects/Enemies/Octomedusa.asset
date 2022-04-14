@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Octomedusa
   m_EditorClassIdentifier: 
   characterName: Octomedusa
-  health: 1400
-  maxHealth: 1400
+  maxHealth: 3000
   initiative: 4
+  isOwnedByPlayer: 0
+  artwork: {fileID: 21300000, guid: 6d78dc7397295d14aa8278ca9bc1ae0a, type: 3}
   abilities:
   - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
+  - {fileID: 11400000, guid: 06794f2b5ecbd0647ae5da7c0772ef79, type: 2}
   - {fileID: 11400000, guid: 6ee1127a5c5dae042be193006823c641, type: 2}
-  isOwnedByPlayer: 0
+  health: 3000
   isDead: 0
-  artwork: {fileID: 21300000, guid: 6d78dc7397295d14aa8278ca9bc1ae0a, type: 3}
