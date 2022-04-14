@@ -28,11 +28,12 @@ namespace Controllers
         [SerializeField] private GameObject abilityIndicator;
         [SerializeField] private float delayBetweenActions;
         [SerializeField] private float timeBeforeBattleStart;
-        private readonly BattleMenuEnemy enemy = new();
-        private readonly BattleMenuPlayer player = new();
+        //private readonly BattleMenuEnemy enemy = new();
+        private readonly BattleMenuActions battleMenuActions = new();
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
         private List<GameObject> allCharacters;
+        private List<Character> soAllCharacters;
         private List<Character> battleQueue = new();
         private GameManager gm;
         private int turnCounter;
@@ -42,8 +43,8 @@ namespace Controllers
         [SerializeField] private float defaultVignetteIntensity;
         [SerializeField] private float enemyTurnVignetteIntensity;
         [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
-        [SerializeField] private Color defaultVignete;
-        [SerializeField] private Color enemyTurnVignete;
+        [SerializeField] private Color defaultVignette;
+        [SerializeField] private Color enemyTurnVignette;
 
         private void Start()
         {
@@ -80,6 +81,7 @@ namespace Controllers
             foreach (var g in playerCharacters)
                 soPlayerCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
             foreach (var g in enemyCharacters) soEnemyCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
+            soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
         }
 
         private void CreateTargetPools()
@@ -151,7 +153,7 @@ namespace Controllers
                     yield return new WaitUntil(() =>
                         gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    player.MakeAttack(character, playerSelectedTarget, playerSelectedAbility);
+                    battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility, soAllCharacters, true);
                     StartCoroutine(MakeAttackPostEffects());
                     ToggleSkillButtonsVisibility(false);
                     playerSelectedAbility = null;
@@ -163,7 +165,10 @@ namespace Controllers
                     ToggleEnemyTurnPostEffects();
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
-                    enemy.MakeAttack(character, targetsForEnemyPool[randomTargetIndex]);
+                    var enemySelectedTarget = targetsForEnemyPool[randomTargetIndex];
+                    var randomEnemyAbilityIndex = Random.Range(0, character.abilities.Length);
+                    var enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
+                    battleMenuActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters, false);
                     StartCoroutine(MakeAttackPostEffects());
                 }
 
@@ -179,7 +184,7 @@ namespace Controllers
         private void ToggleEnemyTurnPostEffects()
         {
             vignette.intensity.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignetteIntensity : defaultVignetteIntensity);
-            vignette.color.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignete : defaultVignete);
+            vignette.color.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignette : defaultVignette);
         }
 
         private IEnumerator MakeAttackPostEffects()
@@ -217,21 +222,32 @@ namespace Controllers
 
         public void EndPlayerTurn()
         {
+            Debug.Log($"Full end-turn data dump: {gm.stateController.fsm.State}, {playerSelectedAbility}, {playerSelectedTarget}, {playerSelectedTarget.isDead}, {targetsForPlayerPool}, {targetsForEnemyPool}");
             if (gm.stateController.fsm.State == StateController.States.SelectingTarget &&
                 playerSelectedAbility != null && playerSelectedTarget != null && !playerSelectedTarget.isDead)
             {
-                if (targetsForPlayerPool.Contains(playerSelectedTarget) && !playerSelectedAbility.canOnlyTargetAllies)
+                
+                
+                if (targetsForPlayerPool.Contains(playerSelectedTarget) && !playerSelectedAbility.canOnlyTargetOwnCharacters)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                 }
                 else
                 {
-                    if (playerSelectedTarget.isOwnedByPlayer && playerSelectedAbility.canOnlyTargetAllies)
+                    if (playerSelectedTarget.isOwnedByPlayer && playerSelectedAbility.canOnlyTargetOwnCharacters)
                     {
-                        Debug.Log(
-                            "Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove");
-                        gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                        if (playerSelectedAbility.buff && playerSelectedAbility.usedOnlyOnSelf)
+                        {
+                            Debug.Log("Buffing own character, setting state to PlayerFinalizedHisMove");
+                            gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                        }
+                        else
+                        {
+                            Debug.Log(
+                                $"Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove.");
+                            gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                        }
                     }
                     else
                     {
@@ -240,6 +256,7 @@ namespace Controllers
                             : "Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
                     }
                 }
+                
             }
             else
             {
