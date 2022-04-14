@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Salamander
   m_EditorClassIdentifier: 
   characterName: Salamander
-  health: 4000
+  maxHealth: 4000
   initiative: 1
-  abilities:
-  - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
-  - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
-  - {fileID: 11400000, guid: 06794f2b5ecbd0647ae5da7c0772ef79, type: 2}
-  - {fileID: 11400000, guid: 6ee1127a5c5dae042be193006823c641, type: 2}
   isOwnedByPlayer: 0
-  artwork: {fileID: 21300000, guid: 38c53555f4b877e4b80a3151ede9e1fe, type: 3}
+  artwork: {fileID: 21300000, guid: c7e64e59229501a499d4f953ae1ad7c8, type: 3}
+  abilities:
+  - {fileID: 11400000, guid: bac16ef8c46d0564a8c69565a4318f3f, type: 2}
+  - {fileID: 11400000, guid: f85e539896d4d0a4a93e794934ab3e03, type: 2}
+  - {fileID: 11400000, guid: 09fe43a18d8b1b24a8f9d7f109dfe07c, type: 2}
+  health: 0
+  isDead: 0
