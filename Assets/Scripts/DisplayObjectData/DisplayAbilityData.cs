@@ -19,7 +19,7 @@ namespace DisplayObjectData
         {
             nameTextContainer.text = ability.abilityName;
             image.sprite = ability.artwork;
-            
+
             if (ability.damage < 0)
             {
                 damageTextContainer.color = Color.green;
@@ -35,15 +35,9 @@ namespace DisplayObjectData
                 damageTextContainer.color = Color.red;
                 damageTextContainer.text = ability.damage + " DMG";
             }
-            
-            if (ability.targetsWholeTeam)
-            {
-                damageTextContainer.text += " (All)";
-            }
-            if (ability.usedOnlyOnSelf)
-            {
-                damageTextContainer.text += " (Self)";
-            }
+
+            if (ability.targetsWholeTeam) damageTextContainer.text += " (All)";
+            if (ability.usedOnlyOnSelf) damageTextContainer.text += " (Self)";
         }
 
         public void SelectAsAbilityForUse()

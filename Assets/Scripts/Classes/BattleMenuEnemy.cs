@@ -1,7 +1,3 @@
-using ScriptableObjects;
-using UnityEngine;
-using System.Collections.Generic;
-
 namespace Classes
 {
     public class BattleMenuEnemy : BattleMenuActions

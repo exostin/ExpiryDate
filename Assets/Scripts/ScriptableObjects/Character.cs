@@ -13,6 +13,6 @@ namespace ScriptableObjects
         public Ability[] abilities;
 
         [HideInInspector] public int health;
-        [HideInInspector] public bool isDead = false;
+        [HideInInspector] public bool isDead;
     }
 }

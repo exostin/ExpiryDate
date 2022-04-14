@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,10 @@ using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Controllers
 {
@@ -28,32 +31,35 @@ namespace Controllers
         [SerializeField] private GameObject abilityIndicator;
         [SerializeField] private float delayBetweenActions;
         [SerializeField] private float timeBeforeBattleStart;
+        [SerializeField] private Volume postprocessingVolume;
+        [SerializeField] private float defaultVignetteIntensity;
+        [SerializeField] private float enemyTurnVignetteIntensity;
+        [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
+        [SerializeField] private Color defaultVignette;
+
+        [SerializeField] private Color enemyTurnVignette;
+
         //private readonly BattleMenuEnemy enemy = new();
         private readonly BattleMenuActions battleMenuActions = new();
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
         private List<GameObject> allCharacters;
-        private List<Character> soAllCharacters;
         private List<Character> battleQueue = new();
+        private ChromaticAberration chromaticAberration;
         private GameManager gm;
+        private List<Character> soAllCharacters;
         private int turnCounter;
-        [SerializeField] private Volume postprocessingVolume;
-        private UnityEngine.Rendering.Universal.Vignette vignette;
-        private UnityEngine.Rendering.Universal.ChromaticAberration chromaticAberration;
-        [SerializeField] private float defaultVignetteIntensity;
-        [SerializeField] private float enemyTurnVignetteIntensity;
-        [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
-        [SerializeField] private Color defaultVignette;
-        [SerializeField] private Color enemyTurnVignette;
+        private Vignette vignette;
 
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
-            
-            VolumeProfile postprocessingVolumeProfile = postprocessingVolume.GetComponent<Volume>()?.profile;
-            if(!postprocessingVolumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
-            if(!postprocessingVolumeProfile.TryGet(out vignette)) throw new System.NullReferenceException(nameof(vignette));
-            if(!postprocessingVolumeProfile.TryGet(out chromaticAberration)) throw new System.NullReferenceException(nameof(chromaticAberration));
+
+            var postprocessingVolumeProfile = postprocessingVolume.GetComponent<Volume>()?.profile;
+            if (!postprocessingVolumeProfile) throw new NullReferenceException(nameof(VolumeProfile));
+            if (!postprocessingVolumeProfile.TryGet(out vignette)) throw new NullReferenceException(nameof(vignette));
+            if (!postprocessingVolumeProfile.TryGet(out chromaticAberration))
+                throw new NullReferenceException(nameof(chromaticAberration));
 
             allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
 
@@ -61,11 +67,8 @@ namespace Controllers
 
             CreateTargetPools();
             CreateQueue();
-            
-            foreach(var character in battleQueue)
-            {
-                character.health = character.maxHealth;
-            }
+
+            foreach (var character in battleQueue) character.health = character.maxHealth;
 
             LetPlayerChooseTarget(false);
             ToggleSkillButtonsVisibility(false);
@@ -74,7 +77,7 @@ namespace Controllers
         }
 
         /// <summary>
-        /// Extract character scriptable objects data from their game objects
+        ///     Extract character scriptable objects data from their game objects
         /// </summary>
         private void ExtractCharactersData()
         {
@@ -153,7 +156,8 @@ namespace Controllers
                     yield return new WaitUntil(() =>
                         gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility, soAllCharacters, true);
+                    battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility,
+                        soAllCharacters, true);
                     StartCoroutine(MakeAttackPostEffects());
                     ToggleSkillButtonsVisibility(false);
                     playerSelectedAbility = null;
@@ -168,7 +172,8 @@ namespace Controllers
                     var enemySelectedTarget = targetsForEnemyPool[randomTargetIndex];
                     var randomEnemyAbilityIndex = Random.Range(0, character.abilities.Length);
                     var enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
-                    battleMenuActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters, false);
+                    battleMenuActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters,
+                        false);
                     StartCoroutine(MakeAttackPostEffects());
                 }
 
@@ -183,8 +188,12 @@ namespace Controllers
 
         private void ToggleEnemyTurnPostEffects()
         {
-            vignette.intensity.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignetteIntensity : defaultVignetteIntensity);
-            vignette.color.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn ? enemyTurnVignette : defaultVignette);
+            vignette.intensity.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn
+                ? enemyTurnVignetteIntensity
+                : defaultVignetteIntensity);
+            vignette.color.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn
+                ? enemyTurnVignette
+                : defaultVignette);
         }
 
         private IEnumerator MakeAttackPostEffects()
@@ -195,7 +204,8 @@ namespace Controllers
                 chromaticAberration.intensity.Override(i);
                 yield return new WaitForSecondsRealtime(0.02f);
             }
-            for(var i = attackChromaticAberrationIntensity; i > 0; i -= 0.05f)
+
+            for (var i = attackChromaticAberrationIntensity; i > 0; i -= 0.05f)
             {
                 chromaticAberration.intensity.Override(i);
                 yield return new WaitForSecondsRealtime(0.02f);
@@ -222,13 +232,13 @@ namespace Controllers
 
         public void EndPlayerTurn()
         {
-            Debug.Log($"Full end-turn data dump: {gm.stateController.fsm.State}, {playerSelectedAbility}, {playerSelectedTarget}, {playerSelectedTarget.isDead}, {targetsForPlayerPool}, {targetsForEnemyPool}");
+            Debug.Log(
+                $"Full end-turn data dump: {gm.stateController.fsm.State}, {playerSelectedAbility}, {playerSelectedTarget}, {playerSelectedTarget.isDead}, {targetsForPlayerPool}, {targetsForEnemyPool}");
             if (gm.stateController.fsm.State == StateController.States.SelectingTarget &&
                 playerSelectedAbility != null && playerSelectedTarget != null && !playerSelectedTarget.isDead)
             {
-                
-                
-                if (targetsForPlayerPool.Contains(playerSelectedTarget) && !playerSelectedAbility.canOnlyTargetOwnCharacters)
+                if (targetsForPlayerPool.Contains(playerSelectedTarget) &&
+                    !playerSelectedAbility.canOnlyTargetOwnCharacters)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
@@ -245,7 +255,7 @@ namespace Controllers
                         else
                         {
                             Debug.Log(
-                                $"Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove.");
+                                "Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove.");
                             gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                         }
                     }
@@ -256,7 +266,6 @@ namespace Controllers
                             : "Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
                     }
                 }
-                
             }
             else
             {

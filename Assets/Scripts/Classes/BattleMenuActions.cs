@@ -1,69 +1,49 @@
+using System.Collections.Generic;
+using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
-using System.Collections.Generic;
-using System.EnterpriseServices;
-using System.Linq;
 
 namespace Classes
 {
     public class BattleMenuActions
     {
-        public void MakeAction(Character characterUsedForAttack, Character target, Ability selectedAbility, List<Character> allCharacters, bool isPlayerTurn)
+        public void MakeAction(Character characterUsedForAttack, Character target, Ability selectedAbility,
+            List<Character> allCharacters, bool isPlayerTurn)
         {
-
             var finalAttackTargets = new List<Character>();
             finalAttackTargets.AddRange(allCharacters.Where(x => !x.isDead).ToList());
-            
+
             if (isPlayerTurn)
             {
-                
                 if (selectedAbility.buff || selectedAbility.heal)
-                {
                     // when ability is a buff/heal - remove all non-player characters from targets list
                     RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
-                }
                 else
-                {
                     RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
-                }
             }
             else
             {
                 if (selectedAbility.buff || selectedAbility.heal)
-                {
                     // when ability is a buff/heal - remove all player characters from targets list
                     RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
-                }
                 else
-                {
                     RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
-                }
             }
 
             if (selectedAbility.targetsWholeTeam)
             {
                 foreach (var character in finalAttackTargets)
-                {
                     if (selectedAbility.buff)
-                    {
                         Buff(character, selectedAbility);
-                    }
                     else
-                    {
                         DealOrHeal(characterUsedForAttack, character, selectedAbility);
-                    }
-                }
             }
             else
             {
                 if (selectedAbility.buff)
-                {
                     Buff(target, selectedAbility);
-                }
                 else
-                {
                     DealOrHeal(characterUsedForAttack, target, selectedAbility);
-                }
             }
         }
 
@@ -71,10 +51,7 @@ namespace Classes
         {
             for (var i = 0; i < finalAttackTargets.Count; i++)
             {
-                if (i >= finalAttackTargets.Count)
-                {
-                    break;
-                }
+                if (i >= finalAttackTargets.Count) break;
 
                 if (!finalAttackTargets[i].isOwnedByPlayer)
                 {
@@ -89,10 +66,7 @@ namespace Classes
         {
             for (var i = 0; i < finalAttackTargets.Count; i++)
             {
-                if (i >= finalAttackTargets.Count)
-                {
-                    break;
-                }
+                if (i >= finalAttackTargets.Count) break;
 
                 if (finalAttackTargets[i].isOwnedByPlayer)
                 {
