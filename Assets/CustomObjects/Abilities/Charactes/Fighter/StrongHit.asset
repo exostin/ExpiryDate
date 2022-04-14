@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: StrongHit
   m_EditorClassIdentifier: 
   abilityName: Strong hit
-  damage: 180
   description: 
+  damage: 600
+  targetsWholeTeam: 0
+  canOnlyTargetOwnCharacters: 0
+  usedOnlyOnSelf: 0
+  buff: 0
+  heal: 0
   artwork: {fileID: 21300000, guid: 9ffe7b7cb34f11145a2d227dcb072ace, type: 3}
+  soundEffect: {fileID: 0}

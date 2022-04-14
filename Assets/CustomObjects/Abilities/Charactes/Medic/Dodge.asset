@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Dodge
   m_EditorClassIdentifier: 
   abilityName: Dodge
-  damage: 0
   description: 
+  damage: 0
+  targetsWholeTeam: 0
+  canOnlyTargetOwnCharacters: 1
+  usedOnlyOnSelf: 1
+  buff: 1
+  heal: 0
   artwork: {fileID: 21300000, guid: 92c03b04279657f4a99ebdfc5fe09630, type: 3}
   soundEffect: {fileID: 0}
-  canOnlyTargetAllies: 1

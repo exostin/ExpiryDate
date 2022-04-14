@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: Special attack
   m_EditorClassIdentifier: 
   abilityName: Spit
-  cost: 5
-  damage: 300
+  description: 
+  damage: 180
+  targetsWholeTeam: 1
+  canOnlyTargetOwnCharacters: 0
+  usedOnlyOnSelf: 0
+  buff: 0
+  heal: 0
+  artwork: {fileID: 0}
+  soundEffect: {fileID: 0}

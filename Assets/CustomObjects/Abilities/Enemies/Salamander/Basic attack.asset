@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: Basic attack
   m_EditorClassIdentifier: 
   abilityName: Basic attack
-  cost: 5
-  damage: 200
+  description: 
+  damage: 10
+  targetsWholeTeam: 0
+  canOnlyTargetOwnCharacters: 0
+  usedOnlyOnSelf: 0
+  buff: 0
+  heal: 0
+  artwork: {fileID: 0}
+  soundEffect: {fileID: 0}
