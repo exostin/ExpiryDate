@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   abilityName: Pistol
-  damage: 80
   description: 
+  damage: 120
+  targetsWholeTeam: 0
+  canOnlyTargetOwnCharacters: 0
+  usedOnlyOnSelf: 0
+  buff: 0
+  heal: 0
   artwork: {fileID: 21300000, guid: d471d5047ca91b347a75dcc9c49afb7c, type: 3}
+  soundEffect: {fileID: 0}

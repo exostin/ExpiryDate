@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: FlameThrower
   m_EditorClassIdentifier: 
   abilityName: Flamethrower
-  damage: 150
   description: 
+  damage: 500
+  targetsWholeTeam: 1
+  canOnlyTargetOwnCharacters: 0
+  usedOnlyOnSelf: 0
+  buff: 0
+  heal: 0
   artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
+  soundEffect: {fileID: 0}
