@@ -186,6 +186,7 @@ namespace Controllers
         }
         public void NextDay()
         {
+            cbm.Save();
             NextDay(false);
         }
 
