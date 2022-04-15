@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
         public Level1()
         {
             Level = 1;
-            ModelName = "WaterGenerator2";
+            ModelName = "WaterGenerator1";
             Output = new Resources
             {
                 Water = 10
