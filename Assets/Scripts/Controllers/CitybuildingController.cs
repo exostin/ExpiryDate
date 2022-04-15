@@ -179,10 +179,14 @@ namespace Controllers
             SceneManager.LoadScene(2);
         }
 
-        public void NextDay()
+        public void NextDay(bool skipFight)
         {
             cbm.OnNextDay();
-            EnterBattleMode();
+            if (!skipFight) EnterBattleMode();
+        }
+        public void NextDay()
+        {
+            NextDay(false);
         }
 
         public void DebugGiveResources()
