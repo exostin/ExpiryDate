@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Classes.Citybuilding.Buildings.Housing.Upgrades
 {
     public class Level3 : BuildingUpgrade
@@ -8,14 +10,19 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
             ModelName = "Housing3";
             BaseCost = new Resources
             {
-                Titan = 30
+                Titan = 90,
+                Water = 70,
+                Food = 50,
+                Energy = 40
             };
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
         {
             base.ApplySideEffects(simulation, building);
-            foreach (var generatorBuilding in simulation.GeneratorBuildings) generatorBuilding.OutputMultiplier -= .5f;
+            foreach (var otherBuilding in simulation.Buildings.ToList()
+                         .FindAll(el => el is not Housing && el.CanBeUpgraded))
+                building.NextUpgrade!.CostMultiplier *= .9f;
         }
     }
 }

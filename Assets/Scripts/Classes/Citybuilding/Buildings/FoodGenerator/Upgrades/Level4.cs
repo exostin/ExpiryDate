@@ -1,15 +1,11 @@
 namespace Classes.Citybuilding.Buildings.FoodGenerator.Upgrades
 {
-    public class Level2 : GeneratorBuildingUpgrade
+    public class Level4 : GeneratorBuildingUpgrade
     {
-        public Level2()
+        public Level4()
         {
-            Level = 2;
-            ModelName = "FoodGenerator2";
-            Output = new Resources
-            {
-                Food = 3
-            };
+            Level = 4;
+            ModelName = "FoodGenerator4";
             BaseCost = new Resources
             {
                 Titan = 50,

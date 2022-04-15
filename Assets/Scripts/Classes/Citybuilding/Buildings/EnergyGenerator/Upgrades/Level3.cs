@@ -8,11 +8,13 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
             ModelName = "EnergyGenerator3";
             Output = new Resources
             {
-                Energy = 20
+                Energy = 2
             };
             BaseCost = new Resources
             {
-                Titan = 15
+                Titan = 20,
+                Water = 40,
+                Food = 50
             };
         }
     }

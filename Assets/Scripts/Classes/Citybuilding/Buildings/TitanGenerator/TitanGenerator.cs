@@ -13,7 +13,9 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator
             {
                 new Level0(),
                 new Level1(),
-                new Level2()
+                new Level2(),
+                new Level3(),
+                new Level4()
             };
         }
     }

@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.DroneSchool.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "DroneSchool0";
+            ModelName = "Empty";
         }
     }
 }

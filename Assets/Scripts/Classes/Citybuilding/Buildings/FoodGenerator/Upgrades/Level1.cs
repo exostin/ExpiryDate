@@ -8,11 +8,7 @@ namespace Classes.Citybuilding.Buildings.FoodGenerator.Upgrades
             ModelName = "FoodGenerator1";
             Output = new Resources
             {
-                Food = 10
-            };
-            BaseCost = new Resources
-            {
-                Energy = 10
+                Food = 5
             };
         }
     }

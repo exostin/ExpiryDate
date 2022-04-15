@@ -1,15 +1,11 @@
 namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
 {
-    public class Level2 : GeneratorBuildingUpgrade
+    public class Level4 : GeneratorBuildingUpgrade
     {
-        public Level2()
+        public Level4()
         {
-            Level = 2;
-            ModelName = "EnergyGenerator2";
-            Output = new Resources
-            {
-                Energy = 3
-            };
+            Level = 4;
+            ModelName = "EnergyGenerator4";
             BaseCost = new Resources
             {
                 Titan = 20,

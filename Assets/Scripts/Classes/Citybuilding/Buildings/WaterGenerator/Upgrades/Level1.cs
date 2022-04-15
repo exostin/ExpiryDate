@@ -8,11 +8,7 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
             ModelName = "WaterGenerator1";
             Output = new Resources
             {
-                Water = 10
-            };
-            BaseCost = new Resources
-            {
-                Titan = 10
+                Water = 5
             };
         }
     }
