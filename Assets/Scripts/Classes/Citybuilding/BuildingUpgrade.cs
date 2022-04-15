@@ -8,7 +8,7 @@ namespace Classes.Citybuilding
         public int Level;
         public string ModelName;
 
-        public Resources ActualCost => BaseCost * CostMultiplier + CostBonus;
+        public Resources ActualCost => (BaseCost * CostMultiplier) + CostBonus;
 
         public virtual void ApplySideEffects(Simulation simulation, Building building)
         {

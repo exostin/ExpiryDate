@@ -12,7 +12,7 @@ namespace Classes.Citybuilding.Buildings
         {
         }
 
-        public Resources ActualOutput => BaseOutput * OutputMultiplier + OutputBonus;
+        public Resources ActualOutput => (BaseOutput * OutputMultiplier) + OutputBonus;
 
         public override void ApplySideEffects(Simulation simulation)
         {

@@ -24,8 +24,7 @@ namespace Classes.Citybuilding
 
         public BuildingUpgrade[] UnlockedUpgrades
             => Upgrades.ToList().FindAll(upgrade => upgrade.Level <= CurrentUpgradeLevel).ToArray();
-
-
+        
         [CanBeNull] public BuildingUpgrade NextUpgrade => CurrentUpgrade.Level + 1 < Upgrades.Length ? Upgrades[CurrentUpgrade.Level + 1] : null;
 
         public bool CanBeUpgraded => !(NextUpgrade is null) && NextUpgrade.ActualCost <= cbm.PlayerResources;
