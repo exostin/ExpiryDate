@@ -6,11 +6,11 @@ namespace Classes.Citybuilding
 {
     public abstract class Building
     {
+        private readonly Action<int> setLevel;
         public Manager cbm;
         public int CurrentUpgradeLevel;
         public string Description;
         public string Name;
-        private readonly Action<int> setLevel;
         public BuildingUpgrade[] Upgrades;
 
         public Building(int level, Action<int> setLevel)
@@ -24,8 +24,10 @@ namespace Classes.Citybuilding
 
         public BuildingUpgrade[] UnlockedUpgrades
             => Upgrades.ToList().FindAll(upgrade => upgrade.Level <= CurrentUpgradeLevel).ToArray();
-        
-        [CanBeNull] public BuildingUpgrade NextUpgrade => CurrentUpgrade.Level + 1 < Upgrades.Length ? Upgrades[CurrentUpgrade.Level + 1] : null;
+
+        [CanBeNull]
+        public BuildingUpgrade NextUpgrade =>
+            CurrentUpgrade.Level + 1 < Upgrades.Length ? Upgrades[CurrentUpgrade.Level + 1] : null;
 
         public bool CanBeUpgraded => !(NextUpgrade is null) && NextUpgrade.ActualCost <= cbm.PlayerResources;
 

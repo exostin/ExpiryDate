@@ -184,6 +184,7 @@ namespace Controllers
             cbm.OnNextDay();
             if (!skipFight) EnterBattleMode();
         }
+
         public void NextDay()
         {
             cbm.Save();

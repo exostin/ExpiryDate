@@ -4,7 +4,7 @@ namespace Classes.Citybuilding.Buildings
 {
     public abstract class GeneratorBuilding : Building
     {
-        public Resources BaseOutput = new Resources();
+        public Resources BaseOutput = new();
         public int OutputBonus = 0;
         public float OutputMultiplier = 1f;
 
@@ -12,7 +12,7 @@ namespace Classes.Citybuilding.Buildings
         {
         }
 
-        public Resources ActualOutput => (BaseOutput * OutputMultiplier) + OutputBonus;
+        public Resources ActualOutput => BaseOutput * OutputMultiplier + OutputBonus;
 
         public override void ApplySideEffects(Simulation simulation)
         {
