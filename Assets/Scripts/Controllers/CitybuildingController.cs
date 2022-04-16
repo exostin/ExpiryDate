@@ -21,6 +21,21 @@ namespace Controllers
         private GameManager gm;
         private Camera mainCamera;
 
+        private Dictionary<Building, GameObject> BuildingsGameObjects => new()
+        {
+            {cbm.Simulation.Housing, housing},
+            {cbm.Simulation.DroneSchool, droneSchool},
+            {cbm.Simulation.FighterSchool, fighterSchool},
+            {cbm.Simulation.MedicSchool, medicSchool},
+            {cbm.Simulation.RobotSchool, robotSchool},
+            {cbm.Simulation.ShooterSchool, shooterSchool},
+            {cbm.Simulation.TitanGenerator, titanGenerator},
+            {cbm.Simulation.WaterGenerator, waterGenerator},
+            {cbm.Simulation.EnergyGenerator, energyGenerator},
+            {cbm.Simulation.FoodGenerator, foodGenerator},
+            {cbm.Simulation.MainCamp, mainCamp}
+        };
+
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -50,24 +65,29 @@ namespace Controllers
 
             #endregion
 
-            #region Mouse input for upgrading buildings
 
             if (mainCamera == null) mainCamera = Camera.main;
             var ray = mainCamera!.ScreenPointToRay(Input.mousePosition);
-            if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out var hit))
+
+            if (Physics.Raycast(ray, out var hit))
             {
                 var colliderGameObject = hit.collider.gameObject;
 
-                if (GameObjectToBuilding(colliderGameObject) is Building building)
-                {
-                    building.Upgrade();
-                    UpdateModels();
-                }
-                
-                Debug.Log($"{colliderGameObject.name} was clicked.");
-            }
+                #region Mouse input for upgrading buildings
 
-            #endregion
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (GameObjectToBuilding(colliderGameObject) is Building building)
+                    {
+                        building.Upgrade();
+                        UpdateModels();
+                    }
+
+                    Debug.Log($"{colliderGameObject.name} was clicked.");
+                }
+
+                #endregion
+            }
         }
 
         private void UpdateModels()
@@ -146,29 +166,15 @@ namespace Controllers
             cbm.Save();
             NextDay(false);
         }
-        
-        private Dictionary<Building, GameObject> BuildingsGameObjects => new Dictionary<Building, GameObject>()
-        {
-            {cbm.Simulation.Housing, housing},
-            {cbm.Simulation.DroneSchool, droneSchool},
-            {cbm.Simulation.FighterSchool, fighterSchool},
-            {cbm.Simulation.MedicSchool, medicSchool},
-            {cbm.Simulation.RobotSchool, robotSchool},
-            {cbm.Simulation.ShooterSchool, shooterSchool},
-            {cbm.Simulation.TitanGenerator, titanGenerator},
-            {cbm.Simulation.WaterGenerator, waterGenerator},
-            {cbm.Simulation.EnergyGenerator, energyGenerator},
-            {cbm.Simulation.FoodGenerator, foodGenerator},
-            {cbm.Simulation.MainCamp, mainCamp}
-        };
-        
+
         private Building GameObjectToBuilding(GameObject go)
         {
             foreach (var building in BuildingsGameObjects)
-                if (building.Value == go) return building.Key;
+                if (building.Value == go)
+                    return building.Key;
             return null;
         }
-        
+
         private GameObject BuildingToGameObject(Building building)
         {
             return BuildingsGameObjects[building];
