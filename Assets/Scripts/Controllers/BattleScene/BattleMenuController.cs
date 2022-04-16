@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Controllers
+namespace Controllers.BattleScene
 {
     public class BattleMenuController : MonoBehaviour
     {
@@ -36,8 +36,11 @@ namespace Controllers
         [SerializeField] private float enemyTurnVignetteIntensity;
         [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
         [SerializeField] private Color defaultVignette;
+        [SerializeField] private GameObject playerWonCanvas;
+        [SerializeField] private GameObject playerLostCanvas;
 
         [SerializeField] private Color enemyTurnVignette;
+        public GameManager gm;
 
         //private readonly BattleMenuEnemy enemy = new();
         private readonly BattleMenuActions battleMenuActions = new();
@@ -46,7 +49,7 @@ namespace Controllers
         private List<GameObject> allCharacters;
         private List<Character> battleQueue = new();
         private ChromaticAberration chromaticAberration;
-        private GameManager gm;
+        private bool playerWon;
         private List<Character> soAllCharacters;
         private int turnCounter;
         private Vignette vignette;
@@ -103,6 +106,8 @@ namespace Controllers
 
         private bool CheckIfAnySideWon()
         {
+            playerWon = soPlayerCharacters.Any(character => character.health > 0) &&
+                        soEnemyCharacters.All(character => character.health <= 0);
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
             return soPlayerCharacters.Any(character => character.health > 0) &&
                    soEnemyCharacters.All(character => character.health <= 0)
@@ -316,10 +321,15 @@ namespace Controllers
 
         private IEnumerator GameEnd()
         {
-            Debug.Log("Game ended!");
-            gm.stateController.fsm.ChangeState(StateController.States.Playing);
-            yield return new WaitForSecondsRealtime(2f);
+            gm.stateController.fsm.ChangeState(StateController.States.GameEnded);
+            Debug.Log($"Game ended, player won: {playerWon}");
+            if (playerWon)
+                Instantiate(playerWonCanvas);
+            else
+                Instantiate(playerLostCanvas);
+            yield return new WaitForSecondsRealtime(2.8f);
             SceneManager.LoadScene(1);
+            gm.stateController.fsm.ChangeState(StateController.States.Playing);
         }
     }
 }
