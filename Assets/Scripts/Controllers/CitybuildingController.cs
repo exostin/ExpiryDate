@@ -53,62 +53,17 @@ namespace Controllers
             #region Mouse input for upgrading buildings
 
             if (mainCamera == null) mainCamera = Camera.main;
-            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            var ray = mainCamera!.ScreenPointToRay(Input.mousePosition);
             if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out var hit))
             {
                 var colliderGameObject = hit.collider.gameObject;
 
-                if (colliderGameObject == mainCamp)
+                if (GameObjectToBuilding(colliderGameObject) is Building building)
                 {
-                    cbm.Simulation.MainCamp.Upgrade();
+                    building.Upgrade();
                     UpdateModels();
                 }
-                else if (colliderGameObject == droneSchool)
-                {
-                    cbm.Simulation.DroneSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == fighterSchool)
-                {
-                    cbm.Simulation.FighterSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == robotSchool)
-                {
-                    cbm.Simulation.RobotSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == medicSchool)
-                {
-                    cbm.Simulation.MedicSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == titanGenerator)
-                {
-                    cbm.Simulation.TitanGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == waterGenerator)
-                {
-                    cbm.Simulation.WaterGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == energyGenerator)
-                {
-                    cbm.Simulation.EnergyGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == foodGenerator)
-                {
-                    cbm.Simulation.FoodGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == housing)
-                {
-                    cbm.Simulation.Housing.Upgrade();
-                    UpdateModels();
-                }
-
+                
                 Debug.Log($"{colliderGameObject.name} was clicked.");
             }
 
