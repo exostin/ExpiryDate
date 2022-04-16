@@ -17,6 +17,8 @@ namespace Controllers
         [SerializeField] private GameObject energyAmount;
         [SerializeField] private GameObject foodAmount;
 
+        [SerializeField] public Texture2D cursorPointerTexture;
+
         private Manager cbm;
         private GameManager gm;
         private Camera mainCamera;
@@ -64,33 +66,9 @@ namespace Controllers
             foodAmount.GetComponent<TextMeshProUGUI>().text = cbm.PlayerResources.Food.ToString();
 
             #endregion
-
-
-            if (mainCamera == null) mainCamera = Camera.main;
-            var ray = mainCamera!.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out var hit))
-            {
-                var colliderGameObject = hit.collider.gameObject;
-
-                #region Mouse input for upgrading buildings
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    if (GameObjectToBuilding(colliderGameObject) is Building building)
-                    {
-                        building.Upgrade();
-                        UpdateModels();
-                    }
-
-                    Debug.Log($"{colliderGameObject.name} was clicked.");
-                }
-
-                #endregion
-            }
         }
 
-        private void UpdateModels()
+        public void UpdateModels()
         {
             #region Hide all buildings
 
@@ -119,9 +97,6 @@ namespace Controllers
             foreach (Transform child in citybuilding.transform)
                 if (usedBuildingsModelNames.Contains(child.name))
                 {
-                    Debug.Log($"Showing {child.name}");
-
-                    child.gameObject.SetActive(true);
                     if (child.name.StartsWith("DroneSchool")) droneSchool = child.gameObject;
                     else if (child.name.StartsWith("EnergyGenerator")) energyGenerator = child.gameObject;
                     else if (child.name.StartsWith("FighterSchool")) fighterSchool = child.gameObject;
@@ -133,6 +108,9 @@ namespace Controllers
                     else if (child.name.StartsWith("TitanGenerator")) titanGenerator = child.gameObject;
                     else if (child.name.StartsWith("WaterGenerator")) waterGenerator = child.gameObject;
                     else if (child.name.StartsWith("Housing")) housing = child.gameObject;
+
+                    Debug.Log($"Showing {child.name}");
+                    child.gameObject.SetActive(true);
                 }
 
             #endregion
@@ -167,7 +145,7 @@ namespace Controllers
             NextDay(false);
         }
 
-        private Building GameObjectToBuilding(GameObject go)
+        public Building GameObjectToBuilding(GameObject go)
         {
             foreach (var building in BuildingsGameObjects)
                 if (building.Value == go)
