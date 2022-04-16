@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Controllers
+namespace Controllers.BattleScene
 {
     public class SelectionIndicatorController : MonoBehaviour
     {

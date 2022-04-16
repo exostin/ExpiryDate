@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace Controllers
+namespace Controllers.BattleScene
 {
     public class MoveActiveCharacterToCenter : MonoBehaviour
     {
         private readonly float spotlightLocationForEnemies = -1000f;
-        private readonly float spotlightLocationForPlayerCharacters = 550f;
+        private readonly float spotlightLocationForPlayerCharacters = 600f;
         private Vector3 originalPosition;
 
         private void Start()
