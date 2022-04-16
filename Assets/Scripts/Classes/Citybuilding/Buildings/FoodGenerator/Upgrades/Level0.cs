@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.FoodGenerator.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "FoodGenerator0";
+            ModelName = "Empty";
         }
     }
 }

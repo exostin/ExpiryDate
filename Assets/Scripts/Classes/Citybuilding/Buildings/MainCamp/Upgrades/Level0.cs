@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "MainCamp0";
+            ModelName = "Empty";
         }
     }
 }

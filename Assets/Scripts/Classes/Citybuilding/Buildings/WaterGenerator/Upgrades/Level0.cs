@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "WaterGenerator0";
+            ModelName = "Empty";
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Classes.Citybuilding
         public float CostMultiplier = 1f;
         public int Level;
         public string ModelName;
+        public bool Unlocked = true;
 
         public Resources ActualCost => BaseCost * CostMultiplier + CostBonus;
 

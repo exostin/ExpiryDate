@@ -15,13 +15,14 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
                 Food = 50,
                 Energy = 40
             };
+            Unlocked = false;
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
         {
             base.ApplySideEffects(simulation, building);
             foreach (var otherBuilding in simulation.Buildings.ToList()
-                         .FindAll(el => el is not Housing && el.CanBeUpgraded))
+                         .FindAll(el => el is not Housing && el.NextUpgrade is not null))
                 building.NextUpgrade!.CostMultiplier *= .9f;
         }
     }

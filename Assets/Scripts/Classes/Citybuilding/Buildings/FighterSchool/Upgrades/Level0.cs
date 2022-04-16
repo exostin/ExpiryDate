@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.FighterSchool.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "FighterSchool0";
+            ModelName = "Empty";
         }
     }
 }

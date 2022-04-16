@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "RobotSchool0";
+            ModelName = "Empty";
         }
     }
 }
