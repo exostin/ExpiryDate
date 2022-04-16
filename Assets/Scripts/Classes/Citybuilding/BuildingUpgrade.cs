@@ -2,7 +2,7 @@ namespace Classes.Citybuilding
 {
     public abstract class BuildingUpgrade
     {
-        public Resources BaseCost;
+        public Resources BaseCost = new Resources();
         public int CostBonus = 0;
         public float CostMultiplier = 1f;
         public int Level;
