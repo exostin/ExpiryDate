@@ -29,7 +29,7 @@ namespace Classes.Citybuilding
         public BuildingUpgrade NextUpgrade =>
             CurrentUpgrade.Level + 1 < Upgrades.Length ? Upgrades[CurrentUpgrade.Level + 1] : null;
 
-        public bool CanBeUpgraded => !(NextUpgrade is null) && NextUpgrade.ActualCost <= cbm.PlayerResources && NextUpgrade.Unlocked;
+        public bool CanBeUpgraded => NextUpgrade is not null && NextUpgrade.ActualCost <= cbm.PlayerResources && NextUpgrade.Unlocked;
 
         public virtual void ApplySideEffects(Simulation simulation)
         {
