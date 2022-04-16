@@ -17,7 +17,7 @@ namespace Classes.Citybuilding.Buildings
         public override void ApplySideEffects(Simulation simulation)
         {
             base.ApplySideEffects(simulation);
-            foreach (var upgrade in UnlockedUpgrades)
+            foreach (var upgrade in BoughtUpgrades)
                 if (upgrade is GeneratorBuildingUpgrade generatorUpgrade)
                     generatorUpgrade.ApplyGeneratorSideEffects(simulation, this);
         }
