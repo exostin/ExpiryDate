@@ -13,7 +13,8 @@ public class StateController : MonoBehaviour
         EnemyTurn,
         Countdown,
         ReadyForNextTurn,
-        SelectingTarget
+        SelectingTarget,
+        GameEnded
     }
 
     // should be private
