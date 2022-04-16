@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Classes.Citybuilding;
 using TMPro;
@@ -189,6 +190,33 @@ namespace Controllers
         {
             cbm.Save();
             NextDay(false);
+        }
+        
+        private Dictionary<Building, GameObject> BuildingsGameObjects => new Dictionary<Building, GameObject>()
+        {
+            {cbm.Simulation.Housing, housing},
+            {cbm.Simulation.DroneSchool, droneSchool},
+            {cbm.Simulation.FighterSchool, fighterSchool},
+            {cbm.Simulation.MedicSchool, medicSchool},
+            {cbm.Simulation.RobotSchool, robotSchool},
+            {cbm.Simulation.ShooterSchool, shooterSchool},
+            {cbm.Simulation.TitanGenerator, titanGenerator},
+            {cbm.Simulation.WaterGenerator, waterGenerator},
+            {cbm.Simulation.EnergyGenerator, energyGenerator},
+            {cbm.Simulation.FoodGenerator, foodGenerator},
+            {cbm.Simulation.MainCamp, mainCamp}
+        };
+        
+        private Building GameObjectToBuilding(GameObject go)
+        {
+            foreach (var building in BuildingsGameObjects)
+                if (building.Value == go) return building.Key;
+            return null;
+        }
+        
+        private GameObject BuildingToGameObject(Building building)
+        {
+            return BuildingsGameObjects[building];
         }
 
         public void DebugGiveResources()
