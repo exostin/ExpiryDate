@@ -1,4 +1,3 @@
-using System;
 using Controllers;
 using UnityEngine;
 
@@ -6,16 +5,16 @@ namespace Other.Citybuilding
 {
     public class Building : MonoBehaviour
     {
-        private Texture2D cursorPointerTexture;
         private Classes.Citybuilding.Building building;
         private CitybuildingController cbc;
-        
+        private Texture2D cursorPointerTexture;
+
         private void OnEnable()
         {
             Debug.Log($"OnEnable {gameObject.name}");
-            
+
             cbc = GameObject.Find("CitybuildingController").GetComponent<CitybuildingController>();
-            
+
             cursorPointerTexture = cbc.cursorPointerTexture;
             building = cbc.GameObjectToBuilding(gameObject);
         }
