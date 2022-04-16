@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Classes.Citybuilding;
 using TMPro;
@@ -16,9 +17,26 @@ namespace Controllers
         [SerializeField] private GameObject energyAmount;
         [SerializeField] private GameObject foodAmount;
 
+        [SerializeField] public Texture2D cursorPointerTexture;
+
         private Manager cbm;
         private GameManager gm;
         private Camera mainCamera;
+
+        private Dictionary<Building, GameObject> BuildingsGameObjects => new()
+        {
+            {cbm.Simulation.Housing, housing},
+            {cbm.Simulation.DroneSchool, droneSchool},
+            {cbm.Simulation.FighterSchool, fighterSchool},
+            {cbm.Simulation.MedicSchool, medicSchool},
+            {cbm.Simulation.RobotSchool, robotSchool},
+            {cbm.Simulation.ShooterSchool, shooterSchool},
+            {cbm.Simulation.TitanGenerator, titanGenerator},
+            {cbm.Simulation.WaterGenerator, waterGenerator},
+            {cbm.Simulation.EnergyGenerator, energyGenerator},
+            {cbm.Simulation.FoodGenerator, foodGenerator},
+            {cbm.Simulation.MainCamp, mainCamp}
+        };
 
         private void Start()
         {
@@ -48,73 +66,9 @@ namespace Controllers
             foodAmount.GetComponent<TextMeshProUGUI>().text = cbm.PlayerResources.Food.ToString();
 
             #endregion
-
-            #region Mouse input for upgrading buildings
-
-            if (mainCamera == null) mainCamera = Camera.main;
-            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out var hit))
-            {
-                var colliderGameObject = hit.collider.gameObject;
-
-                if (colliderGameObject == mainCamp)
-                {
-                    cbm.Simulation.MainCamp.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == droneSchool)
-                {
-                    cbm.Simulation.DroneSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == fighterSchool)
-                {
-                    cbm.Simulation.FighterSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == robotSchool)
-                {
-                    cbm.Simulation.RobotSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == medicSchool)
-                {
-                    cbm.Simulation.MedicSchool.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == titanGenerator)
-                {
-                    cbm.Simulation.TitanGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == waterGenerator)
-                {
-                    cbm.Simulation.WaterGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == energyGenerator)
-                {
-                    cbm.Simulation.EnergyGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == foodGenerator)
-                {
-                    cbm.Simulation.FoodGenerator.Upgrade();
-                    UpdateModels();
-                }
-                else if (colliderGameObject == housing)
-                {
-                    cbm.Simulation.Housing.Upgrade();
-                    UpdateModels();
-                }
-
-                Debug.Log($"{colliderGameObject.name} was clicked.");
-            }
-
-            #endregion
         }
 
-        private void UpdateModels()
+        public void UpdateModels()
         {
             #region Hide all buildings
 
@@ -143,9 +97,6 @@ namespace Controllers
             foreach (Transform child in citybuilding.transform)
                 if (usedBuildingsModelNames.Contains(child.name))
                 {
-                    Debug.Log($"Showing {child.name}");
-
-                    child.gameObject.SetActive(true);
                     if (child.name.StartsWith("DroneSchool")) droneSchool = child.gameObject;
                     else if (child.name.StartsWith("EnergyGenerator")) energyGenerator = child.gameObject;
                     else if (child.name.StartsWith("FighterSchool")) fighterSchool = child.gameObject;
@@ -157,6 +108,9 @@ namespace Controllers
                     else if (child.name.StartsWith("TitanGenerator")) titanGenerator = child.gameObject;
                     else if (child.name.StartsWith("WaterGenerator")) waterGenerator = child.gameObject;
                     else if (child.name.StartsWith("Housing")) housing = child.gameObject;
+
+                    Debug.Log($"Showing {child.name}");
+                    child.gameObject.SetActive(true);
                 }
 
             #endregion
@@ -189,6 +143,19 @@ namespace Controllers
         {
             cbm.Save();
             NextDay(false);
+        }
+
+        public Building GameObjectToBuilding(GameObject go)
+        {
+            foreach (var building in BuildingsGameObjects)
+                if (building.Value == go)
+                    return building.Key;
+            return null;
+        }
+
+        private GameObject BuildingToGameObject(Building building)
+        {
+            return BuildingsGameObjects[building];
         }
 
         public void DebugGiveResources()
