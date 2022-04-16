@@ -22,24 +22,24 @@ namespace Classes.Citybuilding
         public BuildingUpgrade CurrentUpgrade =>
             Upgrades.ToList().Find(upgrade => upgrade.Level == CurrentUpgradeLevel);
 
-        public BuildingUpgrade[] UnlockedUpgrades
+        public BuildingUpgrade[] BoughtUpgrades
             => Upgrades.ToList().FindAll(upgrade => upgrade.Level <= CurrentUpgradeLevel).ToArray();
 
         [CanBeNull]
         public BuildingUpgrade NextUpgrade =>
             CurrentUpgrade.Level + 1 < Upgrades.Length ? Upgrades[CurrentUpgrade.Level + 1] : null;
 
-        public bool CanBeUpgraded => !(NextUpgrade is null) && NextUpgrade.ActualCost <= cbm.PlayerResources;
+        public bool CanBeUpgraded => NextUpgrade is not null && NextUpgrade.ActualCost <= cbm.PlayerResources && NextUpgrade.Unlocked;
 
         public virtual void ApplySideEffects(Simulation simulation)
         {
-            foreach (var upgrade in UnlockedUpgrades)
+            foreach (var upgrade in BoughtUpgrades)
                 upgrade.ApplySideEffects(simulation, this);
         }
 
         public virtual void OnNextDay()
         {
-            foreach (var upgrade in UnlockedUpgrades)
+            foreach (var upgrade in BoughtUpgrades)
                 upgrade.OnNextDay(cbm);
         }
 

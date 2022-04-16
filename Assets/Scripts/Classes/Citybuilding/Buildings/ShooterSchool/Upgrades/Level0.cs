@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "ShooterSchool0";
+            ModelName = "Empty";
         }
     }
 }

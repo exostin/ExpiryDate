@@ -14,5 +14,11 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
             };
             ModelName = "MainCamp3";
         }
+        
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+            simulation.Housing.Upgrades[2].Unlocked = true;
+        }
     }
 }

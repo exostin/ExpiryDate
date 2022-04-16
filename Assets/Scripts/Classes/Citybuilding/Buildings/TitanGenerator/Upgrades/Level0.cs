@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "TitanGenerator0";
+            ModelName = "Empty";
         }
     }
 }

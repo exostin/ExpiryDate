@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.MedicSchool.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "MedicSchool0";
+            ModelName = "Empty";
         }
     }
 }

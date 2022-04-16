@@ -32,16 +32,16 @@ namespace Classes.Citybuilding
             };
 
             housingLevel = PlayerPrefs.GetInt("PlayerBuildings/Housing", 0);
-            titanGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/TitanGenerator", 0);
-            energyGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/EnergyGenerator", 0);
-            waterGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/WaterGenerator", 0);
-            foodGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/FoodGenerator", 0);
-            fighterSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/FighterSchool", 0);
-            shooterSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/ShooterSchool", 0);
-            robotSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/RobotSchool", 0);
-            droneSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/DroneSchool", 0);
-            medicSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/MedicSchool", 0);
-            mainCampLevel = PlayerPrefs.GetInt("PlayerBuildings/MainCamp", 0);
+            titanGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/TitanGenerator", 1);
+            energyGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/EnergyGenerator", 1);
+            waterGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/WaterGenerator", 1);
+            foodGeneratorLevel = PlayerPrefs.GetInt("PlayerBuildings/FoodGenerator", 1);
+            fighterSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/FighterSchool", 1);
+            shooterSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/ShooterSchool", 1);
+            robotSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/RobotSchool", 1);
+            droneSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/DroneSchool", 1);
+            medicSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/MedicSchool", 1);
+            mainCampLevel = PlayerPrefs.GetInt("PlayerBuildings/MainCamp", 1);
 
             RunSimulation();
         }

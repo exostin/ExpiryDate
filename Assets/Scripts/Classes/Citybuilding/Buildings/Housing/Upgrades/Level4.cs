@@ -13,6 +13,7 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
                 Food = 60,
                 Energy = 50
             };
+            Unlocked = false;
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

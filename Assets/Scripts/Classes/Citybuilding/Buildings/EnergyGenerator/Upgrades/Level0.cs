@@ -5,7 +5,7 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
         public Level0()
         {
             Level = 0;
-            ModelName = "EnergyGenerator0";
+            ModelName = "Empty";
         }
     }
 }
