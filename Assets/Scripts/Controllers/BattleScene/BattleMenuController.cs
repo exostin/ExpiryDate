@@ -17,41 +17,61 @@ namespace Controllers.BattleScene
 {
     public class BattleMenuController : MonoBehaviour
     {
+        public GameManager gm;
         public List<GameObject> playerCharacters;
         public List<GameObject> enemyCharacters;
+        private readonly BattleMenuActions battleMenuActions = new();
+        private List<GameObject> allCharacters;
+        private bool playerWon;
+        
+        #region Scriptable Objects
 
         // so - scriptable object
         [HideInInspector] public List<Character> soPlayerCharacters;
         [HideInInspector] public List<Character> soEnemyCharacters;
-        [SerializeField] private TMP_Text turnCounterText;
-        [SerializeField] private GameObject[] skillButtons;
+
         [HideInInspector] public Character playerSelectedTarget;
         [HideInInspector] public Ability playerSelectedAbility;
+
+        private readonly List<Character> targetsForEnemyPool = new();
+        private readonly List<Character> targetsForPlayerPool = new();
+        private List<Character> battleQueue = new();
+        private List<Character> soAllCharacters;
+
+        #endregion
+
+        #region UI Elements
+
+        [SerializeField] private GameObject[] skillButtons;
         [SerializeField] private GameObject targetIndicator;
         [SerializeField] private GameObject abilityIndicator;
+        private int turnCounter;
+        [SerializeField] private TMP_Text turnCounterText;
+        [SerializeField] private GameObject playerWonCanvas;
+        [SerializeField] private GameObject playerLostCanvas;
+
+        #endregion
+
+        #region Delays, offsets etc.
+
         [SerializeField] private float delayBetweenActions;
         [SerializeField] private float timeBeforeBattleStart;
+
+        #endregion
+
+
+        #region Post Processing
+
         [SerializeField] private Volume postprocessingVolume;
         [SerializeField] private float defaultVignetteIntensity;
         [SerializeField] private float enemyTurnVignetteIntensity;
         [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
-        [SerializeField] private Color defaultVignette;
-        [SerializeField] private GameObject playerWonCanvas;
-        [SerializeField] private GameObject playerLostCanvas;
-
-        [SerializeField] private Color enemyTurnVignette;
-        public GameManager gm;
-        
-        private readonly BattleMenuActions battleMenuActions = new();
-        private readonly List<Character> targetsForEnemyPool = new();
-        private readonly List<Character> targetsForPlayerPool = new();
-        private List<GameObject> allCharacters;
-        private List<Character> battleQueue = new();
-        private ChromaticAberration chromaticAberration;
-        private bool playerWon;
-        private List<Character> soAllCharacters;
-        private int turnCounter;
         private Vignette vignette;
+        [SerializeField] private Color defaultVignette;
+        [SerializeField] private Color enemyTurnVignette;
+        private ChromaticAberration chromaticAberration;
+
+        #endregion
 
         private void Start()
         {
@@ -79,7 +99,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Sets all characters in battleQueue current HP to their MaxHP value
+        ///     Sets all characters in battleQueue current HP to their MaxHP value
         /// </summary>
         private void SetCurrentCharacterHpToMax()
         {
@@ -87,7 +107,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Extract character scriptable object data from their game objects to their respective lists
+        ///     Extract character scriptable object data from their game objects to their respective lists
         /// </summary>
         private void ExtractCharactersData()
         {
@@ -96,7 +116,7 @@ namespace Controllers.BattleScene
             foreach (var g in enemyCharacters) soEnemyCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
         }
-        
+
         private void CreateTargetPools()
         {
             targetsForPlayerPool.AddRange(soEnemyCharacters);
@@ -104,7 +124,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Create a queue in form of List of all the characters to be used in battle
+        ///     Create a queue in form of List of all the characters to be used in battle
         /// </summary>
         private void CreateQueue()
         {
@@ -115,7 +135,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Checks if either of teams has won (all characters are dead while the other team still stands)
+        ///     Checks if either of teams has won (all characters are dead while the other team still stands)
         /// </summary>
         /// <returns></returns>
         private bool CheckIfAnySideWon()
@@ -130,7 +150,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Starts a whole battle consisting of multiple turns
+        ///     Starts a whole battle consisting of multiple turns
         /// </summary>
         /// <returns></returns>
         private IEnumerator PlayBattle()
@@ -147,7 +167,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Makes a turn consisting of one action for each character in the battle queue
+        ///     Makes a turn consisting of one action for each character in the battle queue
         /// </summary>
         /// <returns></returns>
         private IEnumerator MakeTurn()
@@ -214,7 +234,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Toggles post effects that should be visible during the enemy turn
+        ///     Toggles post effects that should be visible during the enemy turn
         /// </summary>
         private void ToggleEnemyTurnPostEffects()
         {
@@ -227,7 +247,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Toggles post effects that should be visible when a character makes an attack
+        ///     Toggles post effects that should be visible when a character makes an attack
         /// </summary>
         private IEnumerator MakeAttackPostEffects()
         {
@@ -246,7 +266,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Increment the turn counter and show it on the screen
+        ///     Increment the turn counter and show it on the screen
         /// </summary>
         private void UpdateTurnCounter()
         {
@@ -255,7 +275,8 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Search through all attached character GameObjects, and return the one which DisplayCharacterData component has a Character scriptable object attached with the same name as the chosen character
+        ///     Search through all attached character GameObjects, and return the one which DisplayCharacterData component has a
+        ///     Character scriptable object attached with the same name as the chosen character
         /// </summary>
         private GameObject FindCharactersGameObjectByName(Character character)
         {
@@ -268,7 +289,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Check if all the required steps to end the turn were completed, if so then set the state to PlayerFinalizedHisMove
+        ///     Check if all the required steps to end the turn were completed, if so then set the state to PlayerFinalizedHisMove
         /// </summary>
         public void EndPlayerTurn()
         {
@@ -320,7 +341,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Disable/enable interactability of all characters buttons
+        ///     Disable/enable interactability of all characters buttons
         /// </summary>
         /// <param name="choice">true/false</param>
         private void LetPlayerChooseTarget(bool choice)
@@ -333,7 +354,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Set all ability data to match the character which turn it is
+        ///     Set all ability data to match the character which turn it is
         /// </summary>
         /// <param name="currentCharacter">character which turn it currently is</param>
         private void UpdateSkillButtons(Character currentCharacter)
@@ -353,7 +374,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Disable the indicators that show what ability and target is currently selected by the player
+        ///     Disable the indicators that show what ability and target is currently selected by the player
         /// </summary>
         private void DisableSelectionIndicators()
         {
@@ -362,20 +383,18 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        /// Start game end sequence
+        ///     Start game end sequence
         /// </summary>
         /// <returns></returns>
         private IEnumerator GameEnd()
         {
             gm.stateController.fsm.ChangeState(StateController.States.GameEnded);
             Debug.Log($"Game ended, player won: {playerWon}");
-            if (playerWon)
-                Instantiate(playerWonCanvas);
-            else
-                Instantiate(playerLostCanvas);
+            Instantiate(playerWon ? playerWonCanvas : playerLostCanvas);
             yield return new WaitForSecondsRealtime(2.8f);
             SceneManager.LoadScene(1);
             gm.stateController.fsm.ChangeState(StateController.States.Playing);
         }
+        
     }
 }
