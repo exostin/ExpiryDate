@@ -58,8 +58,7 @@ namespace Controllers.BattleScene
         [SerializeField] private float timeBeforeBattleStart;
 
         #endregion
-
-
+        
         #region Post Processing
 
         [SerializeField] private Volume postprocessingVolume;
@@ -76,34 +75,47 @@ namespace Controllers.BattleScene
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
+            GetPostProcessingReferences();
 
+            #region Creating variables related to characters
+            
+            allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
+            ExtractCharactersData();
+            CreateTargetPools();
+            CreateQueue();
+            InitializeAllCharactersDefaultStats();
+            
+            #endregion
+
+            #region UI elements
+
+            LetPlayerChooseTarget(false);
+            ToggleAbilityButtonsVisibility(false);
+
+            #endregion
+            
+            StartCoroutine(PlayBattle());
+        }
+
+        /// <summary>
+        ///     Initialize all characters' default stats (currentHealth = maxHealth etc.)
+        /// </summary>
+        private void InitializeAllCharactersDefaultStats()
+        {
+            foreach (var character in battleQueue) character.Initialize();
+        }
+
+        /// <summary>
+        ///     Get references to post processing components
+        /// </summary>
+        /// <exception cref="NullReferenceException"></exception>
+        private void GetPostProcessingReferences()
+        {
             var postprocessingVolumeProfile = postprocessingVolume.GetComponent<Volume>()?.profile;
             if (!postprocessingVolumeProfile) throw new NullReferenceException(nameof(VolumeProfile));
             if (!postprocessingVolumeProfile.TryGet(out vignette)) throw new NullReferenceException(nameof(vignette));
             if (!postprocessingVolumeProfile.TryGet(out chromaticAberration))
                 throw new NullReferenceException(nameof(chromaticAberration));
-
-            allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
-
-            ExtractCharactersData();
-
-            CreateTargetPools();
-            CreateQueue();
-
-            SetCurrentCharacterHpToMax();
-
-            LetPlayerChooseTarget(false);
-            ToggleSkillButtonsVisibility(false);
-
-            StartCoroutine(PlayBattle());
-        }
-
-        /// <summary>
-        ///     Sets all characters in battleQueue current HP to their MaxHP value
-        /// </summary>
-        private void SetCurrentCharacterHpToMax()
-        {
-            foreach (var character in battleQueue) character.health = character.maxHealth;
         }
 
         /// <summary>
@@ -117,6 +129,9 @@ namespace Controllers.BattleScene
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
         }
 
+        /// <summary>
+        ///     Creates a list of characters which are targets for player, and another one for the enemy
+        /// </summary>
         private void CreateTargetPools()
         {
             targetsForPlayerPool.AddRange(soEnemyCharacters);
@@ -197,7 +212,7 @@ namespace Controllers.BattleScene
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     ToggleEnemyTurnPostEffects();
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
-                    ToggleSkillButtonsVisibility(true);
+                    ToggleAbilityButtonsVisibility(true);
                     UpdateSkillButtons(character);
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() =>
@@ -206,7 +221,7 @@ namespace Controllers.BattleScene
                     battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility,
                         soAllCharacters, true);
                     StartCoroutine(MakeAttackPostEffects());
-                    ToggleSkillButtonsVisibility(false);
+                    ToggleAbilityButtonsVisibility(false);
                     playerSelectedAbility = null;
                     playerSelectedTarget = null;
                 }
@@ -223,7 +238,6 @@ namespace Controllers.BattleScene
                         false);
                     StartCoroutine(MakeAttackPostEffects());
                 }
-
                 DisableSelectionIndicators();
                 LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
@@ -294,7 +308,16 @@ namespace Controllers.BattleScene
         public void EndPlayerTurn()
         {
             Debug.Log(
-                $"Full end-turn data dump: {gm.stateController.fsm.State}, {playerSelectedAbility}, {playerSelectedTarget}, {playerSelectedTarget.isDead}, {targetsForPlayerPool}, {targetsForEnemyPool}");
+                $"Full end-turn data dump: " +
+                $"State: {gm.stateController.fsm.State}, " +
+                $"Selected ability: {playerSelectedAbility}," +
+                $"Selected target: {playerSelectedTarget}, is the target dead?: {playerSelectedTarget.isDead}, " +
+                $"Targets for player pool: {targetsForPlayerPool}, Targets for enemy pool: {targetsForEnemyPool}" +
+                $"Can the ability target only allies?: {playerSelectedAbility.canOnlyTargetOwnCharacters}," +
+                $"Can the ability target only the caster?: {playerSelectedAbility.usedOnlyOnSelf}," +
+                $"Does the ability target whole team?: {playerSelectedAbility.targetsWholeTeam}," +
+                $"Is the ability a heal?: {playerSelectedAbility.heal}, is the ability a buff?: {playerSelectedAbility.buff}");
+                
             if (gm.stateController.fsm.State == StateController.States.SelectingTarget &&
                 playerSelectedAbility != null && playerSelectedTarget != null && !playerSelectedTarget.isDead)
             {
@@ -333,13 +356,7 @@ namespace Controllers.BattleScene
                 Debug.Log("No ability and/or target chosen!");
             }
         }
-
-        public void StartTargetSelectionState()
-        {
-            gm.stateController.fsm.ChangeState(StateController.States.SelectingTarget);
-            LetPlayerChooseTarget(true);
-        }
-
+        
         /// <summary>
         ///     Disable/enable interactability of all characters buttons
         /// </summary>
@@ -367,7 +384,7 @@ namespace Controllers.BattleScene
             }
         }
 
-        private void ToggleSkillButtonsVisibility(bool enable)
+        private void ToggleAbilityButtonsVisibility(bool enable)
         {
             Debug.Log($"Setting visibility of abilities to {enable}");
             for (var i = 0; i <= 3; i++) skillButtons[i].gameObject.SetActive(enable);
@@ -395,6 +412,16 @@ namespace Controllers.BattleScene
             SceneManager.LoadScene(1);
             gm.stateController.fsm.ChangeState(StateController.States.Playing);
         }
+        
+        #region Functions invoked only by buttons inside the UI
+
+        public void StartTargetSelectionState()
+        {
+            gm.stateController.fsm.ChangeState(StateController.States.SelectingTarget);
+            LetPlayerChooseTarget(true);
+        }
+
+        #endregion
         
     }
 }
