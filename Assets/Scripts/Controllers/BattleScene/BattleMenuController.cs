@@ -41,8 +41,7 @@ namespace Controllers.BattleScene
 
         [SerializeField] private Color enemyTurnVignette;
         public GameManager gm;
-
-        //private readonly BattleMenuEnemy enemy = new();
+        
         private readonly BattleMenuActions battleMenuActions = new();
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
@@ -71,7 +70,7 @@ namespace Controllers.BattleScene
             CreateTargetPools();
             CreateQueue();
 
-            foreach (var character in battleQueue) character.health = character.maxHealth;
+            SetCurrentCharacterHpToMax();
 
             LetPlayerChooseTarget(false);
             ToggleSkillButtonsVisibility(false);
@@ -80,7 +79,15 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        ///     Extract character scriptable objects data from their game objects
+        /// Sets all characters in battleQueue current HP to their MaxHP value
+        /// </summary>
+        private void SetCurrentCharacterHpToMax()
+        {
+            foreach (var character in battleQueue) character.health = character.maxHealth;
+        }
+
+        /// <summary>
+        /// Extract character scriptable object data from their game objects to their respective lists
         /// </summary>
         private void ExtractCharactersData()
         {
@@ -89,13 +96,16 @@ namespace Controllers.BattleScene
             foreach (var g in enemyCharacters) soEnemyCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
         }
-
+        
         private void CreateTargetPools()
         {
             targetsForPlayerPool.AddRange(soEnemyCharacters);
             targetsForEnemyPool.AddRange(soPlayerCharacters);
         }
 
+        /// <summary>
+        /// Create a queue in form of List of all the characters to be used in battle
+        /// </summary>
         private void CreateQueue()
         {
             // Merge playerCharacters and enemyCharacters into one array
@@ -104,6 +114,10 @@ namespace Controllers.BattleScene
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
         }
 
+        /// <summary>
+        /// Checks if either of teams has won (all characters are dead while the other team still stands)
+        /// </summary>
+        /// <returns></returns>
         private bool CheckIfAnySideWon()
         {
             playerWon = soPlayerCharacters.Any(character => character.health > 0) &&
@@ -115,6 +129,10 @@ namespace Controllers.BattleScene
                    soEnemyCharacters.Any(character => character.health > 0);
         }
 
+        /// <summary>
+        /// Starts a whole battle consisting of multiple turns
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator PlayBattle()
         {
             yield return new WaitForSecondsRealtime(timeBeforeBattleStart);
@@ -128,6 +146,10 @@ namespace Controllers.BattleScene
             StartCoroutine(GameEnd());
         }
 
+        /// <summary>
+        /// Makes a turn consisting of one action for each character in the battle queue
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator MakeTurn()
         {
             UpdateTurnCounter();
@@ -191,6 +213,9 @@ namespace Controllers.BattleScene
             gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
 
+        /// <summary>
+        /// Toggles post effects that should be visible during the enemy turn
+        /// </summary>
         private void ToggleEnemyTurnPostEffects()
         {
             vignette.intensity.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn
@@ -201,6 +226,9 @@ namespace Controllers.BattleScene
                 : defaultVignette);
         }
 
+        /// <summary>
+        /// Toggles post effects that should be visible when a character makes an attack
+        /// </summary>
         private IEnumerator MakeAttackPostEffects()
         {
             for (float i = 0; i < attackChromaticAberrationIntensity; i += 0.05f)
@@ -217,16 +245,20 @@ namespace Controllers.BattleScene
             }
         }
 
+        /// <summary>
+        /// Increment the turn counter and show it on the screen
+        /// </summary>
         private void UpdateTurnCounter()
         {
             turnCounter++;
             turnCounterText.text = "Turn: " + turnCounter;
         }
 
+        /// <summary>
+        /// Search through all attached character GameObjects, and return the one which DisplayCharacterData component has a Character scriptable object attached with the same name as the chosen character
+        /// </summary>
         private GameObject FindCharactersGameObjectByName(Character character)
         {
-            // search through all character GameObjects, and return the one which DisplayCharacterData Character has the same name as the chosen character
-            // in short - find characters corresponding GameObject
             foreach (var g in allCharacters.Where(g =>
                          g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
                 return g;
@@ -235,6 +267,9 @@ namespace Controllers.BattleScene
             return null;
         }
 
+        /// <summary>
+        /// Check if all the required steps to end the turn were completed, if so then set the state to PlayerFinalizedHisMove
+        /// </summary>
         public void EndPlayerTurn()
         {
             Debug.Log(
@@ -285,7 +320,7 @@ namespace Controllers.BattleScene
         }
 
         /// <summary>
-        ///     Disable/Enable interactability of all characters buttons
+        /// Disable/enable interactability of all characters buttons
         /// </summary>
         /// <param name="choice">true/false</param>
         private void LetPlayerChooseTarget(bool choice)
@@ -297,6 +332,10 @@ namespace Controllers.BattleScene
                 g.GetComponent<Button>().interactable = choice;
         }
 
+        /// <summary>
+        /// Set all ability data to match the character which turn it is
+        /// </summary>
+        /// <param name="currentCharacter">character which turn it currently is</param>
         private void UpdateSkillButtons(Character currentCharacter)
         {
             Debug.Log("Updating ability info");
@@ -313,12 +352,19 @@ namespace Controllers.BattleScene
             for (var i = 0; i <= 3; i++) skillButtons[i].gameObject.SetActive(enable);
         }
 
+        /// <summary>
+        /// Disable the indicators that show what ability and target is currently selected by the player
+        /// </summary>
         private void DisableSelectionIndicators()
         {
             targetIndicator.SetActive(false);
             abilityIndicator.SetActive(false);
         }
 
+        /// <summary>
+        /// Start game end sequence
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator GameEnd()
         {
             gm.stateController.fsm.ChangeState(StateController.States.GameEnded);
