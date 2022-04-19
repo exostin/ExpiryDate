@@ -13,5 +13,13 @@ namespace Classes.Citybuilding.Buildings.MedicSchool.Upgrades
             };
             ModelName = "MedicSchool4";
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Medic].Tier = 3;
+            building.cbm.Defenders[DefenderType.Medic].CostMultiplier = .8f;
+        }
     }
 }

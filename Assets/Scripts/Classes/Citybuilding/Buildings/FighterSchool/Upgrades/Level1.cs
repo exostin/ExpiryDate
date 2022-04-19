@@ -7,5 +7,12 @@ namespace Classes.Citybuilding.Buildings.FighterSchool.Upgrades
             Level = 1;
             ModelName = "FighterSchool1";
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Fighter].Tier = 0;
+        }
     }
 }

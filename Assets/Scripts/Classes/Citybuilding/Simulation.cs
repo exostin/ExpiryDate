@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Classes.Citybuilding.Buildings;
 using Classes.Citybuilding.Buildings.DroneSchool;
 using Classes.Citybuilding.Buildings.EnergyGenerator;
@@ -16,6 +18,7 @@ namespace Classes.Citybuilding
 {
     public class Simulation
     {
+        public Dictionary<DefenderType, Defender> Defenders;
         public bool Simulated;
 
         public Building[] Buildings => new Building[]
@@ -44,6 +47,13 @@ namespace Classes.Citybuilding
         public void Run()
         {
             if (Simulated) throw new InvalidOperationException("Simulation can only be run once.");
+            foreach (var defender in Defenders.Select(pair => pair.Value))
+            {
+                defender.Tier = -1;
+                defender.CostMultiplier = 1f;
+                defender.StatsMultiplier = 1f;
+            }
+
             foreach (var building in Buildings) building.ApplySideEffects(this);
             Simulated = true;
         }

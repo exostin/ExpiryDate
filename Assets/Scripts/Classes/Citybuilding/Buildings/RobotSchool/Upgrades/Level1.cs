@@ -7,5 +7,12 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
             Level = 1;
             ModelName = "RobotSchool1";
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Robot].Tier = 0;
+        }
     }
 }

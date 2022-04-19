@@ -13,5 +13,12 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
                 Energy = 30
             };
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Medic].StatsMultiplier = 1.1f;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace Classes.Citybuilding
         public int CurrentUpgradeLevel;
         public string Description;
         public string Name;
-        public BuildingUpgrade[] Upgrades;
+        public BuildingUpgrade[] Upgrades; // it's important to have this in the order of the levels
 
         public Building(int level, Action<int> setLevel)
         {

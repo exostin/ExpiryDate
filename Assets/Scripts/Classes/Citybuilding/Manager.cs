@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Classes.Citybuilding.Buildings.DroneSchool;
 using Classes.Citybuilding.Buildings.EnergyGenerator;
 using Classes.Citybuilding.Buildings.FighterSchool;
@@ -15,17 +16,16 @@ namespace Classes.Citybuilding
 {
     public class Manager
     {
-        public Defender[] Defenders =
+        public Dictionary<DefenderType, Defender> Defenders = new()
         {
-            new(DefenderType.Drone),
-            new(DefenderType.Fighter),
-            new(DefenderType.Robot),
-            new(DefenderType.Shooter),
-            new(DefenderType.Medic)
+            {DefenderType.Drone, new Defender(DefenderType.Drone)},
+            {DefenderType.Fighter, new Defender(DefenderType.Fighter)},
+            {DefenderType.Robot, new Defender(DefenderType.Robot)},
+            {DefenderType.Shooter, new Defender(DefenderType.Shooter)},
+            {DefenderType.Medic, new Defender(DefenderType.Medic)}
         };
 
         public Resources PlayerResources;
-
 
         public Simulation Simulation;
 
@@ -36,8 +36,9 @@ namespace Classes.Citybuilding
             $"EnergyGenerator: {energyGeneratorLevel} TitanGenerator: {titanGeneratorLevel}\n" +
             $"PlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} " +
             $"Food: {PlayerResources.Food} Water: {PlayerResources.Water}\n" +
-            $"Defenders: Drone: {Defenders[0].Amount} Fighter: {Defenders[1].Amount} Robot: {Defenders[2].Amount} " +
-            $"Shooter: {Defenders[3].Amount} Medic: {Defenders[4].Amount}";
+            $"Defenders: Drone: {Defenders[DefenderType.Drone].Amount} Fighter: {Defenders[DefenderType.Fighter].Amount} " +
+            $"Robot: {Defenders[DefenderType.Robot].Amount} Shooter: {Defenders[DefenderType.Shooter].Amount} " +
+            $"Medic: {Defenders[DefenderType.Medic].Amount}";
 
         public void Load()
         {
@@ -109,7 +110,8 @@ namespace Classes.Citybuilding
                     {cbm = this},
                 MedicSchool = new MedicSchool(medicSchoolLevel, newLevel => { medicSchoolLevel = newLevel; })
                     {cbm = this},
-                MainCamp = new MainCamp(mainCampLevel, newLevel => { mainCampLevel = newLevel; }) {cbm = this}
+                MainCamp = new MainCamp(mainCampLevel, newLevel => { mainCampLevel = newLevel; }) {cbm = this},
+                Defenders = Defenders
             };
             Simulation.Run();
         }
