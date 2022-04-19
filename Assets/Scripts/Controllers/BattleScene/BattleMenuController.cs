@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +6,6 @@ using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -17,7 +14,9 @@ namespace Controllers.BattleScene
 {
     public class BattleMenuController : MonoBehaviour
     {
-        public GameManager gm;
+        private GameManager gm;
+        private PostProcessingController postProcessingController;
+        
         public List<GameObject> playerCharacters;
         public List<GameObject> enemyCharacters;
         private readonly BattleMenuActions battleMenuActions = new();
@@ -58,24 +57,11 @@ namespace Controllers.BattleScene
         [SerializeField] private float timeBeforeBattleStart;
 
         #endregion
-        
-        #region Post Processing
-
-        [SerializeField] private Volume postprocessingVolume;
-        [SerializeField] private float defaultVignetteIntensity;
-        [SerializeField] private float enemyTurnVignetteIntensity;
-        [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
-        private Vignette vignette;
-        [SerializeField] private Color defaultVignette;
-        [SerializeField] private Color enemyTurnVignette;
-        private ChromaticAberration chromaticAberration;
-
-        #endregion
 
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
-            GetPostProcessingReferences();
+            postProcessingController = FindObjectOfType<PostProcessingController>();
 
             #region Creating variables related to characters
             
@@ -103,19 +89,6 @@ namespace Controllers.BattleScene
         private void InitializeAllCharactersDefaultStats()
         {
             foreach (var character in battleQueue) character.Initialize();
-        }
-
-        /// <summary>
-        ///     Get references to post processing components
-        /// </summary>
-        /// <exception cref="NullReferenceException"></exception>
-        private void GetPostProcessingReferences()
-        {
-            var postprocessingVolumeProfile = postprocessingVolume.GetComponent<Volume>()?.profile;
-            if (!postprocessingVolumeProfile) throw new NullReferenceException(nameof(VolumeProfile));
-            if (!postprocessingVolumeProfile.TryGet(out vignette)) throw new NullReferenceException(nameof(vignette));
-            if (!postprocessingVolumeProfile.TryGet(out chromaticAberration))
-                throw new NullReferenceException(nameof(chromaticAberration));
         }
 
         /// <summary>
@@ -210,7 +183,7 @@ namespace Controllers.BattleScene
                 if (character.isOwnedByPlayer)
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                    ToggleEnemyTurnPostEffects();
+                    postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     ToggleAbilityButtonsVisibility(true);
                     UpdateSkillButtons(character);
@@ -220,7 +193,7 @@ namespace Controllers.BattleScene
                     Debug.Log("Player finalized his move!");
                     battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility,
                         soAllCharacters, true);
-                    StartCoroutine(MakeAttackPostEffects());
+                    StartCoroutine(postProcessingController.MakeAttackPostEffects());
                     ToggleAbilityButtonsVisibility(false);
                     playerSelectedAbility = null;
                     playerSelectedTarget = null;
@@ -228,7 +201,7 @@ namespace Controllers.BattleScene
                 else
                 {
                     gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
-                    ToggleEnemyTurnPostEffects();
+                    postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
                     var enemySelectedTarget = targetsForEnemyPool[randomTargetIndex];
@@ -236,7 +209,7 @@ namespace Controllers.BattleScene
                     var enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
                     battleMenuActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
-                    StartCoroutine(MakeAttackPostEffects());
+                    StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
                 DisableSelectionIndicators();
                 LetPlayerChooseTarget(false);
@@ -245,38 +218,6 @@ namespace Controllers.BattleScene
             }
 
             gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
-        }
-
-        /// <summary>
-        ///     Toggles post effects that should be visible during the enemy turn
-        /// </summary>
-        private void ToggleEnemyTurnPostEffects()
-        {
-            vignette.intensity.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn
-                ? enemyTurnVignetteIntensity
-                : defaultVignetteIntensity);
-            vignette.color.Override(gm.stateController.fsm.State == StateController.States.EnemyTurn
-                ? enemyTurnVignette
-                : defaultVignette);
-        }
-
-        /// <summary>
-        ///     Toggles post effects that should be visible when a character makes an attack
-        /// </summary>
-        private IEnumerator MakeAttackPostEffects()
-        {
-            for (float i = 0; i < attackChromaticAberrationIntensity; i += 0.05f)
-            {
-                Debug.Log($"Setting chromatic aberration to: {i}, actual: {attackChromaticAberrationIntensity}");
-                chromaticAberration.intensity.Override(i);
-                yield return new WaitForSecondsRealtime(0.02f);
-            }
-
-            for (var i = attackChromaticAberrationIntensity; i > 0; i -= 0.05f)
-            {
-                chromaticAberration.intensity.Override(i);
-                yield return new WaitForSecondsRealtime(0.02f);
-            }
         }
 
         /// <summary>

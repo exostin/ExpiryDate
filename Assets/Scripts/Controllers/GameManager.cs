@@ -7,7 +7,6 @@ namespace Controllers
 {
     public class GameManager : MonoBehaviour
     {
-        // Definitely could be done better, but the milestone is approaching and I had to do it ad hoc
         public StateController stateController;
 
         [SerializeField] private GameObject pauseMenu;
@@ -20,7 +19,8 @@ namespace Controllers
                 .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
                 .GetComponent<SettingsMenuController>()
                 .Initialize();
-            stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
+            //stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
+            stateController = FindObjectOfType<StateController>();
             cbm = new Manager();
         }
 
