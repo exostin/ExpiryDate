@@ -15,11 +15,29 @@ namespace Classes.Citybuilding
 {
     public class Manager
     {
+        public Defender[] Defenders =
+        {
+            new(DefenderType.Drone),
+            new(DefenderType.Fighter),
+            new(DefenderType.Robot),
+            new(DefenderType.Shooter),
+            new(DefenderType.Medic)
+        };
+
         public Resources PlayerResources;
+
+
         public Simulation Simulation;
 
         public string DebugStatus =>
-            $"FighterSchool: {fighterSchoolLevel} ShooterSchool: {shooterSchoolLevel} RobotSchool: {robotSchoolLevel} DroneSchool: {droneSchoolLevel} MedicSchool: {medicSchoolLevel} MainCamp: {mainCampLevel} FoodGenerator: {foodGeneratorLevel} WaterGenerator: {waterGeneratorLevel} EnergyGenerator: {energyGeneratorLevel} TitanGenerator: {titanGeneratorLevel}\nPlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} Food: {PlayerResources.Food} Water: {PlayerResources.Water}";
+            $"FighterSchool: {fighterSchoolLevel} ShooterSchool: {shooterSchoolLevel} RobotSchool: {robotSchoolLevel} " +
+            $"DroneSchool: {droneSchoolLevel} MedicSchool: {medicSchoolLevel} MainCamp: {mainCampLevel} " +
+            $"FoodGenerator: {foodGeneratorLevel} WaterGenerator: {waterGeneratorLevel} " +
+            $"EnergyGenerator: {energyGeneratorLevel} TitanGenerator: {titanGeneratorLevel}\n" +
+            $"PlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} " +
+            $"Food: {PlayerResources.Food} Water: {PlayerResources.Water}\n" +
+            $"Defenders: Drone: {Defenders[0].Amount} Fighter: {Defenders[1].Amount} Robot: {Defenders[2].Amount} " +
+            $"Shooter: {Defenders[3].Amount} Medic: {Defenders[4].Amount}";
 
         public void Load()
         {
