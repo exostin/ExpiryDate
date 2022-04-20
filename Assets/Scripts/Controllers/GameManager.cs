@@ -55,7 +55,7 @@ namespace Controllers
 
             #endregion
 
-            // TODO: Copy costs from excel, make ui for buying defenders, link scriptable objects to gm in unity
+            // TODO: Copy costs from excel, make ui for buying defenders
         }
 
         public void TogglePauseMenu()
