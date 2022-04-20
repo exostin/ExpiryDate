@@ -16,8 +16,7 @@ public class StateController : MonoBehaviour
         SelectingTarget,
         GameEnded
     }
-
-    // should be private
+    
     public StateMachine<States, StateDriverUnity> fsm;
 
     private void Awake()
@@ -35,6 +34,7 @@ public class StateController : MonoBehaviour
     //We can return a coroutine, this is useful animations and the like
     private IEnumerator Countdown_Enter()
     {
+        Debug.Log("Entering Countdown state");
         yield return new WaitForSecondsRealtime(1f);
 
         fsm.ChangeState(States.Playing);
@@ -42,6 +42,7 @@ public class StateController : MonoBehaviour
 
     private void Playing_Enter()
     {
+        Debug.Log("Entering Playing state");
     }
 
     private void Playing_Update()
@@ -50,31 +51,33 @@ public class StateController : MonoBehaviour
 
     private void Play_Exit()
     {
-        Debug.Log("Game Over");
+        Debug.Log("Exiting Play state");
     }
 
     private void Lose_Enter()
     {
-        Debug.Log("Lost");
+        Debug.Log("Entering Lose state");
     }
 
     private void Win_Enter()
     {
-        Debug.Log("Won");
+        Debug.Log("Entering Win state");
     }
 
     private void Pause_Enter()
     {
+        Debug.Log("Entering Pause state");
         Time.timeScale = 0f;
     }
 
     private void Pause_Exit()
     {
+        Debug.Log("Exiting Pause state");
         Time.timeScale = 1f;
     }
 
     private void PlayerTurn_Enter()
     {
-        Time.timeScale = 0f;
+        Debug.Log("Entering player turn state");
     }
 }
