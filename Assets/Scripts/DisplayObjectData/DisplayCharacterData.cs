@@ -16,7 +16,7 @@ namespace DisplayObjectData
         [SerializeField] private TMP_Text healthTextContainer;
         [SerializeField] private Slider hpSlider;
 
-        [SerializeField] private BattleMenuController battleMenuController;
+        [SerializeField] private BattleController battleController;
 
         private void Start()
         {
@@ -35,8 +35,8 @@ namespace DisplayObjectData
         public void SelectAsATarget()
         {
             Debug.Log($"Target selected: {character.name}, ending turn");
-            battleMenuController.playerSelectedTarget = character;
-            battleMenuController.EndPlayerTurn();
+            battleController.playerSelectedTarget = character;
+            battleController.EndPlayerTurn();
         }
     }
 }

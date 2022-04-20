@@ -14,7 +14,7 @@ namespace DisplayObjectData
         [SerializeField] private Image image;
         [SerializeField] private TMP_Text nameTextContainer;
         [SerializeField] private TMP_Text damageTextContainer;
-        [SerializeField] private BattleMenuController battleMenuController;
+        [SerializeField] private BattleController battleController;
 
         public void UpdateAbilityDisplay()
         {
@@ -44,7 +44,7 @@ namespace DisplayObjectData
         public void SelectAsAbilityForUse()
         {
             Debug.Log($"Selected: {ability.name}");
-            battleMenuController.playerSelectedAbility = ability;
+            battleController.playerSelectedAbility = ability;
         }
     }
 }
