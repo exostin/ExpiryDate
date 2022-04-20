@@ -13,5 +13,12 @@ namespace Classes.Citybuilding.Buildings.DroneSchool.Upgrades
             };
             ModelName = "DroneSchool2";
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Drone].Tier = 1;
+        }
     }
 }

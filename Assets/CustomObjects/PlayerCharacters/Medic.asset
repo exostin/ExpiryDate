@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: Medic
   m_EditorClassIdentifier: 
   characterName: Medic
-  health: 1000
   maxHealth: 1000
   initiative: 7
+  isOwnedByPlayer: 1
+  artwork: {fileID: 21300000, guid: a049ab85a9da7174b8416903feca20c3, type: 3}
   abilities:
   - {fileID: 11400000, guid: ec0902869f35a6940a8c73ea854ab83b, type: 2}
   - {fileID: 11400000, guid: 8f347fb90e6af684f94323be98c54c27, type: 2}
   - {fileID: 11400000, guid: aabcc686a53cfe14ea8199a17a5a7443, type: 2}
   - {fileID: 11400000, guid: 5199eb4fd0dd2c14b885079e6c390ce9, type: 2}
-  isOwnedByPlayer: 1
+  costTitan: 30
+  costWater: 50
+  costFood: 50
+  costEnergy: 30
+  health: 1000
   isDead: 0
-  artwork: {fileID: 21300000, guid: a049ab85a9da7174b8416903feca20c3, type: 3}

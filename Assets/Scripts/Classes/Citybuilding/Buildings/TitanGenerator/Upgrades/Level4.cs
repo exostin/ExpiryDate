@@ -13,5 +13,12 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator.Upgrades
                 Food = 20
             };
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Shooter].StatsMultiplier = 1.1f;
+        }
     }
 }

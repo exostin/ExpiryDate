@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Classes.Citybuilding.Buildings;
 using Classes.Citybuilding.Buildings.DroneSchool;
 using Classes.Citybuilding.Buildings.EnergyGenerator;
@@ -16,6 +18,8 @@ namespace Classes.Citybuilding
 {
     public class Simulation
     {
+        public Manager cbm;
+        public Dictionary<DefenderType, Defender> Defenders;
         public bool Simulated;
 
         public Building[] Buildings => new Building[]
@@ -44,6 +48,13 @@ namespace Classes.Citybuilding
         public void Run()
         {
             if (Simulated) throw new InvalidOperationException("Simulation can only be run once.");
+            foreach (var defender in Defenders.Select(pair => pair.Value))
+            {
+                defender.Tier = -1;
+                defender.CostMultiplier = 1f;
+                defender.StatsMultiplier = 1f;
+            }
+
             foreach (var building in Buildings) building.ApplySideEffects(this);
             Simulated = true;
         }
@@ -55,6 +66,22 @@ namespace Classes.Citybuilding
                 building.cbm = cbm;
                 building.OnNextDay();
             }
+        }
+
+        public void BuyDefender(DefenderType defenderType)
+        {
+            // TODO: Make custom exceptions that future ui can catch
+
+            if (!Simulated) throw new InvalidOperationException("Simulation must be run before buying defenders.");
+            if (Defenders[defenderType].Amount >= 3)
+                throw new InvalidOperationException("You can't buy more than 3 defenders of the same type.");
+            if (cbm.DefenderBought) throw new InvalidOperationException("You can buy only one defender per round.");
+            if (Defenders[defenderType].ActualCost > cbm.PlayerResources)
+                throw new InvalidOperationException("Not enough resources.");
+
+            cbm.PlayerResources -= Defenders[defenderType].ActualCost;
+            Defenders[defenderType].Amount++;
+            cbm.DefenderBought = true;
         }
 
         #region Buildings
