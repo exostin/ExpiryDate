@@ -9,9 +9,17 @@ namespace Controllers
     {
         public StateController stateController;
 
+        #region Start/Pause menu
+        
         [SerializeField] private GameObject pauseMenu;
+        
+        #endregion
 
+        #region CityBuilding
+        
         public Manager cbm;
+        
+        #endregion
 
         private void Start()
         {
