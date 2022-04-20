@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2015,6 +2015,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateController: {fileID: 309716534}
   pauseMenu: {fileID: 1417582643}
+  fighterCharacter: {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}
+  shooterCharacter: {fileID: 11400000, guid: 2f3909f7c609ec641b70d7021260e029, type: 2}
+  medicCharacter: {fileID: 11400000, guid: 31019430c41a14c47ace8e500f4ec064, type: 2}
+  robotCharacter: {fileID: 11400000, guid: 212c70b4ddeb83e4c8dcea27603d03ac, type: 2}
+  droneCharacter: {fileID: 11400000, guid: 93de91982900e554ea4502a157a8d6ac, type: 2}
 --- !u!1 &1176276181
 GameObject:
   m_ObjectHideFlags: 0
