@@ -4,25 +4,24 @@ using System.Linq;
 using Classes;
 using DisplayObjectData;
 using ScriptableObjects;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
 {
-    public class BattleMenuController : MonoBehaviour
+    public class BattleController : MonoBehaviour
     {
         private GameManager gm;
+        private StateController stateController;
         private PostProcessingController postProcessingController;
+        private BattleUIController battleUIController;
         
         public List<GameObject> playerCharacters;
         public List<GameObject> enemyCharacters;
         private readonly BattleMenuActions battleMenuActions = new();
-        private List<GameObject> allCharacters;
+        public List<GameObject> allCharacters;
         private bool playerWon;
-        
+
         #region Scriptable Objects
 
         // so - scriptable object
@@ -34,23 +33,10 @@ namespace Controllers.BattleScene
 
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
-        private List<Character> battleQueue = new();
+        public List<Character> battleQueue = new();
         private List<Character> soAllCharacters;
 
         #endregion
-
-        #region UI Elements
-
-        [SerializeField] private GameObject[] skillButtons;
-        [SerializeField] private GameObject targetIndicator;
-        [SerializeField] private GameObject abilityIndicator;
-        private int turnCounter;
-        [SerializeField] private TMP_Text turnCounterText;
-        [SerializeField] private GameObject playerWonCanvas;
-        [SerializeField] private GameObject playerLostCanvas;
-
-        #endregion
-
         #region Delays, offsets etc.
 
         [SerializeField] private float delayBetweenActions;
@@ -61,7 +47,9 @@ namespace Controllers.BattleScene
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
+            stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
+            battleUIController = FindObjectOfType<BattleUIController>();
 
             #region Creating variables related to characters
             
@@ -74,9 +62,9 @@ namespace Controllers.BattleScene
             #endregion
 
             #region UI elements
-
-            LetPlayerChooseTarget(false);
-            ToggleAbilityButtonsVisibility(false);
+            
+            battleUIController.LetPlayerChooseTarget(false);
+            battleUIController.ToggleAbilityButtonsVisibility(false);
 
             #endregion
             
@@ -140,7 +128,6 @@ namespace Controllers.BattleScene
         /// <summary>
         ///     Starts a whole battle consisting of multiple turns
         /// </summary>
-        /// <returns></returns>
         private IEnumerator PlayBattle()
         {
             yield return new WaitForSecondsRealtime(timeBeforeBattleStart);
@@ -148,16 +135,14 @@ namespace Controllers.BattleScene
             {
                 StartCoroutine(MakeTurn());
                 yield return new WaitUntil(
-                    () => gm.stateController.fsm.State == StateController.States.ReadyForNextTurn);
+                    () => stateController.fsm.State == StateController.States.ReadyForNextTurn);
             }
-
             StartCoroutine(GameEnd());
         }
 
         /// <summary>
         ///     Makes a turn consisting of one action for each character in the battle queue
         /// </summary>
-        /// <returns></returns>
         private IEnumerator MakeTurn()
         {
             UpdateTurnCounter();
@@ -182,14 +167,14 @@ namespace Controllers.BattleScene
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
                 if (character.isOwnedByPlayer)
                 {
-                    gm.stateController.fsm.ChangeState(StateController.States.PlayerTurn);
+                    stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     ToggleAbilityButtonsVisibility(true);
                     UpdateSkillButtons(character);
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() =>
-                        gm.stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
+                        stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
                     battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility,
                         soAllCharacters, true);
@@ -200,7 +185,7 @@ namespace Controllers.BattleScene
                 }
                 else
                 {
-                    gm.stateController.fsm.ChangeState(StateController.States.EnemyTurn);
+                    stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
@@ -217,16 +202,7 @@ namespace Controllers.BattleScene
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
 
-            gm.stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
-        }
-
-        /// <summary>
-        ///     Increment the turn counter and show it on the screen
-        /// </summary>
-        private void UpdateTurnCounter()
-        {
-            turnCounter++;
-            turnCounterText.text = "Turn: " + turnCounter;
+            stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
 
         /// <summary>
@@ -250,7 +226,7 @@ namespace Controllers.BattleScene
         {
             Debug.Log(
                 $"Full end-turn data dump: " +
-                $"State: {gm.stateController.fsm.State}, " +
+                $"State: {stateController.fsm.State}, " +
                 $"Selected ability: {playerSelectedAbility}," +
                 $"Selected target: {playerSelectedTarget}, is the target dead?: {playerSelectedTarget.isDead}, " +
                 $"Targets for player pool: {targetsForPlayerPool}, Targets for enemy pool: {targetsForEnemyPool}" +
@@ -259,14 +235,14 @@ namespace Controllers.BattleScene
                 $"Does the ability target whole team?: {playerSelectedAbility.targetsWholeTeam}," +
                 $"Is the ability a heal?: {playerSelectedAbility.heal}, is the ability a buff?: {playerSelectedAbility.buff}");
                 
-            if (gm.stateController.fsm.State == StateController.States.SelectingTarget &&
+            if (stateController.fsm.State == StateController.States.SelectingTarget &&
                 playerSelectedAbility != null && playerSelectedTarget != null && !playerSelectedTarget.isDead)
             {
                 if (targetsForPlayerPool.Contains(playerSelectedTarget) &&
                     !playerSelectedAbility.canOnlyTargetOwnCharacters)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
-                    gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                    stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                 }
                 else
                 {
@@ -275,13 +251,13 @@ namespace Controllers.BattleScene
                         if (playerSelectedAbility.buff && playerSelectedAbility.usedOnlyOnSelf)
                         {
                             Debug.Log("Buffing own character, setting state to PlayerFinalizedHisMove");
-                            gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                            stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                         }
                         else
                         {
                             Debug.Log(
                                 "Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove.");
-                            gm.stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                            stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                         }
                     }
                     else
@@ -297,72 +273,6 @@ namespace Controllers.BattleScene
                 Debug.Log("No ability and/or target chosen!");
             }
         }
-        
-        /// <summary>
-        ///     Disable/enable interactability of all characters buttons
-        /// </summary>
-        /// <param name="choice">true/false</param>
-        private void LetPlayerChooseTarget(bool choice)
-        {
-            Debug.Log($"Setting interactability with characters to: {choice}");
-            foreach (var character in battleQueue)
-            foreach (var g in allCharacters.Where(g =>
-                         g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
-                g.GetComponent<Button>().interactable = choice;
-        }
 
-        /// <summary>
-        ///     Set all ability data to match the character which turn it is
-        /// </summary>
-        /// <param name="currentCharacter">character which turn it currently is</param>
-        private void UpdateSkillButtons(Character currentCharacter)
-        {
-            Debug.Log("Updating ability info");
-            for (var i = 0; i <= 3; i++)
-            {
-                skillButtons[i].GetComponent<DisplayAbilityData>().ability = currentCharacter.abilities[i];
-                skillButtons[i].GetComponent<DisplayAbilityData>().UpdateAbilityDisplay();
-            }
-        }
-
-        private void ToggleAbilityButtonsVisibility(bool enable)
-        {
-            Debug.Log($"Setting visibility of abilities to {enable}");
-            for (var i = 0; i <= 3; i++) skillButtons[i].gameObject.SetActive(enable);
-        }
-
-        /// <summary>
-        ///     Disable the indicators that show what ability and target is currently selected by the player
-        /// </summary>
-        private void DisableSelectionIndicators()
-        {
-            targetIndicator.SetActive(false);
-            abilityIndicator.SetActive(false);
-        }
-
-        /// <summary>
-        ///     Start game end sequence
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerator GameEnd()
-        {
-            gm.stateController.fsm.ChangeState(StateController.States.GameEnded);
-            Debug.Log($"Game ended, player won: {playerWon}");
-            Instantiate(playerWon ? playerWonCanvas : playerLostCanvas);
-            yield return new WaitForSecondsRealtime(2.8f);
-            SceneManager.LoadScene(1);
-            gm.stateController.fsm.ChangeState(StateController.States.Playing);
-        }
-        
-        #region Functions invoked only by buttons inside the UI
-
-        public void StartTargetSelectionState()
-        {
-            gm.stateController.fsm.ChangeState(StateController.States.SelectingTarget);
-            LetPlayerChooseTarget(true);
-        }
-
-        #endregion
-        
     }
 }

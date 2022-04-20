@@ -17,7 +17,7 @@ namespace Controllers.BattleScene
         [SerializeField] private Color enemyTurnVignette;
         private ChromaticAberration chromaticAberration;
 
-        void Start()
+        private void Start()
         {
             GetPostProcessingReferences();
         }
