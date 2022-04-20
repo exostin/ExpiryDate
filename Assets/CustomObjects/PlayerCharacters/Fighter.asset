@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: Fighter
   m_EditorClassIdentifier: 
   characterName: Fighter
-  health: 1000
   maxHealth: 1000
   initiative: 9
+  isOwnedByPlayer: 1
+  artwork: {fileID: 21300000, guid: 150d6518f6592e14b99822cf5ad269d5, type: 3}
   abilities:
   - {fileID: 11400000, guid: 5b55d97a8fc614b4aa8552b9356099e7, type: 2}
   - {fileID: 11400000, guid: aeb8bb4d2a0989240bbbcb29f99f617e, type: 2}
   - {fileID: 11400000, guid: 4af19a533c09e92469888d88ac5bcfa0, type: 2}
   - {fileID: 11400000, guid: 07c2feaddd5074d45978927a999292d2, type: 2}
-  isOwnedByPlayer: 1
+  costTitan: 30
+  costWater: 50
+  costFood: 50
+  costEnergy: 30
+  health: 1000
   isDead: 0
-  artwork: {fileID: 21300000, guid: 150d6518f6592e14b99822cf5ad269d5, type: 3}
