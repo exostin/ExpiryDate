@@ -18,6 +18,7 @@ namespace Classes.Citybuilding
 {
     public class Simulation
     {
+        public Manager cbm;
         public Dictionary<DefenderType, Defender> Defenders;
         public bool Simulated;
 
@@ -65,6 +66,22 @@ namespace Classes.Citybuilding
                 building.cbm = cbm;
                 building.OnNextDay();
             }
+        }
+
+        public void BuyDefender(DefenderType defenderType)
+        {
+            // TODO: Make custom exceptions that future ui can catch
+
+            if (!Simulated) throw new InvalidOperationException("Simulation must be run before buying defenders.");
+            if (Defenders[defenderType].Amount >= 3)
+                throw new InvalidOperationException("You can't buy more than 3 defenders of the same type.");
+            if (cbm.DefenderBought) throw new InvalidOperationException("You can buy only one defender per round.");
+            if (Defenders[defenderType].ActualCost > cbm.PlayerResources)
+                throw new InvalidOperationException("Not enough resources.");
+
+            cbm.PlayerResources -= Defenders[defenderType].ActualCost;
+            Defenders[defenderType].Amount++;
+            cbm.DefenderBought = true;
         }
 
         #region Buildings

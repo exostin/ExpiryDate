@@ -16,6 +16,8 @@ namespace Classes.Citybuilding
 {
     public class Manager
     {
+        public bool DefenderBought;
+
         public Dictionary<DefenderType, Defender> Defenders = new()
         {
             {DefenderType.Drone, new Defender(DefenderType.Drone)},
@@ -111,13 +113,15 @@ namespace Classes.Citybuilding
                 MedicSchool = new MedicSchool(medicSchoolLevel, newLevel => { medicSchoolLevel = newLevel; })
                     {cbm = this},
                 MainCamp = new MainCamp(mainCampLevel, newLevel => { mainCampLevel = newLevel; }) {cbm = this},
-                Defenders = Defenders
+                Defenders = Defenders,
+                cbm = this
             };
             Simulation.Run();
         }
 
         public void OnNextDay()
         {
+            DefenderBought = false;
             RunSimulation();
             Simulation.OnNextDay(this);
         }
