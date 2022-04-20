@@ -64,6 +64,9 @@ namespace Classes.Citybuilding
             medicSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/MedicSchool", 1);
             mainCampLevel = PlayerPrefs.GetInt("PlayerBuildings/MainCamp", 1);
 
+            foreach (var defender in Defenders)
+                defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 0);
+
             RunSimulation();
         }
 
@@ -84,6 +87,9 @@ namespace Classes.Citybuilding
             PlayerPrefs.SetInt("PlayerBuildings/RobotSchool", robotSchoolLevel);
             PlayerPrefs.SetInt("PlayerBuildings/DroneSchool", droneSchoolLevel);
             PlayerPrefs.SetInt("PlayerBuildings/MedicSchool", medicSchoolLevel);
+
+            foreach (var defender in Defenders)
+                PlayerPrefs.SetInt($"PlayerDefenders/{defender.Key}", defender.Value.Amount);
         }
 
         public void RunSimulation()
