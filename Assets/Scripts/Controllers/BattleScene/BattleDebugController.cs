@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Controllers.BattleScene
@@ -14,15 +13,21 @@ namespace Controllers.BattleScene
             stateController = FindObjectOfType<StateController>();
         }
 
+        /// <summary>
+        ///     Kill all player characters
+        /// </summary>
         public void LoseBattle()
         {
-            battleController.soPlayerCharacters.ForEach(c => c.health = 0);
+            foreach (var c in battleController.SoPlayerCharacters) c.health = 0;
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
 
+        /// <summary>
+        ///     Kill all enemy characters
+        /// </summary>
         public void WinBattle()
         {
-            battleController.soEnemyCharacters.ForEach(c => c.health = 0);
+            foreach (var c in battleController.SoEnemyCharacters) c.health = 0;
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
     }

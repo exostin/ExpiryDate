@@ -1,4 +1,3 @@
-using Controllers;
 using Controllers.BattleScene;
 using ScriptableObjects;
 using TMPro;
@@ -16,10 +15,11 @@ namespace DisplayObjectData
         [SerializeField] private TMP_Text healthTextContainer;
         [SerializeField] private Slider hpSlider;
 
-        [SerializeField] private BattleController battleController;
+        private BattleController battleController;
 
         private void Start()
         {
+            battleController = FindObjectOfType<BattleController>();
             hpSlider.maxValue = character.maxHealth;
             hpSlider.value = character.maxHealth;
             nameTextContainer.text = character.characterName;
@@ -35,7 +35,7 @@ namespace DisplayObjectData
         public void SelectAsATarget()
         {
             Debug.Log($"Target selected: {character.name}, ending turn");
-            battleController.playerSelectedTarget = character;
+            battleController.PlayerSelectedTarget = character;
             battleController.EndPlayerTurn();
         }
     }

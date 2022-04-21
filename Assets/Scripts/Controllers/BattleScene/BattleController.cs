@@ -5,38 +5,70 @@ using Classes;
 using DisplayObjectData;
 using ScriptableObjects;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
 {
     public class BattleController : MonoBehaviour
     {
+        #region Properties
+
+        #region Iterate-through-only lists
+
+        // Could be used here depending on need: IReadOnlyCollection/IReadOnlyList/IEnumerable
+        public IEnumerable<Character> SoPlayerCharacters => soPlayerCharacters;
+        public IEnumerable<Character> SoEnemyCharacters => soEnemyCharacters;
+        public IEnumerable<Character> BattleQueue => battleQueue;
+        public IEnumerable<GameObject> AllCharacters => allCharacters;
+
+        #endregion
+
+        #region Other
+
+        public bool PlayerWon { get; private set; }
+        public Character PlayerSelectedTarget { get; set; }
+        public Ability PlayerSelectedAbility { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Fields
+
+        #region References set automatically in Start()
+
         private GameManager gm;
         private StateController stateController;
         private PostProcessingController postProcessingController;
         private BattleUIController battleUIController;
-        
+
+        #endregion
+
+        #region GameObject Lists
+
         public List<GameObject> playerCharacters;
         public List<GameObject> enemyCharacters;
-        private readonly BattleMenuActions battleMenuActions = new();
-        public List<GameObject> allCharacters;
-        private bool playerWon;
+        private List<GameObject> allCharacters;
+
+        #endregion
+
+        #region Static class references
+
+        private readonly BattleActions battleActions = new();
+
+        #endregion
 
         #region Scriptable Objects
 
         // so - scriptable object
-        [HideInInspector] public List<Character> soPlayerCharacters;
-        [HideInInspector] public List<Character> soEnemyCharacters;
-
-        [HideInInspector] public Character playerSelectedTarget;
-        [HideInInspector] public Ability playerSelectedAbility;
-
+        private readonly List<Character> soPlayerCharacters = new();
+        private readonly List<Character> soEnemyCharacters = new();
+        private List<Character> battleQueue;
+        private List<Character> soAllCharacters;
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
-        public List<Character> battleQueue = new();
-        private List<Character> soAllCharacters;
 
         #endregion
+
         #region Delays, offsets etc.
 
         [SerializeField] private float delayBetweenActions;
@@ -44,6 +76,7 @@ namespace Controllers.BattleScene
 
         #endregion
 
+        #endregion
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -52,22 +85,22 @@ namespace Controllers.BattleScene
             battleUIController = FindObjectOfType<BattleUIController>();
 
             #region Creating variables related to characters
-            
+
             allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
             ExtractCharactersData();
             CreateTargetPools();
             CreateQueue();
             InitializeAllCharactersDefaultStats();
-            
+
             #endregion
 
             #region UI elements
-            
+
             battleUIController.LetPlayerChooseTarget(false);
             battleUIController.ToggleAbilityButtonsVisibility(false);
 
             #endregion
-            
+
             StartCoroutine(PlayBattle());
         }
 
@@ -116,15 +149,17 @@ namespace Controllers.BattleScene
         /// <returns></returns>
         private bool CheckIfAnySideWon()
         {
-            playerWon = soPlayerCharacters.Any(character => character.health > 0) &&
+            PlayerWon = soPlayerCharacters.Any(character => character.health > 0) &&
                         soEnemyCharacters.All(character => character.health <= 0);
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return soPlayerCharacters.Any(character => character.health > 0) &&
-                   soEnemyCharacters.All(character => character.health <= 0)
-                   || soPlayerCharacters.All(character => character.health <= 0) &&
-                   soEnemyCharacters.Any(character => character.health > 0);
+            return (soPlayerCharacters.Any(character => character.health > 0) &&
+                    soEnemyCharacters.All(character => character.health <= 0))
+                   || (soPlayerCharacters.All(character => character.health <= 0) &&
+                       soEnemyCharacters.Any(character => character.health > 0));
         }
+        
 
+        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         ///     Starts a whole battle consisting of multiple turns
         /// </summary>
@@ -137,15 +172,17 @@ namespace Controllers.BattleScene
                 yield return new WaitUntil(
                     () => stateController.fsm.State == StateController.States.ReadyForNextTurn);
             }
-            StartCoroutine(GameEnd());
+
+            StartCoroutine(battleUIController.GameEnd());
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         ///     Makes a turn consisting of one action for each character in the battle queue
         /// </summary>
         private IEnumerator MakeTurn()
         {
-            UpdateTurnCounter();
+            battleUIController.UpdateTurnCounter();
 
             foreach (var character in battleQueue.ToList())
             {
@@ -170,18 +207,18 @@ namespace Controllers.BattleScene
                     stateController.fsm.ChangeState(StateController.States.PlayerTurn);
                     postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
-                    ToggleAbilityButtonsVisibility(true);
-                    UpdateSkillButtons(character);
+                    battleUIController.ToggleAbilityButtonsVisibility(true);
+                    battleUIController.UpdateSkillButtons(character);
                     // Wait until player does his turn and then continue
                     yield return new WaitUntil(() =>
                         stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    battleMenuActions.MakeAction(character, playerSelectedTarget, playerSelectedAbility,
+                    battleActions.MakeAction(character, PlayerSelectedTarget, PlayerSelectedAbility,
                         soAllCharacters, true);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
-                    ToggleAbilityButtonsVisibility(false);
-                    playerSelectedAbility = null;
-                    playerSelectedTarget = null;
+                    battleUIController.ToggleAbilityButtonsVisibility(false);
+                    PlayerSelectedAbility = null;
+                    PlayerSelectedTarget = null;
                 }
                 else
                 {
@@ -192,12 +229,13 @@ namespace Controllers.BattleScene
                     var enemySelectedTarget = targetsForEnemyPool[randomTargetIndex];
                     var randomEnemyAbilityIndex = Random.Range(0, character.abilities.Length);
                     var enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
-                    battleMenuActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters,
+                    battleActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
-                DisableSelectionIndicators();
-                LetPlayerChooseTarget(false);
+
+                battleUIController.DisableSelectionIndicators();
+                battleUIController.LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
@@ -225,30 +263,30 @@ namespace Controllers.BattleScene
         public void EndPlayerTurn()
         {
             Debug.Log(
-                $"Full end-turn data dump: " +
+                "Full end-turn data dump: " +
                 $"State: {stateController.fsm.State}, " +
-                $"Selected ability: {playerSelectedAbility}," +
-                $"Selected target: {playerSelectedTarget}, is the target dead?: {playerSelectedTarget.isDead}, " +
+                $"Selected ability: {PlayerSelectedAbility}," +
+                $"Selected target: {PlayerSelectedTarget}, is the target dead?: {PlayerSelectedTarget.isDead}, " +
                 $"Targets for player pool: {targetsForPlayerPool}, Targets for enemy pool: {targetsForEnemyPool}" +
-                $"Can the ability target only allies?: {playerSelectedAbility.canOnlyTargetOwnCharacters}," +
-                $"Can the ability target only the caster?: {playerSelectedAbility.usedOnlyOnSelf}," +
-                $"Does the ability target whole team?: {playerSelectedAbility.targetsWholeTeam}," +
-                $"Is the ability a heal?: {playerSelectedAbility.heal}, is the ability a buff?: {playerSelectedAbility.buff}");
-                
+                $"Can the ability target only allies?: {PlayerSelectedAbility.canOnlyTargetOwnCharacters}," +
+                $"Can the ability target only the caster?: {PlayerSelectedAbility.usedOnlyOnSelf}," +
+                $"Does the ability target whole team?: {PlayerSelectedAbility.targetsWholeTeam}," +
+                $"Is the ability a heal?: {PlayerSelectedAbility.heal}, is the ability a buff?: {PlayerSelectedAbility.buff}");
+
             if (stateController.fsm.State == StateController.States.SelectingTarget &&
-                playerSelectedAbility != null && playerSelectedTarget != null && !playerSelectedTarget.isDead)
+                PlayerSelectedAbility != null && PlayerSelectedTarget != null && !PlayerSelectedTarget.isDead)
             {
-                if (targetsForPlayerPool.Contains(playerSelectedTarget) &&
-                    !playerSelectedAbility.canOnlyTargetOwnCharacters)
+                if (targetsForPlayerPool.Contains(PlayerSelectedTarget) &&
+                    !PlayerSelectedAbility.canOnlyTargetOwnCharacters)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
                     stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                 }
                 else
                 {
-                    if (playerSelectedTarget.isOwnedByPlayer && playerSelectedAbility.canOnlyTargetOwnCharacters)
+                    if (PlayerSelectedTarget.isOwnedByPlayer && PlayerSelectedAbility.canOnlyTargetOwnCharacters)
                     {
-                        if (playerSelectedAbility.buff && playerSelectedAbility.usedOnlyOnSelf)
+                        if (PlayerSelectedAbility.buff && PlayerSelectedAbility.usedOnlyOnSelf)
                         {
                             Debug.Log("Buffing own character, setting state to PlayerFinalizedHisMove");
                             stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
@@ -262,7 +300,7 @@ namespace Controllers.BattleScene
                     }
                     else
                     {
-                        Debug.Log(playerSelectedTarget.isDead
+                        Debug.Log(PlayerSelectedTarget.isDead
                             ? "You somehow selected a dead target!"
                             : "Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
                     }
@@ -273,6 +311,5 @@ namespace Controllers.BattleScene
                 Debug.Log("No ability and/or target chosen!");
             }
         }
-
     }
 }

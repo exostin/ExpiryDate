@@ -14,19 +14,19 @@ namespace Controllers.BattleScene
         [SerializeField] private GameObject[] skillButtons;
         [SerializeField] private GameObject targetIndicator;
         [SerializeField] private GameObject abilityIndicator;
-        private int turnCounter;
         [SerializeField] private TMP_Text turnCounterText;
         [SerializeField] private GameObject playerWonCanvas;
         [SerializeField] private GameObject playerLostCanvas;
-        private StateController stateController;
         private BattleController battleController;
+        private StateController stateController;
+        private int turnCounter;
 
         private void Start()
         {
             stateController = FindObjectOfType<StateController>();
             battleController = FindObjectOfType<BattleController>();
         }
-    
+
         /// <summary>
         ///     Increment the turn counter and show it on the screen
         /// </summary>
@@ -35,6 +35,7 @@ namespace Controllers.BattleScene
             turnCounter++;
             turnCounterText.text = "Turn: " + turnCounter;
         }
+
         /// <summary>
         ///     Disable/enable interactability of all characters buttons
         /// </summary>
@@ -42,9 +43,10 @@ namespace Controllers.BattleScene
         public void LetPlayerChooseTarget(bool choice)
         {
             Debug.Log($"Setting interactability with characters to: {choice}");
-            foreach (var character in battleController.battleQueue)
-            foreach (var g in battleController.allCharacters.Where(g =>
-                         g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
+            foreach (var g in battleController.BattleQueue.SelectMany(character => battleController.AllCharacters.Where(
+                         g =>
+                             g.GetComponent<DisplayCharacterData>().character.characterName ==
+                             character.characterName)))
                 g.GetComponent<Button>().interactable = choice;
         }
 
@@ -90,7 +92,7 @@ namespace Controllers.BattleScene
             SceneManager.LoadScene(1);
             stateController.fsm.ChangeState(StateController.States.Playing);
         }
-        
+
         #region Functions invoked only by buttons inside the UI
 
         public void StartTargetSelectionState()

@@ -1,27 +1,27 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Controllers.BattleScene
 {
     public class PostProcessingController : MonoBehaviour
     {
         [SerializeField] private Volume postprocessingVolume;
-        [SerializeField] private float defaultVignetteIntensity;
-        [SerializeField] private float enemyTurnVignetteIntensity;
+        [SerializeField] private float defaultVignetteIntensity = 0.328f;
+        [SerializeField] private float enemyTurnVignetteIntensity = 0.532f;
         [SerializeField] private float attackChromaticAberrationIntensity = 0.5f;
-        private Vignette vignette;
         [SerializeField] private Color defaultVignette;
         [SerializeField] private Color enemyTurnVignette;
         private ChromaticAberration chromaticAberration;
+        private Vignette vignette;
 
         private void Start()
         {
             GetPostProcessingReferences();
         }
-        
+
         /// <summary>
         ///     Get references to post processing components
         /// </summary>
@@ -34,7 +34,7 @@ namespace Controllers.BattleScene
             if (!postprocessingVolumeProfile.TryGet(out chromaticAberration))
                 throw new NullReferenceException(nameof(chromaticAberration));
         }
-        
+
         /// <summary>
         ///     Toggles post effects that should be visible during the enemy turn
         /// </summary>
