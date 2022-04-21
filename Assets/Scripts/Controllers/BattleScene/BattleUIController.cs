@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DisplayObjectData;
 
 namespace Controllers.BattleScene
 {
@@ -53,7 +52,7 @@ namespace Controllers.BattleScene
         ///     Set all ability data to match the character which turn it is
         /// </summary>
         /// <param name="currentCharacter">character which turn it currently is</param>
-        public void UpdateSkillButtons(Character currentCharacter);
+        public void UpdateSkillButtons(Character currentCharacter)
         {
             Debug.Log("Updating ability info");
             for (var i = 0; i <= 3; i++)
@@ -72,7 +71,7 @@ namespace Controllers.BattleScene
         /// <summary>
         ///     Disable the indicators that show what ability and target is currently selected by the player
         /// </summary>
-        private void DisableSelectionIndicators()
+        public void DisableSelectionIndicators()
         {
             targetIndicator.SetActive(false);
             abilityIndicator.SetActive(false);
@@ -85,8 +84,8 @@ namespace Controllers.BattleScene
         public IEnumerator GameEnd()
         {
             stateController.fsm.ChangeState(StateController.States.GameEnded);
-            Debug.Log($"Game ended, player won: {playerWon}");
-            Instantiate(playerWon ? playerWonCanvas : playerLostCanvas);
+            Debug.Log($"Game ended, player won: {battleController.PlayerWon}");
+            Instantiate(battleController.PlayerWon ? playerWonCanvas : playerLostCanvas);
             yield return new WaitForSecondsRealtime(2.8f);
             SceneManager.LoadScene(1);
             stateController.fsm.ChangeState(StateController.States.Playing);
