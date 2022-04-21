@@ -19,6 +19,7 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
         {
             base.ApplySideEffects(simulation, building);
             simulation.Housing.Upgrades[3].Unlocked = true;
+            foreach (var generatorBuilding in simulation.GeneratorBuildings) generatorBuilding.OutputMultiplier *= 1.3f;
         }
     }
 }

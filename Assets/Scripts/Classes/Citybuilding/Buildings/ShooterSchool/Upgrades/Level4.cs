@@ -13,5 +13,13 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
             };
             ModelName = "ShooterSchool4";
         }
+
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+
+            building.cbm.Defenders[DefenderType.Shooter].Tier = 3;
+            building.cbm.Defenders[DefenderType.Shooter].CostMultiplier = .8f;
+        }
     }
 }

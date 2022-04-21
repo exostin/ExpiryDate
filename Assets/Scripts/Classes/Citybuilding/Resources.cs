@@ -116,11 +116,11 @@ namespace Classes.Citybuilding
 
         public static bool operator >(Resources a, Resources b)
         {
-            if (a.Food <= b.Food) return false;
-            if (a.Titan <= b.Titan) return false;
-            if (a.Energy <= b.Energy) return false;
-            if (a.Water <= b.Water) return false;
-            return true;
+            if (a.Food > b.Food) return true;
+            if (a.Titan > b.Titan) return true;
+            if (a.Energy > b.Energy) return true;
+            if (a.Water > b.Water) return true;
+            return false;
         }
 
         public override string ToString()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Classes.Citybuilding.Buildings.DroneSchool;
 using Classes.Citybuilding.Buildings.EnergyGenerator;
 using Classes.Citybuilding.Buildings.FighterSchool;
@@ -15,11 +16,31 @@ namespace Classes.Citybuilding
 {
     public class Manager
     {
+        public bool DefenderBought;
+
+        public Dictionary<DefenderType, Defender> Defenders = new()
+        {
+            {DefenderType.Drone, new Defender(DefenderType.Drone)},
+            {DefenderType.Fighter, new Defender(DefenderType.Fighter)},
+            {DefenderType.Robot, new Defender(DefenderType.Robot)},
+            {DefenderType.Shooter, new Defender(DefenderType.Shooter)},
+            {DefenderType.Medic, new Defender(DefenderType.Medic)}
+        };
+
         public Resources PlayerResources;
+
         public Simulation Simulation;
 
         public string DebugStatus =>
-            $"FighterSchool: {fighterSchoolLevel} ShooterSchool: {shooterSchoolLevel} RobotSchool: {robotSchoolLevel} DroneSchool: {droneSchoolLevel} MedicSchool: {medicSchoolLevel} MainCamp: {mainCampLevel} FoodGenerator: {foodGeneratorLevel} WaterGenerator: {waterGeneratorLevel} EnergyGenerator: {energyGeneratorLevel} TitanGenerator: {titanGeneratorLevel}\nPlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} Food: {PlayerResources.Food} Water: {PlayerResources.Water}";
+            $"FighterSchool: {fighterSchoolLevel} ShooterSchool: {shooterSchoolLevel} RobotSchool: {robotSchoolLevel} " +
+            $"DroneSchool: {droneSchoolLevel} MedicSchool: {medicSchoolLevel} MainCamp: {mainCampLevel} " +
+            $"FoodGenerator: {foodGeneratorLevel} WaterGenerator: {waterGeneratorLevel} " +
+            $"EnergyGenerator: {energyGeneratorLevel} TitanGenerator: {titanGeneratorLevel}\n" +
+            $"PlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} " +
+            $"Food: {PlayerResources.Food} Water: {PlayerResources.Water}\n" +
+            $"Defenders: Drone: {Defenders[DefenderType.Drone].Amount} Fighter: {Defenders[DefenderType.Fighter].Amount} " +
+            $"Robot: {Defenders[DefenderType.Robot].Amount} Shooter: {Defenders[DefenderType.Shooter].Amount} " +
+            $"Medic: {Defenders[DefenderType.Medic].Amount}";
 
         public void Load()
         {
@@ -43,6 +64,9 @@ namespace Classes.Citybuilding
             medicSchoolLevel = PlayerPrefs.GetInt("PlayerBuildings/MedicSchool", 1);
             mainCampLevel = PlayerPrefs.GetInt("PlayerBuildings/MainCamp", 1);
 
+            foreach (var defender in Defenders)
+                defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 0);
+
             RunSimulation();
         }
 
@@ -63,6 +87,9 @@ namespace Classes.Citybuilding
             PlayerPrefs.SetInt("PlayerBuildings/RobotSchool", robotSchoolLevel);
             PlayerPrefs.SetInt("PlayerBuildings/DroneSchool", droneSchoolLevel);
             PlayerPrefs.SetInt("PlayerBuildings/MedicSchool", medicSchoolLevel);
+
+            foreach (var defender in Defenders)
+                PlayerPrefs.SetInt($"PlayerDefenders/{defender.Key}", defender.Value.Amount);
         }
 
         public void RunSimulation()
@@ -91,13 +118,16 @@ namespace Classes.Citybuilding
                     {cbm = this},
                 MedicSchool = new MedicSchool(medicSchoolLevel, newLevel => { medicSchoolLevel = newLevel; })
                     {cbm = this},
-                MainCamp = new MainCamp(mainCampLevel, newLevel => { mainCampLevel = newLevel; }) {cbm = this}
+                MainCamp = new MainCamp(mainCampLevel, newLevel => { mainCampLevel = newLevel; }) {cbm = this},
+                Defenders = Defenders,
+                cbm = this
             };
             Simulation.Run();
         }
 
         public void OnNextDay()
         {
+            DefenderBought = false;
             RunSimulation();
             Simulation.OnNextDay(this);
         }

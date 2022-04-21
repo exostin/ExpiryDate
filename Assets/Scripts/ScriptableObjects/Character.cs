@@ -12,6 +12,11 @@ namespace ScriptableObjects
         public Sprite artwork;
         public Ability[] abilities;
 
+        public int costTitan;
+        public int costWater;
+        public int costFood;
+        public int costEnergy;
+
         [HideInInspector] public int health;
         [HideInInspector] public bool isDead;
 
