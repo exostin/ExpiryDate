@@ -158,7 +158,6 @@ namespace Controllers.BattleScene
                        soEnemyCharacters.Any(character => character.health > 0));
         }
         
-
         // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         ///     Starts a whole battle consisting of multiple turns
