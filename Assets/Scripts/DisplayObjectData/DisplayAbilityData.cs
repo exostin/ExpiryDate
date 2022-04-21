@@ -1,4 +1,3 @@
-using Controllers;
 using Controllers.BattleScene;
 using ScriptableObjects;
 using TMPro;
@@ -14,8 +13,15 @@ namespace DisplayObjectData
         [SerializeField] private Image image;
         [SerializeField] private TMP_Text nameTextContainer;
         [SerializeField] private TMP_Text damageTextContainer;
-        [SerializeField] private BattleMenuController battleMenuController;
 
+        private BattleController battleController;
+
+        private void Start()
+        {
+            battleController = FindObjectOfType<BattleController>();
+        }
+
+        // Update information shown on screen to reflect the currently selected ability
         public void UpdateAbilityDisplay()
         {
             nameTextContainer.text = ability.abilityName;
@@ -44,7 +50,7 @@ namespace DisplayObjectData
         public void SelectAsAbilityForUse()
         {
             Debug.Log($"Selected: {ability.name}");
-            battleMenuController.playerSelectedAbility = ability;
+            battleController.PlayerSelectedAbility = ability;
         }
     }
 }

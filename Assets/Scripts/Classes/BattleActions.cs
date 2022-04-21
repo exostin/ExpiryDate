@@ -5,10 +5,13 @@ using UnityEngine;
 
 namespace Classes
 {
-    public class BattleMenuActions
+    public class BattleActions
     {
+        /// <summary>
+        ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
+        /// </summary>
         public void MakeAction(Character characterUsedForAttack, Character target, Ability selectedAbility,
-            List<Character> allCharacters, bool isPlayerTurn)
+            IEnumerable<Character> allCharacters, bool isPlayerTurn)
         {
             var finalAttackTargets = new List<Character>();
             finalAttackTargets.AddRange(allCharacters.Where(x => !x.isDead).ToList());

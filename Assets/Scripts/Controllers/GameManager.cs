@@ -10,10 +10,15 @@ namespace Controllers
 {
     public class GameManager : MonoBehaviour
     {
-        // Definitely could be done better, but the milestone is approaching and I had to do it ad hoc
         public StateController stateController;
 
+        #region Start/Pause menu
+        
         [SerializeField] private GameObject pauseMenu;
+        
+        #endregion
+
+        #region CityBuilding
 
         [SerializeField] private Character fighterCharacter;
         [SerializeField] private Character shooterCharacter;
@@ -22,6 +27,8 @@ namespace Controllers
         [SerializeField] private Character droneCharacter;
 
         public Manager cbm;
+        
+        #endregion
 
         private void Start()
         {
@@ -29,7 +36,9 @@ namespace Controllers
                 .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
                 .GetComponent<SettingsMenuController>()
                 .Initialize();
-            stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
+                
+            //stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
+            stateController = FindObjectOfType<StateController>();
 
             cbm = new Manager();
 

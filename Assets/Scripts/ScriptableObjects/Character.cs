@@ -19,5 +19,11 @@ namespace ScriptableObjects
 
         [HideInInspector] public int health;
         [HideInInspector] public bool isDead;
+
+        public void Initialize()
+        {
+            health = maxHealth;
+            isDead = false;
+        }
     }
 }
