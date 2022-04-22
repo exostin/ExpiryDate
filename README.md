@@ -16,7 +16,7 @@ City builder game set during a climatic calamity with a hint of fantasy, created
 - [**Developer Notes**](#developer-notes)
   - [**Git Notes**](#git-notes)
 - [**Mechanics**](#mechanics)
-  - [**Custom scriptable objects creation (battle system)**](#Custom-scriptable-objects-creation)
+  - [**Custom scriptable objects creation**](#Custom-scriptable-objects-creation)
 
 ## **Authors**
 
