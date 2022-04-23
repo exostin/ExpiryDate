@@ -1,4 +1,4 @@
-name: Actions 😎
+name: Auto-build
 
 on: [push, pull_request]
 
