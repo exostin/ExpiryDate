@@ -9,8 +9,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        projectPath:
-          - ExpiryDate
         unityVersion:
           - 2021.3.0f1
         targetPlatform:
@@ -63,8 +61,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        projectPath:
-          - ExpiryDate
         unityVersion:
           - 2021.3.0f1
         targetPlatform:
