@@ -1,4 +1,4 @@
-name: Actions 😎
+name: Auto-build
 
 on: [push, pull_request]
 
@@ -52,6 +52,7 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
+          allowDirtyBuild: true
       - uses: actions/upload-artifact@v2
         with:
           name: Build-Linux
@@ -92,6 +93,7 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
+          allowDirtyBuild: true
       - uses: actions/upload-artifact@v2
         with:
           name: Build-Windows
