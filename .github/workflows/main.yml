@@ -104,7 +104,7 @@ name: Actions 😎
 on: [push, pull_request]
 
 jobs:
-  build:
+  buildWebGL:
     name: buildWebGL
     runs-on: ubuntu-latest
     steps:
