@@ -1,3 +1,4 @@
+[![Auto-build](https://github.com/exostin/ExpiryDate/actions/workflows/main.yml/badge.svg)](https://github.com/exostin/ExpiryDate/actions/workflows/main.yml)
 [![CodeFactor](https://img.shields.io/codefactor/grade/github/exostin/ExpiryDate?style=flat-square)](https://www.codefactor.io/repository/github/exostin/expirydate)
 ![Last commit](https://flat.badgen.net/github/last-commit/exostin/ExpiryDate/main)
 [![Release](https://flat.badgen.net/github/release/exostin/ExpiryDate/stable)](https://github.com/exostin/ExpiryDate/releases)
