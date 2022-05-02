@@ -181,7 +181,7 @@ namespace Controllers.BattleScene
         {
             battleUIController.UpdateTurnCounter();
 
-            foreach (var character in battleQueue.ToList())
+            foreach (Character character in battleQueue.ToList())
             {
                 if (CheckIfAnySideWon()) break;
                 if (character.isDead)
