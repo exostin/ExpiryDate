@@ -158,7 +158,6 @@ namespace Controllers.BattleScene
                        soEnemyCharacters.Any(character => character.health > 0));
         }
         
-        // ReSharper disable Unity.PerformanceAnalysis
         /// <summary>
         ///     Starts a whole battle consisting of multiple turns
         /// </summary>
@@ -174,8 +173,7 @@ namespace Controllers.BattleScene
 
             StartCoroutine(battleUIController.GameEnd());
         }
-
-        // ReSharper disable Unity.PerformanceAnalysis
+        
         /// <summary>
         ///     Makes a turn consisting of one action for each character in the battle queue
         /// </summary>
