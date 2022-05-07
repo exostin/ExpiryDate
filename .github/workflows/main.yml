@@ -98,71 +98,73 @@
         # with:
           # name: Build-Windows
           # path: build/Windows
-          
-name: Actions 😎
+ 
 
-on: [push, pull_request]
+# BETTER: 
+# name: Actions 😎
 
-jobs:
-  buildWebGL:
-    name: buildWebGL
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          lfs: true
+# on: [push, pull_request]
 
-      # Cache
-      - uses: actions/cache@v2
-        with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
+# jobs:
+  # buildWebGL:
+    # name: buildWebGL
+    # runs-on: ubuntu-latest
+    # steps:
+      # # Checkout
+      # - name: Checkout repository
+        # uses: actions/checkout@v2
+        # with:
+          # lfs: true
 
-      # Test
-      - name: Run tests
-        uses: game-ci/unity-test-runner@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      # # Cache
+      # - uses: actions/cache@v2
+        # with:
+          # path: Library
+          # key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          # restore-keys: |
+            # Library-
 
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: WebGL
-          allowDirtyBuild: true
+      # # Test
+      # - name: Run tests
+        # uses: game-ci/unity-test-runner@v2
+        # env:
+          # UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        # with:
+          # githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      # Output
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build-WebGL
-          path: build
+      # # Build
+      # - name: Build project
+        # uses: game-ci/unity-builder@v2
+        # env:
+          # UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          # UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          # UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        # with:
+          # targetPlatform: WebGL
+          # allowDirtyBuild: true
+
+      # # Output
+      # - uses: actions/upload-artifact@v2
+        # with:
+          # name: Build-WebGL
+          # path: build
 
 
-  deployPages:
-    needs: buildWebGL
-    name: Deploy to Github Pages 🚀
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  # deployPages:
+    # needs: buildWebGL
+    # name: Deploy to Github Pages 🚀
+    # runs-on: ubuntu-latest
+    # steps:
+      # - name: Checkout code
+        # uses: actions/checkout@v2
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: Build-WebGL
-          path: build
+      # - uses: actions/download-artifact@v2
+        # with:
+          # name: Build-WebGL
+          # path: build
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: build
+      # - name: Deploy 🚀
+        # uses: JamesIves/github-pages-deploy-action@4.1.4
+        # with:
+          # branch: gh-pages
+          # folder: build
