@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lose battle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1744,8 +1744,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Win battle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1879,8 +1879,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Turn: 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials:
   - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
@@ -1913,7 +1913,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1973,6 +1973,18 @@ PrefabInstance:
     - target: {fileID: 2048558813311813300, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 12.59198
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 2224011075348047746, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2518,6 +2530,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 497417147}
     m_Modifications:
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 2224011075348047746, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3531,9 +3555,6 @@ MonoBehaviour:
   - {fileID: 1159818401}
   - {fileID: 1929723605}
   - {fileID: 1877510320}
-  playerSelectedTarget: {fileID: 0}
-  playerSelectedAbility: {fileID: 0}
-  battleQueue: []
   delayBetweenActions: 1
   timeBeforeBattleStart: 2
 --- !u!1 &1764379367
@@ -3623,6 +3644,18 @@ PrefabInstance:
     - target: {fileID: 2048558813311813300, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 12.59198
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 2224011075348047746, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3850,6 +3883,18 @@ PrefabInstance:
     - target: {fileID: 2048558813311813300, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -12.408051
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2083217951886181421, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 2224011075348047746, guid: 7a1c4dc2667ff304cb25f70005403dba, type: 3}
       propertyPath: m_AnchorMax.x
