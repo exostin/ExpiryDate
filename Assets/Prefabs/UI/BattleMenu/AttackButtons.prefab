@@ -164,7 +164,6 @@ MonoBehaviour:
   image: {fileID: 746794389264152436}
   nameTextContainer: {fileID: 221350195356151396}
   damageTextContainer: {fileID: 1202648735973984572}
-  battleMenuController: {fileID: 0}
 --- !u!1 &1016730038661661213
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +475,6 @@ MonoBehaviour:
   image: {fileID: 8402646820804738011}
   nameTextContainer: {fileID: 2808659643086947567}
   damageTextContainer: {fileID: 7540295114962701475}
-  battleMenuController: {fileID: 0}
 --- !u!1 &1920735862500350063
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,8 +678,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Attack 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -923,7 +921,6 @@ MonoBehaviour:
   image: {fileID: 8254679564441248257}
   nameTextContainer: {fileID: 2746243566264224889}
   damageTextContainer: {fileID: 7392361444166389337}
-  battleMenuController: {fileID: 0}
 --- !u!1 &7464697381225619000
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,8 +989,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Attack 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1127,8 +1124,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Attack 4
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1545,7 +1542,6 @@ MonoBehaviour:
   image: {fileID: 2426741586542139582}
   nameTextContainer: {fileID: 1666896893800968977}
   damageTextContainer: {fileID: 5193839088181296172}
-  battleMenuController: {fileID: 0}
 --- !u!1 &8802949034567940065
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,8 +1610,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Attack 2
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
+  m_sharedMaterial: {fileID: 8508384904897201946, guid: 013e994197e789b4f82b5d4f71d35678, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
