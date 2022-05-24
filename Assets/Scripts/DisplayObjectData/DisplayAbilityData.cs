@@ -15,6 +15,9 @@ namespace DisplayObjectData
         [SerializeField] private TMP_Text damageTextContainer;
 
         private BattleController battleController;
+        
+        public delegate void AbilityEvent();
+        public static event AbilityEvent OnAbilitySelected;
 
         private void Start()
         {
@@ -51,6 +54,8 @@ namespace DisplayObjectData
         {
             Debug.Log($"Selected: {ability.name}");
             battleController.PlayerSelectedAbility = ability;
+            OnAbilitySelected?.Invoke();
         }
+
     }
 }

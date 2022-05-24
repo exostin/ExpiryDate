@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
@@ -8,27 +10,94 @@ namespace Controllers.BattleScene
 {
     public class InspectorController : MonoBehaviour
     {
-        [SerializeField] private Slider inspectorHPSlider;
-        [SerializeField] private TMP_Text inspectorHPSliderText;
-        [SerializeField] private TMP_Text inspectorCharacterName;
-        private BattleController battleController;
+        #region Character inspector
+        [Header("Character inspector")]
+        [SerializeField] private GameObject characterInspector;
+        [SerializeField] private Slider hpSlider;
+        [SerializeField] private TMP_Text hpSliderText;
+        [SerializeField] private TMP_Text characterName;
+        [SerializeField] private Image smallCharacterArtwork;
+
+        #region Stats
+        
+        [SerializeField] private TMP_Text initiative;
+
+        #endregion
+        
         private Character currentCharacter;
+        #endregion
+
+        #region Ability inspector
+        [Header("Ability inspector")]
+        [SerializeField] private GameObject abilityInspector;
+        [SerializeField] private TMP_Text abilityName;
+        [SerializeField] private TMP_Text abilityDescription;
+
+        #endregion
+        private BattleController battleController;
+        
 
         void Start()
         {
             battleController = FindObjectOfType<BattleController>();
-            DisplayCharacterData.OnHoveredOverCharacter += UpdateInspector;
+            DisplayCharacterData.OnHoveredOverCharacter += UpdateCharacterData;
+            BattleController.OnActionMade += UpdateCharacterCurrentHp;
+            BattleController.OnActionMade += HideAbilityData;
+            DisplayAbilityData.OnAbilitySelected += UpdateAbilityData;
+            DisplayAbilityData.OnAbilitySelected += ShowAbilityData;
+            
+            HideAbilityData();
+            characterInspector.SetActive(false);
         }
 
-        private void UpdateInspector()
+        #region Character-related methods
+
+        private void UpdateCharacterData()
         {
             currentCharacter = battleController.PlayerHoveredOverTarget;
+            if (currentCharacter == null)
+            {
+                characterInspector.SetActive(false);
+                return;
+            }
+
+            characterInspector.SetActive(true);
+
+            smallCharacterArtwork.sprite = currentCharacter.artwork;
+            characterName.text = currentCharacter.name;
+            initiative.text = $"Initiative: {currentCharacter.initiative}";
             
-            inspectorHPSlider.maxValue = currentCharacter.maxHealth;
-            inspectorHPSlider.value = currentCharacter.health;
-            inspectorHPSliderText.text = $"{currentCharacter.health} HP";
-            
-            inspectorCharacterName.text = currentCharacter.name;
+            hpSlider.maxValue = currentCharacter.maxHealth;
+            UpdateCharacterCurrentHp();
         }
+
+        private void UpdateCharacterCurrentHp()
+        {
+            if (!characterInspector.gameObject.activeSelf) return;
+            hpSlider.value = currentCharacter.health;
+            hpSliderText.text = $"{currentCharacter.health} HP";
+        }
+
+        #endregion
+
+        #region Ability-related methods
+
+        private void UpdateAbilityData()
+        {
+            abilityName.text = battleController.PlayerSelectedAbility.abilityName;
+            abilityDescription.text = battleController.PlayerSelectedAbility.description;
+        }
+
+        private void ShowAbilityData()
+        {
+            abilityInspector.SetActive(true);
+        }
+        private void HideAbilityData()
+        {
+            abilityInspector.SetActive(false);
+        }
+
+        #endregion
+        
     }
 }

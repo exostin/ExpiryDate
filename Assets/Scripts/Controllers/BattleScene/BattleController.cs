@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,7 @@ using Classes;
 using DisplayObjectData;
 using ScriptableObjects;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
 {
@@ -76,6 +78,13 @@ namespace Controllers.BattleScene
         [SerializeField] private float timeBeforeBattleStart;
 
         #endregion
+
+        #endregion
+
+        #region Events
+
+        public delegate void BattleEvent();
+        public static event BattleEvent OnActionMade;
 
         #endregion
         private void Start()
@@ -237,7 +246,7 @@ namespace Controllers.BattleScene
                         false);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
-
+                OnActionMade?.Invoke();
                 battleUIController.DisableSelectionIndicators();
                 battleUIController.LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
