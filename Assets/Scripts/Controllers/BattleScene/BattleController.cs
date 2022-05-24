@@ -26,6 +26,7 @@ namespace Controllers.BattleScene
 
         public bool PlayerWon { get; private set; }
         public Character PlayerSelectedTarget { get; set; }
+        public Character PlayerHoveredOverTarget { get; set; }
         public Ability PlayerSelectedAbility { get; set; }
 
         #endregion
@@ -101,6 +102,11 @@ namespace Controllers.BattleScene
 
             #endregion
 
+            #region Events config
+
+            DisplayCharacterData.OnTurnEnd += EndPlayerTurn;
+
+            #endregion
             StartCoroutine(PlayBattle());
         }
 
