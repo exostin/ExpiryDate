@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FirstAidKit
   m_EditorClassIdentifier: 
   abilityName: First Aid Kit
-  description: 
-  damage: -200
+  description: A moment of divine intervention! Heal ALL your teammates!
+  damage: -300
   targetsWholeTeam: 1
   canOnlyTargetOwnCharacters: 1
   usedOnlyOnSelf: 0

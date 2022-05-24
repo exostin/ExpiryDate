@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   abilityName: Shield
-  description: 
-  damage: 0
+  description: Drone shields one teammate!
+  damage: -500
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 1
   usedOnlyOnSelf: 0
-  buff: 1
-  heal: 0
+  buff: 0
+  heal: 1
   artwork: {fileID: 21300000, guid: fd96df01631a6b8499e5b098b0d07906, type: 3}
   soundEffect: {fileID: 0}

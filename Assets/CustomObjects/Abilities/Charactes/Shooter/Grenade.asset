@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Grenade
   m_EditorClassIdentifier: 
   abilityName: Grenade
-  description: 
-  damage: 150
+  description: '*Take cover!*'
+  damage: 350
   targetsWholeTeam: 1
   canOnlyTargetOwnCharacters: 0
   usedOnlyOnSelf: 0

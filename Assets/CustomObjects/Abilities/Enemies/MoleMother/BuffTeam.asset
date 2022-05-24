@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Basic attack
+  m_Name: BuffTeam
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
+  abilityName: 
   description: 
-  damage: 100
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 0
+  damage: 120
+  targetsWholeTeam: 1
+  canOnlyTargetOwnCharacters: 1
   usedOnlyOnSelf: 0
   buff: 0
   heal: 0

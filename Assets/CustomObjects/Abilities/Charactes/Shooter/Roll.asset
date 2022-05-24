@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Strong attack
+  m_Name: Roll
   m_EditorClassIdentifier: 
-  abilityName: Strong attack
-  description: 
-  damage: 300
+  abilityName: Roll
+  description: Dodge an incoming attack!
+  damage: 0
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
+  usedOnlyOnSelf: 1
+  buff: 1
   heal: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 7a79cbc4b54dedc4e815e32f3ae622fb, type: 3}
   soundEffect: {fileID: 0}

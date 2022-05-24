@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
-  description: ability description
-  damage: 100
-  targetCount: 1
-  canOnlyTargetAllies: 0
-  usedOnSelf: 0
+  abilityName: 
+  description: 
+  damage: 75
+  targetsWholeTeam: 0
+  canOnlyTargetOwnCharacters: 0
+  usedOnlyOnSelf: 0
   buff: 0
+  heal: 0
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: heal
   m_EditorClassIdentifier: 
   abilityName: Heal
-  description: 
+  description: '"You can bandage the wounds, but you won''t unbreak the bones..."'
   damage: -400
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 1

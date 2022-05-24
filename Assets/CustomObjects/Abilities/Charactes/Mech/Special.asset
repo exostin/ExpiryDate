@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Special attack
+  m_Name: Special
   m_EditorClassIdentifier: 
-  abilityName: Electrocute
-  description: 
-  damage: 200
+  abilityName: Telsa coil
+  description: K-K-K-K-ILL THEM ALL-L-L
+  damage: 650
   targetsWholeTeam: 1
   canOnlyTargetOwnCharacters: 0
   usedOnlyOnSelf: 0
   buff: 0
   heal: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 1c4d3771bb1b6cb44b420b5643d87a3e, type: 3}
   soundEffect: {fileID: 0}

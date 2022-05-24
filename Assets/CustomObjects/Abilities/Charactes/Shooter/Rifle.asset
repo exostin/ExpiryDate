@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   abilityName: Rifle
-  description: 
-  damage: 200
+  description: Scope in and fire a precision strike to the most vulnerable spot!
+  damage: 500
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 0
   usedOnlyOnSelf: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: 
   abilityName: Dash
-  description: 
+  description: Drone makes a dodge in the air!
   damage: 0
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 1

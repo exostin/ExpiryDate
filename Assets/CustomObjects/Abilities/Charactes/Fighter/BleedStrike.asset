@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Basic attack
+  m_Name: BleedStrike
   m_EditorClassIdentifier: 
   abilityName: Basic attack
-  description: 
-  damage: 10
+  description: A crippling blow that makes enemy bleed!
+  damage: 300
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 0
   usedOnlyOnSelf: 0
   buff: 0
   heal: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 74874a67877a27a43b8e708024590f24, type: 3}
   soundEffect: {fileID: 0}

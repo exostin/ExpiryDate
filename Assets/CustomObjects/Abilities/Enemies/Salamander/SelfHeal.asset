@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Sword
+  m_Name: SelfHeal
   m_EditorClassIdentifier: 
-  abilityName: Sword
+  abilityName: 
   description: 
-  damage: 200
-  targetsWholeTeam: 1
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
+  damage: -350
+  targetsWholeTeam: 0
+  canOnlyTargetOwnCharacters: 1
+  usedOnlyOnSelf: 1
   buff: 0
-  heal: 0
-  artwork: {fileID: 21300000, guid: 47942833732ae674ab8e86beddc5dd4b, type: 3}
+  heal: 1
+  artwork: {fileID: 0}
   soundEffect: {fileID: 0}

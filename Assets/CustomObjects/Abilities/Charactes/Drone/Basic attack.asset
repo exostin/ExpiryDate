@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Basic attack
   m_EditorClassIdentifier: 
   abilityName: Basic attack
-  description: 
-  damage: 400
+  description: Drone fires a laser to damage enemy!
+  damage: 150
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 0
   usedOnlyOnSelf: 0

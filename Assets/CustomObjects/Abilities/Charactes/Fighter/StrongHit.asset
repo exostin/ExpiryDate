@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StrongHit
   m_EditorClassIdentifier: 
   abilityName: Strong hit
-  description: 
-  damage: 600
+  description: A devastating hit that makes the enemy crumble!
+  damage: 700
   targetsWholeTeam: 0
   canOnlyTargetOwnCharacters: 0
   usedOnlyOnSelf: 0

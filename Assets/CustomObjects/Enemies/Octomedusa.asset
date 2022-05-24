@@ -19,7 +19,12 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: 6d78dc7397295d14aa8278ca9bc1ae0a, type: 3}
   abilities:
   - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
+  - {fileID: 11400000, guid: a4730cbb8876cf14eb19baabc67f8aaa, type: 2}
   - {fileID: 11400000, guid: 06794f2b5ecbd0647ae5da7c0772ef79, type: 2}
   - {fileID: 11400000, guid: 6ee1127a5c5dae042be193006823c641, type: 2}
+  costTitan: 0
+  costWater: 0
+  costFood: 0
+  costEnergy: 0
   health: 3000
   isDead: 0
