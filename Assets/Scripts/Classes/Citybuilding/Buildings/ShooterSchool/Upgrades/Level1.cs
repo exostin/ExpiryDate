@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
         {
             Level = 1;
             ModelName = "ShooterSchool1";
+            Description = "level 1 bruh";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

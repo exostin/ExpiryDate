@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
                 Water = 20
             };
             ModelName = "ShooterSchool2";
+            Description = "Увеличивает количество получаемых опыта за выстрел на 10%";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using DisplayObjectData;
 using ScriptableObjects;
 using TMPro;
@@ -10,34 +8,10 @@ namespace Controllers.BattleScene
 {
     public class InspectorController : MonoBehaviour
     {
-        #region Character inspector
-        [Header("Character inspector")]
-        [SerializeField] private GameObject characterInspector;
-        [SerializeField] private Slider hpSlider;
-        [SerializeField] private TMP_Text hpSliderText;
-        [SerializeField] private TMP_Text characterName;
-        [SerializeField] private Image smallCharacterArtwork;
-
-        #region Stats
-        
-        [SerializeField] private TMP_Text initiative;
-
-        #endregion
-        
-        private Character currentCharacter;
-        #endregion
-
-        #region Ability inspector
-        [Header("Ability inspector")]
-        [SerializeField] private GameObject abilityInspector;
-        [SerializeField] private TMP_Text abilityName;
-        [SerializeField] private TMP_Text abilityDescription;
-
-        #endregion
         private BattleController battleController;
-        
 
-        void Start()
+
+        private void Start()
         {
             battleController = FindObjectOfType<BattleController>();
             DisplayCharacterData.OnHoveredOverCharacter += UpdateCharacterData;
@@ -45,10 +19,40 @@ namespace Controllers.BattleScene
             BattleController.OnActionMade += HideAbilityData;
             DisplayAbilityData.OnAbilitySelected += UpdateAbilityData;
             DisplayAbilityData.OnAbilitySelected += ShowAbilityData;
-            
+
             HideAbilityData();
             characterInspector.SetActive(false);
         }
+
+        #region Character inspector
+
+        [Header("Character inspector")] [SerializeField]
+        private GameObject characterInspector;
+
+        [SerializeField] private Slider hpSlider;
+        [SerializeField] private TMP_Text hpSliderText;
+        [SerializeField] private TMP_Text characterName;
+        [SerializeField] private Image smallCharacterArtwork;
+
+        #region Stats
+
+        [SerializeField] private TMP_Text initiative;
+
+        #endregion
+
+        private Character currentCharacter;
+
+        #endregion
+
+        #region Ability inspector
+
+        [Header("Ability inspector")] [SerializeField]
+        private GameObject abilityInspector;
+
+        [SerializeField] private TMP_Text abilityName;
+        [SerializeField] private TMP_Text abilityDescription;
+
+        #endregion
 
         #region Character-related methods
 
@@ -66,7 +70,7 @@ namespace Controllers.BattleScene
             smallCharacterArtwork.sprite = currentCharacter.artwork;
             characterName.text = currentCharacter.name;
             initiative.text = $"Initiative: {currentCharacter.initiative}";
-            
+
             hpSlider.maxValue = currentCharacter.maxHealth;
             UpdateCharacterCurrentHp();
         }
@@ -92,12 +96,12 @@ namespace Controllers.BattleScene
         {
             abilityInspector.SetActive(true);
         }
+
         private void HideAbilityData()
         {
             abilityInspector.SetActive(false);
         }
 
         #endregion
-        
     }
 }

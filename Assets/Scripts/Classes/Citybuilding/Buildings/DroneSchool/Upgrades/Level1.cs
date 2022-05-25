@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.DroneSchool.Upgrades
         {
             Level = 1;
             ModelName = "DroneSchool1";
+            Description = "level 1 description";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

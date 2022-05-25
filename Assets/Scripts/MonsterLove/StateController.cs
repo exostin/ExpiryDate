@@ -16,7 +16,7 @@ public class StateController : MonoBehaviour
         SelectingTarget,
         GameEnded
     }
-    
+
     public StateMachine<States, StateDriverUnity> fsm;
 
     private void Awake()

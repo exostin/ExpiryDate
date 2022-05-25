@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
                 Water = 20
             };
             ModelName = "ShooterSchool3";
+            Description = "Улучшение школы оружейников";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

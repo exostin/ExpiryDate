@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace Classes.Citybuilding
 {
     public abstract class BuildingUpgrade
@@ -5,6 +7,7 @@ namespace Classes.Citybuilding
         public Resources BaseCost = new();
         public int CostBonus = 0;
         public float CostMultiplier = 1f;
+        [CanBeNull] public string Description;
         public int Level;
         public string ModelName;
         public bool Unlocked = true;

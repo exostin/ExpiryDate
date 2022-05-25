@@ -9,6 +9,10 @@ namespace DisplayObjectData
 {
     public class DisplayCharacterData : MonoBehaviour, IPointerEnterHandler
     {
+        public delegate void SelectedCharacter();
+
+        public delegate void TurnAction();
+
         public Character character;
 
         [SerializeField] private Image image;
@@ -17,12 +21,6 @@ namespace DisplayObjectData
 
 
         private BattleController battleController;
-        
-        public delegate void SelectedCharacter();
-        public static event SelectedCharacter OnHoveredOverCharacter;
-        
-        public delegate void TurnAction();
-        public static event TurnAction OnTurnEnd;
 
         private void Start()
         {
@@ -35,26 +33,27 @@ namespace DisplayObjectData
             BattleController.OnActionMade += UpdateCurrentHp;
         }
 
-        private void UpdateCurrentHp()
-        {
-            hpSlider.value = character.health;
-            if (character.health == 0)
-            {
-                BattleController.OnActionMade -= UpdateCurrentHp;
-            }
-        }
-        
-        public void SelectAsATarget()
-        {
-            Debug.Log($"Target selected: {character.name}, ending turn");
-            battleController.PlayerSelectedTarget = character;
-            OnTurnEnd?.Invoke();
-        }
         public void OnPointerEnter(PointerEventData eventData)
         {
             Debug.Log($"Mouse hovered over: {character.name}");
             battleController.PlayerHoveredOverTarget = character;
             OnHoveredOverCharacter?.Invoke();
+        }
+
+        public static event SelectedCharacter OnHoveredOverCharacter;
+        public static event TurnAction OnTurnEnd;
+
+        private void UpdateCurrentHp()
+        {
+            hpSlider.value = character.health;
+            if (character.health == 0) BattleController.OnActionMade -= UpdateCurrentHp;
+        }
+
+        public void SelectAsATarget()
+        {
+            Debug.Log($"Target selected: {character.name}, ending turn");
+            battleController.PlayerSelectedTarget = character;
+            OnTurnEnd?.Invoke();
         }
     }
 }

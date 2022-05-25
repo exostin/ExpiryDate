@@ -13,21 +13,9 @@ namespace Controllers
         public StateController stateController;
 
         #region Start/Pause menu
-        
+
         [SerializeField] private GameObject pauseMenu;
-        
-        #endregion
 
-        #region CityBuilding
-
-        [SerializeField] private Character fighterCharacter;
-        [SerializeField] private Character shooterCharacter;
-        [SerializeField] private Character medicCharacter;
-        [SerializeField] private Character robotCharacter;
-        [SerializeField] private Character droneCharacter;
-
-        public Manager cbm;
-        
         #endregion
 
         private void Start()
@@ -36,7 +24,7 @@ namespace Controllers
                 .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
                 .GetComponent<SettingsMenuController>()
                 .Initialize();
-                
+
             //stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
             stateController = FindObjectOfType<StateController>();
 
@@ -81,5 +69,17 @@ namespace Controllers
                     .GetComponent<SettingsMenuController>().SavePreferences();
             pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
+
+        #region CityBuilding
+
+        [SerializeField] private Character fighterCharacter;
+        [SerializeField] private Character shooterCharacter;
+        [SerializeField] private Character medicCharacter;
+        [SerializeField] private Character robotCharacter;
+        [SerializeField] private Character droneCharacter;
+
+        public Manager cbm;
+
+        #endregion
     }
 }

@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.DroneSchool.Upgrades
                 Energy = 50
             };
             ModelName = "DroneSchool2";
+            Description = "Drone School Level 2";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

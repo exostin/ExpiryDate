@@ -5,6 +5,8 @@ namespace Classes.Citybuilding.Buildings.RobotSchool
 {
     public class RobotSchool : Building
     {
+        public readonly DefenderType DefenderType = DefenderType.Robot;
+
         public RobotSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
             Name = "Robot school";

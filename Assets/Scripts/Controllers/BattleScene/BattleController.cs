@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,87 +5,11 @@ using Classes;
 using DisplayObjectData;
 using ScriptableObjects;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
 {
     public class BattleController : MonoBehaviour
     {
-        #region Properties
-
-        #region Iterate-through-only lists
-
-        // Could be used here depending on need: IReadOnlyCollection/IReadOnlyList/IEnumerable
-        public IEnumerable<Character> SoPlayerCharacters => soPlayerCharacters;
-        public IEnumerable<Character> SoEnemyCharacters => soEnemyCharacters;
-        public IEnumerable<Character> BattleQueue => battleQueue;
-        public IEnumerable<GameObject> AllCharacters => allCharacters;
-
-        #endregion
-
-        #region Other
-
-        public bool PlayerWon { get; private set; }
-        public Character PlayerSelectedTarget { get; set; }
-        public Character PlayerHoveredOverTarget { get; set; }
-        public Ability PlayerSelectedAbility { get; set; }
-
-        #endregion
-
-        #endregion
-
-        #region Fields
-
-        #region References set automatically in Start()
-
-        private GameManager gm;
-        private StateController stateController;
-        private PostProcessingController postProcessingController;
-        private BattleUIController battleUIController;
-
-        #endregion
-
-        #region GameObject Lists
-
-        public List<GameObject> playerCharacters;
-        public List<GameObject> enemyCharacters;
-        private List<GameObject> allCharacters;
-
-        #endregion
-
-        #region Static class references
-
-        private readonly BattleActions battleActions = new();
-
-        #endregion
-
-        #region Scriptable Objects
-
-        // so - scriptable object
-        private readonly List<Character> soPlayerCharacters = new();
-        private readonly List<Character> soEnemyCharacters = new();
-        private List<Character> battleQueue;
-        private List<Character> soAllCharacters;
-        private readonly List<Character> targetsForEnemyPool = new();
-        private readonly List<Character> targetsForPlayerPool = new();
-
-        #endregion
-
-        #region Delays, offsets etc.
-
-        [SerializeField] private float delayBetweenActions;
-        [SerializeField] private float timeBeforeBattleStart;
-
-        #endregion
-
-        #endregion
-
-        #region Events
-
-        public delegate void BattleEvent();
-        public static event BattleEvent OnActionMade;
-
-        #endregion
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -116,6 +39,7 @@ namespace Controllers.BattleScene
             DisplayCharacterData.OnTurnEnd += EndPlayerTurn;
 
             #endregion
+
             StartCoroutine(PlayBattle());
         }
 
@@ -167,12 +91,12 @@ namespace Controllers.BattleScene
             PlayerWon = soPlayerCharacters.Any(character => character.health > 0) &&
                         soEnemyCharacters.All(character => character.health <= 0);
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return (soPlayerCharacters.Any(character => character.health > 0) &&
-                    soEnemyCharacters.All(character => character.health <= 0))
-                   || (soPlayerCharacters.All(character => character.health <= 0) &&
-                       soEnemyCharacters.Any(character => character.health > 0));
+            return soPlayerCharacters.Any(character => character.health > 0) &&
+                   soEnemyCharacters.All(character => character.health <= 0)
+                   || soPlayerCharacters.All(character => character.health <= 0) &&
+                   soEnemyCharacters.Any(character => character.health > 0);
         }
-        
+
         /// <summary>
         ///     Starts a whole battle consisting of multiple turns
         /// </summary>
@@ -188,7 +112,7 @@ namespace Controllers.BattleScene
 
             StartCoroutine(battleUIController.GameEnd());
         }
-        
+
         /// <summary>
         ///     Makes a turn consisting of one action for each character in the battle queue
         /// </summary>
@@ -198,7 +122,7 @@ namespace Controllers.BattleScene
 
             for (var index = 0; index < battleQueue.Count; index++)
             {
-                Character character = battleQueue[index];
+                var character = battleQueue[index];
                 if (CheckIfAnySideWon()) break;
                 if (character.isDead)
                 {
@@ -246,6 +170,7 @@ namespace Controllers.BattleScene
                         false);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
+
                 OnActionMade?.Invoke();
                 battleUIController.DisableSelectionIndicators();
                 battleUIController.LetPlayerChooseTarget(false);
@@ -324,5 +249,82 @@ namespace Controllers.BattleScene
                 Debug.Log("No ability and/or target chosen!");
             }
         }
+
+        #region Properties
+
+        #region Iterate-through-only lists
+
+        // Could be used here depending on need: IReadOnlyCollection/IReadOnlyList/IEnumerable
+        public IEnumerable<Character> SoPlayerCharacters => soPlayerCharacters;
+        public IEnumerable<Character> SoEnemyCharacters => soEnemyCharacters;
+        public IEnumerable<Character> BattleQueue => battleQueue;
+        public IEnumerable<GameObject> AllCharacters => allCharacters;
+
+        #endregion
+
+        #region Other
+
+        public bool PlayerWon { get; private set; }
+        public Character PlayerSelectedTarget { get; set; }
+        public Character PlayerHoveredOverTarget { get; set; }
+        public Ability PlayerSelectedAbility { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Fields
+
+        #region References set automatically in Start()
+
+        private GameManager gm;
+        private StateController stateController;
+        private PostProcessingController postProcessingController;
+        private BattleUIController battleUIController;
+
+        #endregion
+
+        #region GameObject Lists
+
+        public List<GameObject> playerCharacters;
+        public List<GameObject> enemyCharacters;
+        private List<GameObject> allCharacters;
+
+        #endregion
+
+        #region Static class references
+
+        private readonly BattleActions battleActions = new();
+
+        #endregion
+
+        #region Scriptable Objects
+
+        // so - scriptable object
+        private readonly List<Character> soPlayerCharacters = new();
+        private readonly List<Character> soEnemyCharacters = new();
+        private List<Character> battleQueue;
+        private List<Character> soAllCharacters;
+        private readonly List<Character> targetsForEnemyPool = new();
+        private readonly List<Character> targetsForPlayerPool = new();
+
+        #endregion
+
+        #region Delays, offsets etc.
+
+        [SerializeField] private float delayBetweenActions;
+        [SerializeField] private float timeBeforeBattleStart;
+
+        #endregion
+
+        #endregion
+
+        #region Events
+
+        public delegate void BattleEvent();
+
+        public static event BattleEvent OnActionMade;
+
+        #endregion
     }
 }

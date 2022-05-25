@@ -12,6 +12,7 @@ namespace Classes.Citybuilding
         public string Description;
         public string Name;
         public BuildingUpgrade[] Upgrades; // it's important to have this in the order of the levels
+        [CanBeNull] public DefenderType DefenderType;
 
         public Building(int level, Action<int> setLevel)
         {

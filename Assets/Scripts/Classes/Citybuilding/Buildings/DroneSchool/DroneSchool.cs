@@ -5,6 +5,8 @@ namespace Classes.Citybuilding.Buildings.DroneSchool
 {
     public class DroneSchool : Building
     {
+        public readonly DefenderType DefenderType = DefenderType.Drone;
+
         public DroneSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
             Name = "Drone school";

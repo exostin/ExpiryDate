@@ -9,14 +9,14 @@ public class PlaceholderDefenderAmountLabel : MonoBehaviour
 
     private GameManager gm;
     private TextMeshProUGUI textComponent;
-    
-    void Start()
+
+    private void Start()
     {
         gm = FindObjectOfType<GameManager>();
         textComponent = gameObject.GetComponent<TextMeshProUGUI>();
     }
-    
-    void Update()
+
+    private void Update()
     {
         textComponent.text = gm.cbm.Defenders[defenderType].Amount.ToString();
     }

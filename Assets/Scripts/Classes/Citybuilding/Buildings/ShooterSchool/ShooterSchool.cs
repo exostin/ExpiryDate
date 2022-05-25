@@ -5,6 +5,8 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool
 {
     public class ShooterSchool : Building
     {
+        public readonly DefenderType DefenderType = DefenderType.Shooter;
+
         public ShooterSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
             Name = "Shooter school";

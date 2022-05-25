@@ -8,6 +8,8 @@ namespace DisplayObjectData
 {
     public class DisplayAbilityData : MonoBehaviour
     {
+        public delegate void AbilityEvent();
+
         public Ability ability;
 
         [SerializeField] private Image image;
@@ -15,14 +17,13 @@ namespace DisplayObjectData
         [SerializeField] private TMP_Text damageTextContainer;
 
         private BattleController battleController;
-        
-        public delegate void AbilityEvent();
-        public static event AbilityEvent OnAbilitySelected;
 
         private void Start()
         {
             battleController = FindObjectOfType<BattleController>();
         }
+
+        public static event AbilityEvent OnAbilitySelected;
 
         // Update information shown on screen to reflect the currently selected ability
         public void UpdateAbilityDisplay()
@@ -56,6 +57,5 @@ namespace DisplayObjectData
             battleController.PlayerSelectedAbility = ability;
             OnAbilitySelected?.Invoke();
         }
-
     }
 }
