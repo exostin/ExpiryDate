@@ -55,7 +55,7 @@ namespace Controllers.BattleScene
         {
             for (float i = 0; i < attackChromaticAberrationIntensity; i += 0.05f)
             {
-                Debug.Log($"Setting chromatic aberration to: {i}, actual: {attackChromaticAberrationIntensity}");
+                //Debug.Log($"Setting chromatic aberration to: {i}, actual: {attackChromaticAberrationIntensity}");
                 chromaticAberration.intensity.Override(i);
                 yield return new WaitForSecondsRealtime(0.02f);
             }

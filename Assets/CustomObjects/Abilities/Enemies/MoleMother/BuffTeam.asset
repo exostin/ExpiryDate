@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: BuffTeam
   m_EditorClassIdentifier: 
   abilityName: 
-  description: 
-  damage: 120
-  targetsWholeTeam: 1
-  canOnlyTargetOwnCharacters: 1
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
+  abilityTarget: 3
+  abilityType: 2
+  healAmount: 0
+  damageAmount: 0
+  statusType: 2
+  shieldAmount: 60
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

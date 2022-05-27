@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using DisplayObjectData;
 using ScriptableObjects;
@@ -15,6 +14,8 @@ namespace Controllers.BattleScene
         [SerializeField] private GameObject characterInspector;
         [SerializeField] private Slider hpSlider;
         [SerializeField] private TMP_Text hpSliderText;
+        [SerializeField] private Slider shieldSlider;
+        [SerializeField] private TMP_Text shieldSliderText;
         [SerializeField] private TMP_Text characterName;
         [SerializeField] private Image smallCharacterArtwork;
 
@@ -40,8 +41,8 @@ namespace Controllers.BattleScene
         void Start()
         {
             battleController = FindObjectOfType<BattleController>();
-            DisplayCharacterData.OnHoveredOverCharacter += UpdateCharacterData;
-            BattleController.OnActionMade += UpdateCharacterCurrentHp;
+            DisplayCharacterData.OnHoveredOverCharacter += UpdateBasicCharacterData;
+            BattleController.OnActionMade += LiveUpdateCharacterData;
             BattleController.OnActionMade += HideAbilityData;
             DisplayAbilityData.OnAbilitySelected += UpdateAbilityData;
             DisplayAbilityData.OnAbilitySelected += ShowAbilityData;
@@ -52,7 +53,10 @@ namespace Controllers.BattleScene
 
         #region Character-related methods
 
-        private void UpdateCharacterData()
+        /// <summary>
+        /// Used after switching characters
+        /// </summary>
+        private void UpdateBasicCharacterData()
         {
             currentCharacter = battleController.PlayerHoveredOverTarget;
             if (currentCharacter == null)
@@ -60,22 +64,46 @@ namespace Controllers.BattleScene
                 characterInspector.SetActive(false);
                 return;
             }
-
+            
             characterInspector.SetActive(true);
-
+            
             smallCharacterArtwork.sprite = currentCharacter.artwork;
             characterName.text = currentCharacter.name;
-            initiative.text = $"Initiative: {currentCharacter.initiative}";
-            
+
             hpSlider.maxValue = currentCharacter.maxHealth;
-            UpdateCharacterCurrentHp();
+            shieldSlider.maxValue = currentCharacter.maxShield;
+            LiveUpdateCharacterData();
         }
 
-        private void UpdateCharacterCurrentHp()
+        /// <summary>
+        /// Used to update the stats, that are often changed during the battle
+        /// </summary>
+        private void LiveUpdateCharacterData()
         {
             if (!characterInspector.gameObject.activeSelf) return;
-            hpSlider.value = currentCharacter.health;
-            hpSliderText.text = $"{currentCharacter.health} HP";
+            hpSlider.value = currentCharacter.Health;
+            hpSliderText.text = $"HP: {currentCharacter.Health}/{currentCharacter.maxHealth}";
+            shieldSlider.value = currentCharacter.ShieldPoints;
+            shieldSliderText.text = $"Shield: {currentCharacter.ShieldPoints}/{currentCharacter.maxShield}";
+            UpdateStatuses();
+        }
+
+        private void UpdateStatuses()
+        {
+            string activeStatusesList = null;
+            if (currentCharacter.currentlyAppliedStatuses.Any())
+            {
+                foreach (var status in currentCharacter.currentlyAppliedStatuses)
+                {
+                    activeStatusesList += status + "\n";
+                }
+            }
+            else
+            {
+                activeStatusesList = "None";
+            }
+            
+            initiative.text = $"Initiative: {currentCharacter.initiative}\nActive statuses: {activeStatusesList}";
         }
 
         #endregion
@@ -85,7 +113,7 @@ namespace Controllers.BattleScene
         private void UpdateAbilityData()
         {
             abilityName.text = battleController.PlayerSelectedAbility.abilityName;
-            abilityDescription.text = battleController.PlayerSelectedAbility.description;
+            abilityDescription.text = battleController.PlayerSelectedAbility.abilityDescription;
         }
 
         private void ShowAbilityData()

@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
   abilityName: 
-  description: 
-  damage: 130
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 0
+  healAmount: 0
+  damageAmount: 123
+  statusType: 0
+  shieldAmount: 0
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

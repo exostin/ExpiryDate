@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Other.Enums;
 using ScriptableObjects;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Classes
@@ -10,43 +13,55 @@ namespace Classes
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
         /// </summary>
-        public void MakeAction(Character characterUsedForAttack, Character target, Ability selectedAbility,
+        public void MakeAction(Character target, Ability selectedAbility,
             IEnumerable<Character> allCharacters, bool isPlayerTurn)
         {
             var finalAttackTargets = new List<Character>();
-            finalAttackTargets.AddRange(allCharacters.Where(x => !x.isDead).ToList());
+            finalAttackTargets.AddRange(allCharacters.Where(x => !x.IsDead).ToList());
+            finalAttackTargets.RemoveAll(x => x.DodgeEverythingUntilNextTurn);
 
-            if (isPlayerTurn)
+            // If the ability should target only own team
+            if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates or TargetType.SelfOnly)
             {
-                if (selectedAbility.buff || selectedAbility.heal)
-                    // when ability is a buff/heal - remove all non-player characters from targets list
-                    RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
-                else
-                    RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
+                if (isPlayerTurn) RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
+                else RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
             }
             else
             {
-                if (selectedAbility.buff || selectedAbility.heal)
-                    // when ability is a buff/heal - remove all player characters from targets list
-                    RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
-                else
-                    RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
+                if (isPlayerTurn) RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
+                else RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
             }
 
-            if (selectedAbility.targetsWholeTeam)
+            if (selectedAbility.abilityTarget is TargetType.MultipleEnemies or TargetType.MultipleTeammates)
             {
-                foreach (var character in finalAttackTargets)
-                    if (selectedAbility.buff)
-                        Buff(character, selectedAbility);
+                foreach (var thisIterationTarget in finalAttackTargets)
+                    if (selectedAbility.abilityType is AbilityType.Status)
+                        ApplyStatus(thisIterationTarget, selectedAbility);
+                    else if (selectedAbility.abilityType is AbilityType.Damage)
+                        Deal(thisIterationTarget, selectedAbility);
+                    else if (selectedAbility.abilityType is AbilityType.Heal)
+                        Heal(thisIterationTarget, selectedAbility);
+                    else if (selectedAbility.abilityType is AbilityType.Shield)
+                        Shield(thisIterationTarget, selectedAbility);
                     else
-                        DealOrHeal(characterUsedForAttack, character, selectedAbility);
+                    {
+                        Debug.LogError("Ability type not found");
+                    }
             }
             else
             {
-                if (selectedAbility.buff)
-                    Buff(target, selectedAbility);
+                if (selectedAbility.abilityType is AbilityType.Status)
+                    ApplyStatus(target, selectedAbility);
+                else if (selectedAbility.abilityType is AbilityType.Damage)
+                    Deal(target, selectedAbility);
+                else if (selectedAbility.abilityType is AbilityType.Heal)
+                    Heal(target, selectedAbility);
+                else if (selectedAbility.abilityType is AbilityType.Shield)
+                    Shield(target, selectedAbility);
                 else
-                    DealOrHeal(characterUsedForAttack, target, selectedAbility);
+                {
+                    Debug.LogError("Ability type not found");
+                }
             }
         }
 
@@ -58,7 +73,6 @@ namespace Classes
 
                 if (!finalAttackTargets[i].isOwnedByPlayer)
                 {
-                    Debug.Log($"Removing {finalAttackTargets[i].name} from targets list");
                     finalAttackTargets.Remove(finalAttackTargets[i]);
                     i--;
                 }
@@ -73,35 +87,95 @@ namespace Classes
 
                 if (finalAttackTargets[i].isOwnedByPlayer)
                 {
-                    Debug.Log($"Removing {finalAttackTargets[i].name} from targets list");
                     finalAttackTargets.Remove(finalAttackTargets[i]);
                     i--;
                 }
             }
         }
 
-        private static void DealOrHeal(Character characterUsedForAttack, Character target, Ability selectedAbility)
+        private static void Deal(Character target, Ability selectedAbility)
         {
-            if (target.health - selectedAbility.damage <= 0)
+            if ((target.Health + target.ShieldPoints) - selectedAbility.damageAmount <= 0)
             {
-                target.health = 0;
-                target.isDead = true;
-            }
-            else if (target.health - selectedAbility.damage > target.maxHealth)
-            {
-                target.health = target.maxHealth;
+                target.ShieldPoints = 0;
+                target.Health = 0;
+                target.IsDead = true;
             }
             else
             {
-                target.health -= selectedAbility.damage;
+                if (target.ShieldPoints - selectedAbility.damageAmount < 0)
+                {
+                    target.ShieldPoints = 0;
+                    target.Health -= selectedAbility.damageAmount - target.ShieldPoints;
+                }
+                else
+                {
+                    target.ShieldPoints -= selectedAbility.damageAmount;
+                }
             }
 
-            Debug.Log($"{characterUsedForAttack.name} has dealt {selectedAbility.damage} damage to {target.name}!");
+            Debug.Log($"Dealt {selectedAbility.damageAmount} damage to {target.name}!");
         }
-
-        private static void Buff(Character characterUsed, Ability selectedBuff)
+        private static void Heal(Character target, Ability selectedAbility)
         {
-            Debug.Log($"Buff {characterUsed.name} with {selectedBuff.name}!");
+            if (target.currentlyAppliedStatuses.Contains(StatusType.Bleed))
+            {
+                Debug.Log($"Healed bleeding on {target}!");
+                target.BleedDurationLeft = 0;
+            }
+            
+            if (target.Health + selectedAbility.healAmount > target.maxHealth)
+            {
+                target.Health = target.maxHealth;
+            }
+            else
+            {
+                target.Health += selectedAbility.healAmount;
+            }
+
+            Debug.Log($"{target.name} has been healed for {selectedAbility.healAmount}!");
+        }
+        private static void Shield(Character target, Ability selectedAbility)
+        {
+            if (target.ShieldPoints + selectedAbility.shieldAmount > target.maxShield)
+            {
+                target.ShieldPoints= target.maxShield;
+            }
+            else
+            {
+                target.ShieldPoints += selectedAbility.shieldAmount;
+            }
+
+            Debug.Log($"{target.name} has been shielded for {selectedAbility.healAmount}!");
+        }
+        
+
+        private static void ApplyStatus(Character target, Ability selectedStatus)
+        {
+            Debug.Log($"Applied {selectedStatus.name} to {target}!");
+            
+            if(!target.currentlyAppliedStatuses.Contains(selectedStatus.statusType))
+            {
+                target.currentlyAppliedStatuses.Add(selectedStatus.statusType);
+            }
+            
+            switch (selectedStatus.statusType)
+            {
+                case StatusType.Bleed:
+                    Debug.Log($"Setting bleed status, BEFORE: Bleed duration: {target.BleedDurationLeft}, Bleed dmg: {target.CumulatedBleedDmg} on {target.name}!");
+                    target.BleedDurationLeft += selectedStatus.bleedDuration;
+                    target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
+                    Debug.Log($"Setting bleed status, AFTER: Bleed duration: {target.BleedDurationLeft}, Bleed dmg: {target.CumulatedBleedDmg} on {target.name}!");
+                    break;
+                case StatusType.Dodge:
+                    target.DodgeEverythingUntilNextTurn = true;
+                    break;
+                case StatusType.Stun:
+                    target.StunnedDurationLeft += selectedStatus.stunDuration;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(message:"Status type not found", innerException: null);
+            }
         }
     }
 }

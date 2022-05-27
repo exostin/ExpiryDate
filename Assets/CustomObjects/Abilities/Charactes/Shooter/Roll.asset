@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: Roll
   m_EditorClassIdentifier: 
   abilityName: Roll
-  description: Dodge an incoming attack!
-  damage: 0
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 1
-  buff: 1
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 21300000, guid: 7a79cbc4b54dedc4e815e32f3ae622fb, type: 3}
   soundEffect: {fileID: 0}
+  abilityTarget: 2
+  abilityType: 3
+  healAmount: 0
+  shieldAmount: 0
+  damageAmount: 0
+  statusType: 2
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0
