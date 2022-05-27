@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Classes;
 using DisplayObjectData;
+using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -43,6 +44,7 @@ namespace Controllers.BattleScene
         private StateController stateController;
         private PostProcessingController postProcessingController;
         private BattleUIController battleUIController;
+        private StatusHandler statusHandler = new();
 
         #endregion
 
@@ -164,13 +166,13 @@ namespace Controllers.BattleScene
         /// <returns></returns>
         private bool CheckIfAnySideWon()
         {
-            PlayerWon = soPlayerCharacters.Any(character => character.health > 0) &&
-                        soEnemyCharacters.All(character => character.health <= 0);
+            PlayerWon = soPlayerCharacters.Any(character => character.Health > 0) &&
+                        soEnemyCharacters.All(character => character.Health <= 0);
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return (soPlayerCharacters.Any(character => character.health > 0) &&
-                    soEnemyCharacters.All(character => character.health <= 0))
-                   || (soPlayerCharacters.All(character => character.health <= 0) &&
-                       soEnemyCharacters.Any(character => character.health > 0));
+            return (soPlayerCharacters.Any(character => character.Health > 0) &&
+                    soEnemyCharacters.All(character => character.Health <= 0))
+                   || (soPlayerCharacters.All(character => character.Health <= 0) &&
+                       soEnemyCharacters.Any(character => character.Health > 0));
         }
         
         /// <summary>
@@ -200,7 +202,7 @@ namespace Controllers.BattleScene
             {
                 Character character = battleQueue[index];
                 if (CheckIfAnySideWon()) break;
-                if (character.isDead)
+                if (character.IsDead)
                 {
                     if (character.isOwnedByPlayer)
                         targetsForEnemyPool.Remove(character);
@@ -212,7 +214,14 @@ namespace Controllers.BattleScene
 
                 Debug.Log($"{character.characterName} turn!");
                 var currentChar = FindCharactersGameObjectByName(character);
-
+                
+                statusHandler.HandleStatuses(character, out bool skipThisTurn);
+                if (skipThisTurn)
+                {
+                    Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunnedDurationLeft} stun turns left.");
+                    continue;
+                }
+                
                 // AD HOC, TO BE CHANGED ASAP
                 currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
                 if (character.isOwnedByPlayer)
@@ -226,7 +235,7 @@ namespace Controllers.BattleScene
                     yield return new WaitUntil(() =>
                         stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    battleActions.MakeAction(character, PlayerSelectedTarget, PlayerSelectedAbility,
+                    battleActions.MakeAction(PlayerSelectedTarget, PlayerSelectedAbility,
                         soAllCharacters, true);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
                     battleUIController.ToggleAbilityButtonsVisibility(false);
@@ -238,11 +247,17 @@ namespace Controllers.BattleScene
                     stateController.fsm.ChangeState(StateController.States.EnemyTurn);
                     postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
-                    var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
-                    var enemySelectedTarget = targetsForEnemyPool[randomTargetIndex];
+                    
+                    var modifiedTargetsOfEnemyPool = targetsForEnemyPool.Where(target =>
+                        !target.DodgeEverythingUntilNextTurn).ToList();
+                    
+                    var randomTargetIndex = Random.Range(0, modifiedTargetsOfEnemyPool.Count);
+                    Character enemySelectedTarget = modifiedTargetsOfEnemyPool[randomTargetIndex];
+                    
                     var randomEnemyAbilityIndex = Random.Range(0, character.abilities.Length);
-                    var enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
-                    battleActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters,
+                    Ability enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
+                    
+                    battleActions.MakeAction(enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
@@ -275,47 +290,26 @@ namespace Controllers.BattleScene
         /// </summary>
         public void EndPlayerTurn()
         {
-            Debug.Log(
-                "Full end-turn data dump: " +
-                $"State: {stateController.fsm.State}, " +
-                $"Selected ability: {PlayerSelectedAbility}," +
-                $"Selected target: {PlayerSelectedTarget}, is the target dead?: {PlayerSelectedTarget.isDead}, " +
-                $"Targets for player pool: {targetsForPlayerPool}, Targets for enemy pool: {targetsForEnemyPool}" +
-                $"Can the ability target only allies?: {PlayerSelectedAbility.canOnlyTargetOwnCharacters}," +
-                $"Can the ability target only the caster?: {PlayerSelectedAbility.usedOnlyOnSelf}," +
-                $"Does the ability target whole team?: {PlayerSelectedAbility.targetsWholeTeam}," +
-                $"Is the ability a heal?: {PlayerSelectedAbility.heal}, is the ability a buff?: {PlayerSelectedAbility.buff}");
-
             if (stateController.fsm.State == StateController.States.SelectingTarget &&
-                PlayerSelectedAbility != null && PlayerSelectedTarget != null && !PlayerSelectedTarget.isDead)
+                PlayerSelectedAbility != null && PlayerSelectedTarget != null && !PlayerSelectedTarget.IsDead)
             {
+                bool thisAbilityCanOnlyTargetTeammatesOrSelf = PlayerSelectedAbility.abilityTarget is TargetType.SelfOnly or TargetType.MultipleTeammates or TargetType.SingleTeammate;
                 if (targetsForPlayerPool.Contains(PlayerSelectedTarget) &&
-                    !PlayerSelectedAbility.canOnlyTargetOwnCharacters)
+                    !thisAbilityCanOnlyTargetTeammatesOrSelf)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
                     stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                 }
                 else
                 {
-                    if (PlayerSelectedTarget.isOwnedByPlayer && PlayerSelectedAbility.canOnlyTargetOwnCharacters)
+                    if (PlayerSelectedTarget.isOwnedByPlayer && thisAbilityCanOnlyTargetTeammatesOrSelf)
                     {
-                        if (PlayerSelectedAbility.buff && PlayerSelectedAbility.usedOnlyOnSelf)
-                        {
-                            Debug.Log("Buffing own character, setting state to PlayerFinalizedHisMove");
-                            stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
-                        }
-                        else
-                        {
-                            Debug.Log(
-                                "Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove.");
-                            stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
-                        }
+                        Debug.Log("Character used an ability on a teammate");
+                        stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                     }
                     else
                     {
-                        Debug.Log(PlayerSelectedTarget.isDead
-                            ? "You somehow selected a dead target!"
-                            : "Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
+                        Debug.Log("Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
                     }
                 }
             }

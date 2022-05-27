@@ -14,7 +14,7 @@ namespace DisplayObjectData
         [SerializeField] private Image image;
         [SerializeField] private TMP_Text nameTextContainer;
         [SerializeField] private Slider hpSlider;
-
+        [SerializeField] private Slider shieldSlider;
 
         private BattleController battleController;
         
@@ -31,16 +31,19 @@ namespace DisplayObjectData
             image.sprite = character.artwork;
             hpSlider.maxValue = character.maxHealth;
             hpSlider.value = character.maxHealth;
+            shieldSlider.maxValue = character.maxShield;
+            shieldSlider.value = character.ShieldPoints;
 
-            BattleController.OnActionMade += UpdateCurrentHp;
+            BattleController.OnActionMade += UpdateCurrentHpAndShield;
         }
 
-        private void UpdateCurrentHp()
+        private void UpdateCurrentHpAndShield()
         {
-            hpSlider.value = character.health;
-            if (character.health == 0)
+            hpSlider.value = character.Health;
+            shieldSlider.value = character.ShieldPoints;
+            if (character.Health == 0)
             {
-                BattleController.OnActionMade -= UpdateCurrentHp;
+                BattleController.OnActionMade -= UpdateCurrentHpAndShield;
             }
         }
         
@@ -52,7 +55,6 @@ namespace DisplayObjectData
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log($"Mouse hovered over: {character.name}");
             battleController.PlayerHoveredOverTarget = character;
             OnHoveredOverCharacter?.Invoke();
         }

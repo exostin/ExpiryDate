@@ -1,4 +1,5 @@
 using Controllers.BattleScene;
+using Other.Enums;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -30,24 +31,29 @@ namespace DisplayObjectData
             nameTextContainer.text = ability.abilityName;
             image.sprite = ability.artwork;
 
-            if (ability.damage < 0)
+            if (ability.abilityType == AbilityType.Heal)
             {
-                damageTextContainer.color = Color.green;
-                damageTextContainer.text = $"Heal {-ability.damage}";
+                damageTextContainer.color = new Color(0.38f, 0.93f, 0.42f);
+                damageTextContainer.text = $"Heal {ability.healAmount}";
             }
-            else if (ability.damage == 0)
+            else if (ability.abilityType == AbilityType.Status)
             {
-                damageTextContainer.color = Color.yellow;
-                damageTextContainer.text = "Buff";
+                damageTextContainer.color = new Color(0.94f, 0.93f, 0.42f);
+                damageTextContainer.text = ability.statusType.ToString();
             }
-            else
+            else if (ability.abilityType is AbilityType.Damage)
             {
-                damageTextContainer.color = Color.red;
-                damageTextContainer.text = ability.damage + " DMG";
+                damageTextContainer.color = new Color(0.84f, 0.18f, 0.22f);
+                damageTextContainer.text = $"{ability.damageAmount} DMG";
+            }
+            else if (ability.abilityType is AbilityType.Shield)
+            {
+                damageTextContainer.color = new Color(0.12f, 0.42f, 1f);
+                damageTextContainer.text = $"Shield {ability.shieldAmount}";
             }
 
-            if (ability.targetsWholeTeam) damageTextContainer.text += " (All)";
-            if (ability.usedOnlyOnSelf) damageTextContainer.text += " (Self)";
+            if (ability.abilityTarget is TargetType.MultipleEnemies or TargetType.MultipleTeammates) damageTextContainer.text += " (AOE)";
+            if (ability.abilityTarget is TargetType.SelfOnly) damageTextContainer.text += " (Self)";
         }
 
         public void SelectAsAbilityForUse()
