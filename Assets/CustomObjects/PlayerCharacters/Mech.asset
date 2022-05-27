@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Mech
   maxHealth: 3400
+  maxShield: 2000
   initiative: 1
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: f9de6015f0181f846a0971030034e9ef, type: 3}
@@ -22,9 +23,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4df4a483db6d5e846909684914200983, type: 2}
   - {fileID: 11400000, guid: 1731e5b6b15de1644b510ccd034ffdf7, type: 2}
   - {fileID: 11400000, guid: 05d3635297e0c0d439c071a919495115, type: 2}
+  health: 1000
+  isDead: 0
+  isAnyStatusActive: 0
+  currentlyAppliedStatuses: 
+  shieldPoints: 0
+  bleedDurationLeft: 0
+  cumulatedBleedDmg: 0
+  dodgeEverythingUntilNextTurn: 0
+  stunnedDurationLeft: 0
   costTitan: 140
   costWater: 20
   costFood: 20
   costEnergy: 100
-  health: 1000
-  isDead: 0
