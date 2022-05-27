@@ -53,7 +53,6 @@ namespace Controllers.BattleScene
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                character.currentlyAppliedStatuses.Remove(status);
             }
         }
     }
