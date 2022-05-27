@@ -1,4 +1,3 @@
-[![CodeFactor](https://img.shields.io/codefactor/grade/github/exostin/ExpiryDate?style=flat-square)](https://www.codefactor.io/repository/github/exostin/expirydate)
 ![Last commit](https://flat.badgen.net/github/last-commit/exostin/ExpiryDate/main)
 [![Release](https://flat.badgen.net/github/release/exostin/ExpiryDate/stable)](https://github.com/exostin/ExpiryDate/releases)
 ![Downloads of latest version](https://flat.badgen.net/github/assets-dl/exostin/ExpiryDate/?label=lastest+release+downloads)
