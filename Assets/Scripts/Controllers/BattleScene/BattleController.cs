@@ -203,9 +203,11 @@ namespace Controllers.BattleScene
             {
                 Character character = battleQueue[index];
                 ThisTurnCharacter = character;
+                statusHandler.HandleStatuses(character, out bool skipThisTurn);
                 if (CheckIfAnySideWon()) break;
-                if (character.IsDead)
+                if (character.Health <= 0)
                 {
+                    character.IsDead = true;
                     if (character.isOwnedByPlayer)
                         targetsForEnemyPool.Remove(character);
                     else
@@ -216,8 +218,6 @@ namespace Controllers.BattleScene
 
                 Debug.Log($"{character.characterName} turn!");
                 var currentChar = FindCharactersGameObjectByName(character);
-                
-                statusHandler.HandleStatuses(character, out bool skipThisTurn);
                 if (skipThisTurn)
                 {
                     Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunDurationLeft} stun turns left.");
@@ -237,6 +237,7 @@ namespace Controllers.BattleScene
                     yield return new WaitUntil(() =>
                         stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
+                    battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(PlayerSelectedTarget));
                     battleActions.MakeAction(PlayerSelectedTarget, PlayerSelectedAbility,
                         soAllCharacters, true);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
@@ -253,12 +254,26 @@ namespace Controllers.BattleScene
                     var modifiedTargetsOfEnemyPool = targetsForEnemyPool.Where(target =>
                         !target.DodgeEverythingUntilNextTurn).ToList();
                     
-                    var randomTargetIndex = Random.Range(0, modifiedTargetsOfEnemyPool.Count);
-                    Character enemySelectedTarget = modifiedTargetsOfEnemyPool[randomTargetIndex];
-                    
                     var randomEnemyAbilityIndex = Random.Range(0, character.abilities.Length);
                     Ability enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
                     
+                    var randomTargetIndex = Random.Range(0, modifiedTargetsOfEnemyPool.Count);
+                    Character enemySelectedTarget;
+                    
+                    switch (enemySelectedAbility.abilityTarget)
+                    {
+                        case TargetType.SelfOnly or TargetType.MultipleTeammates:
+                            enemySelectedTarget = character;
+                            break;
+                        case TargetType.SingleTeammate:
+                            enemySelectedTarget = soEnemyCharacters[randomTargetIndex];
+                            break;
+                        default:
+                            enemySelectedTarget = modifiedTargetsOfEnemyPool[randomTargetIndex];
+                            break;
+                    }
+                    
+                    battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(enemySelectedTarget));
                     battleActions.MakeAction(enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());

@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3825205248
-  m_fontColor: {r: 0, g: 0, b: 0, a: 0.89411765}
+    rgba: 3841982463
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.89411765}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -84,7 +84,7 @@ MonoBehaviour:
     topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
+  m_fontColorGradientPreset: {fileID: 11400000, guid: df4e0c5a4594855488601984d8f3e90e, type: 2}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
