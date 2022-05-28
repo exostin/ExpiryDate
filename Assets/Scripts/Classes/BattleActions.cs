@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Other.Enums;
 using ScriptableObjects;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Classes
@@ -58,7 +57,6 @@ namespace Classes
             }
             else
             {
-                // if (selectedAbility.abilityTarget == TargetType.SelfOnly && characterMakingAction != target) return;
                 switch (selectedAbility.abilityType)
                 {
                     case AbilityType.Status:
