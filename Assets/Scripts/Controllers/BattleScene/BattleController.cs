@@ -30,6 +30,7 @@ namespace Controllers.BattleScene
         public bool PlayerWon { get; private set; }
         public Character PlayerSelectedTarget { get; set; }
         public Character PlayerHoveredOverTarget { get; set; }
+        private Character ThisTurnCharacter { get; set; }
         public Ability PlayerSelectedAbility { get; set; }
 
         #endregion
@@ -44,7 +45,7 @@ namespace Controllers.BattleScene
         private StateController stateController;
         private PostProcessingController postProcessingController;
         private BattleUIController battleUIController;
-        private StatusHandler statusHandler = new();
+        private readonly StatusHandler statusHandler = new();
 
         #endregion
 
@@ -201,6 +202,7 @@ namespace Controllers.BattleScene
             for (var index = 0; index < battleQueue.Count; index++)
             {
                 Character character = battleQueue[index];
+                ThisTurnCharacter = character;
                 if (CheckIfAnySideWon()) break;
                 if (character.IsDead)
                 {
@@ -293,18 +295,24 @@ namespace Controllers.BattleScene
             if (stateController.fsm.State == StateController.States.SelectingTarget &&
                 PlayerSelectedAbility != null && PlayerSelectedTarget != null && !PlayerSelectedTarget.IsDead)
             {
-                bool thisAbilityCanOnlyTargetTeammatesOrSelf = PlayerSelectedAbility.abilityTarget is TargetType.SelfOnly or TargetType.MultipleTeammates or TargetType.SingleTeammate;
+                bool thisAbilityCanOnlyTargetTeammates = PlayerSelectedAbility.abilityTarget is TargetType.MultipleTeammates or TargetType.SingleTeammate;
                 if (targetsForPlayerPool.Contains(PlayerSelectedTarget) &&
-                    !thisAbilityCanOnlyTargetTeammatesOrSelf)
+                    !thisAbilityCanOnlyTargetTeammates && PlayerSelectedAbility.abilityTarget is not TargetType.SelfOnly)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
                     stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                 }
                 else
                 {
-                    if (PlayerSelectedTarget.isOwnedByPlayer && thisAbilityCanOnlyTargetTeammatesOrSelf)
+                    if (PlayerSelectedTarget.isOwnedByPlayer && thisAbilityCanOnlyTargetTeammates)
                     {
                         Debug.Log("Character used an ability on a teammate");
+                        stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                    }
+                    else if (PlayerSelectedTarget == ThisTurnCharacter &&
+                             PlayerSelectedAbility.abilityTarget == TargetType.SelfOnly)
+                    {
+                        Debug.Log("Character used an ability on self");
                         stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                     }
                     else

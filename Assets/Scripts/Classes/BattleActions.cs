@@ -58,6 +58,7 @@ namespace Classes
             }
             else
             {
+                // if (selectedAbility.abilityTarget == TargetType.SelfOnly && characterMakingAction != target) return;
                 switch (selectedAbility.abilityType)
                 {
                     case AbilityType.Status:
