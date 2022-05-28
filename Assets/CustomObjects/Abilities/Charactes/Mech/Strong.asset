@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: Strong
   m_EditorClassIdentifier: 
   abilityName: Flamethrower
-  description: Now that's a devastating blow!
-  damage: 1000
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
   soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 3
+  healAmount: 0
+  shieldAmount: 0
+  statusType: 1
+  damageAmount: 1000
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

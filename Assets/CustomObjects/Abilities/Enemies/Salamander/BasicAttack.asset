@@ -20,8 +20,8 @@ MonoBehaviour:
   abilityType: 0
   healAmount: 0
   shieldAmount: 0
-  damageAmount: 123
   statusType: 0
+  damageAmount: 130
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0

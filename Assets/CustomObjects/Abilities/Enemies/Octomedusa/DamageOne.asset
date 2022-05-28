@@ -19,9 +19,9 @@ MonoBehaviour:
   abilityTarget: 0
   abilityType: 0
   healAmount: 0
-  damageAmount: 123
-  statusType: 0
   shieldAmount: 0
+  statusType: 0
+  damageAmount: 100
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0
