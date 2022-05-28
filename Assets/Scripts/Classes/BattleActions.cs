@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controllers.BattleScene;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Classes
 {
     public class BattleActions
     {
+        private NotificationsHandler notificationHandlerReference;
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
         /// </summary>
@@ -33,7 +35,7 @@ namespace Classes
 
             if (selectedAbility.abilityTarget is TargetType.MultipleEnemies or TargetType.MultipleTeammates)
             {
-                foreach (var thisIterationTarget in finalAttackTargets)
+                foreach (Character thisIterationTarget in finalAttackTargets)
                 {
                     switch (selectedAbility.abilityType)
                     {
@@ -78,6 +80,20 @@ namespace Classes
             }
         }
 
+        /// <summary>
+        /// This is so wrong my eyes bleed, but we have two days to complete the game... sorry future me and anyone who sees this
+        /// </summary>
+        /// <param name="character">Character GameObject</param>
+        public void AssignNotificationHandlerReference(GameObject character)
+        {
+            notificationHandlerReference = character.GetComponent<NotificationsHandler>();
+        }
+
+        private void VisualizeAction(AbilityType abilityType, string value)
+        {
+            notificationHandlerReference.HandleNotification(abilityType, value);
+        }
+
         private static void RemoveAllEnemyCharactersFromTargets(List<Character> finalAttackTargets)
         {
             for (var i = 0; i < finalAttackTargets.Count; i++)
@@ -106,7 +122,7 @@ namespace Classes
             }
         }
 
-        private static void Deal(Character target, Ability selectedAbility)
+        private void Deal(Character target, Ability selectedAbility)
         {
             if ((target.Health + target.ShieldPoints) - selectedAbility.damageAmount <= 0)
             {
@@ -127,9 +143,10 @@ namespace Classes
                 }
             }
 
+            VisualizeAction(selectedAbility.abilityType, selectedAbility.damageAmount.ToString());
             Debug.Log($"Dealt {selectedAbility.damageAmount} damage to {target.name}!");
         }
-        private static void Heal(Character target, Ability selectedAbility)
+        private void Heal(Character target, Ability selectedAbility)
         {
             if (target.currentlyAppliedStatuses.Contains(StatusType.Bleed))
             {
@@ -145,10 +162,10 @@ namespace Classes
             {
                 target.Health += selectedAbility.healAmount;
             }
-
+            VisualizeAction(selectedAbility.abilityType, selectedAbility.healAmount.ToString());
             Debug.Log($"{target.name} has been healed for {selectedAbility.healAmount}!");
         }
-        private static void Shield(Character target, Ability selectedAbility)
+        private void Shield(Character target, Ability selectedAbility)
         {
             if (target.ShieldPoints + selectedAbility.shieldAmount > target.maxShield)
             {
@@ -158,37 +175,38 @@ namespace Classes
             {
                 target.ShieldPoints += selectedAbility.shieldAmount;
             }
-
+            VisualizeAction(selectedAbility.abilityType, selectedAbility.shieldAmount.ToString());
             Debug.Log($"{target.name} has been shielded for {selectedAbility.healAmount}!");
         }
         
 
-        private static void ApplyStatus(Character target, Ability selectedStatus)
+        private void ApplyStatus(Character target, Ability selectedStatus)
         {
-            Debug.Log($"Applied {selectedStatus.name} to {target}!");
-            
             if(!target.currentlyAppliedStatuses.Contains(selectedStatus.statusType))
             {
                 target.currentlyAppliedStatuses.Add(selectedStatus.statusType);
             }
-            
+            string finalText = null;
             switch (selectedStatus.statusType)
             {
                 case StatusType.Bleed:
-                    Debug.Log($"Setting bleed status, BEFORE: Bleed duration: {target.BleedDurationLeft}, Bleed dmg: {target.CumulatedBleedDmg} on {target.name}!");
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
-                    Debug.Log($"Setting bleed status, AFTER: Bleed duration: {target.BleedDurationLeft}, Bleed dmg: {target.CumulatedBleedDmg} on {target.name}!");
+                    finalText = $"-{selectedStatus.damageAmount} HP, Bleed";
                     break;
                 case StatusType.Dodge:
                     target.DodgeEverythingUntilNextTurn = true;
+                    finalText = "Dodge";
                     break;
                 case StatusType.Stun:
                     target.StunDurationLeft += selectedStatus.stunDuration;
+                    finalText = $"-{selectedStatus.damageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(message:"Status type not found", innerException: null);
             }
+            VisualizeAction(AbilityType.Status, finalText);
+            Debug.Log($"Applied {selectedStatus.statusType} to {target}!");
         }
     }
 }
