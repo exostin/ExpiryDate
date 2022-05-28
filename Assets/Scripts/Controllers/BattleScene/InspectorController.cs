@@ -68,7 +68,7 @@ namespace Controllers.BattleScene
             
             characterInspector.SetActive(true);
             
-            smallCharacterArtwork.sprite = currentCharacter.artwork;
+            smallCharacterArtwork.sprite = currentCharacter.artworkPortrait;
             characterInspectorHeading.text = "Active statuses:";
 
             hpSlider.maxValue = currentCharacter.maxHealth;
@@ -106,6 +106,7 @@ namespace Controllers.BattleScene
                             activeStatusesList += $", {currentCharacter.StunDurationLeft} turns left";
                             break;
                     }
+
                     activeStatusesList += "\n";
                 }
             }

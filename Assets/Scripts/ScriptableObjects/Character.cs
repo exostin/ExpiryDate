@@ -13,6 +13,7 @@ namespace ScriptableObjects
         public int initiative;
         public bool isOwnedByPlayer;
         public Sprite artwork;
+        public Sprite artworkPortrait;
         public Ability[] abilities;
         
         public int Health { get; set; }

@@ -18,20 +18,13 @@ MonoBehaviour:
   initiative: 4
   isOwnedByPlayer: 0
   artwork: {fileID: 21300000, guid: 6d78dc7397295d14aa8278ca9bc1ae0a, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: a6f4e4b4149b21c48a954ba4effa4b32, type: 3}
   abilities:
   - {fileID: 11400000, guid: 6f1045cc3194ca746bf22e842c5f39a9, type: 2}
   - {fileID: 11400000, guid: a4730cbb8876cf14eb19baabc67f8aaa, type: 2}
   - {fileID: 11400000, guid: 06794f2b5ecbd0647ae5da7c0772ef79, type: 2}
   - {fileID: 11400000, guid: 6ee1127a5c5dae042be193006823c641, type: 2}
-  health: 3000
-  isDead: 0
-  isAnyStatusActive: 0
   currentlyAppliedStatuses: 
-  shieldPoints: 0
-  bleedDurationLeft: 0
-  cumulatedBleedDmg: 0
-  dodgeEverythingUntilNextTurn: 0
-  stunnedDurationLeft: 0
   costTitan: 0
   costWater: 0
   costFood: 0
