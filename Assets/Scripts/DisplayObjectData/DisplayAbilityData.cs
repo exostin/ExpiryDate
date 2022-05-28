@@ -34,22 +34,22 @@ namespace DisplayObjectData
             if (ability.abilityType == AbilityType.Heal)
             {
                 damageTextContainer.color = new Color(0.38f, 0.93f, 0.42f);
-                damageTextContainer.text = $"Heal {ability.healAmount}";
+                damageTextContainer.text = $"Heal";
             }
             else if (ability.abilityType == AbilityType.Status)
             {
                 damageTextContainer.color = new Color(0.94f, 0.93f, 0.42f);
                 damageTextContainer.text = ability.statusType.ToString();
             }
-            else if (ability.abilityType is AbilityType.Damage)
+            else if (ability.abilityType is AbilityType.DamageOnly)
             {
                 damageTextContainer.color = new Color(0.84f, 0.18f, 0.22f);
-                damageTextContainer.text = $"{ability.damageAmount} DMG";
+                damageTextContainer.text = $"DMG";
             }
             else if (ability.abilityType is AbilityType.Shield)
             {
                 damageTextContainer.color = new Color(0.12f, 0.42f, 1f);
-                damageTextContainer.text = $"Shield {ability.shieldAmount}";
+                damageTextContainer.text = $"Shield";
             }
 
             if (ability.abilityTarget is TargetType.MultipleEnemies or TargetType.MultipleTeammates) damageTextContainer.text += " (AOE)";

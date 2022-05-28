@@ -22,10 +22,11 @@ namespace Controllers.BattleScene
                         character.Health -= character.CumulatedBleedDmg;
                         character.BleedDurationLeft--;
                         Debug.Log($"{character.name} took {character.CumulatedBleedDmg} damage from bleeding. {character.BleedDurationLeft} bleeding turns left.");
-                        if (character.BleedDurationLeft == 0)
+                        if (character.BleedDurationLeft <= 0)
                         {
                             Debug.Log("Bleeding stopped!");
                             character.currentlyAppliedStatuses.Remove(status);
+                            character.BleedDurationLeft = 0;
                         }
                         break;
                     }
@@ -37,7 +38,7 @@ namespace Controllers.BattleScene
                     }
                     case StatusType.Stun:
                     {
-                        if (character.StunnedDurationLeft == 0)
+                        if (character.StunDurationLeft == 0)
                         {
                             character.currentlyAppliedStatuses.Remove(status);
                             Debug.Log($"{character.name} is no longer stunned.");
@@ -45,8 +46,8 @@ namespace Controllers.BattleScene
                         else
                         {
                             skipThisTurn = true;
-                            character.StunnedDurationLeft--;
-                            Debug.Log($"{character.name} is stunned for: {character.StunnedDurationLeft} more turns.");
+                            character.StunDurationLeft--;
+                            Debug.Log($"{character.name} is stunned for: {character.StunDurationLeft} more turns.");
                         }
                         break;
                     }

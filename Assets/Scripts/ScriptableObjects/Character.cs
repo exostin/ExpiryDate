@@ -26,7 +26,7 @@ namespace ScriptableObjects
 
         public int CumulatedBleedDmg { get; set; }
         public bool DodgeEverythingUntilNextTurn { get; set; }
-        public int StunnedDurationLeft { get; set; }
+        public int StunDurationLeft { get; set; }
         
         [Header("Citybuilding")]
         public int costTitan;
@@ -43,7 +43,7 @@ namespace ScriptableObjects
             BleedDurationLeft = 0;
             CumulatedBleedDmg = 0;
             DodgeEverythingUntilNextTurn = false;
-            StunnedDurationLeft = 0;
+            StunDurationLeft = 0;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Classes
             finalAttackTargets.RemoveAll(x => x.DodgeEverythingUntilNextTurn);
 
             // If the ability should target only own team
-            if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates or TargetType.SelfOnly)
+            if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates)
             {
                 if (isPlayerTurn) RemoveAllEnemyCharactersFromTargets(finalAttackTargets);
                 else RemoveAllPlayerCharactersFromTargets(finalAttackTargets);
@@ -35,32 +35,46 @@ namespace Classes
             if (selectedAbility.abilityTarget is TargetType.MultipleEnemies or TargetType.MultipleTeammates)
             {
                 foreach (var thisIterationTarget in finalAttackTargets)
-                    if (selectedAbility.abilityType is AbilityType.Status)
-                        ApplyStatus(thisIterationTarget, selectedAbility);
-                    else if (selectedAbility.abilityType is AbilityType.Damage)
-                        Deal(thisIterationTarget, selectedAbility);
-                    else if (selectedAbility.abilityType is AbilityType.Heal)
-                        Heal(thisIterationTarget, selectedAbility);
-                    else if (selectedAbility.abilityType is AbilityType.Shield)
-                        Shield(thisIterationTarget, selectedAbility);
-                    else
+                {
+                    switch (selectedAbility.abilityType)
                     {
-                        Debug.LogError("Ability type not found");
+                        case AbilityType.Status:
+                            ApplyStatus(thisIterationTarget, selectedAbility);
+                            break;
+                        case AbilityType.DamageOnly:
+                            Deal(thisIterationTarget, selectedAbility);
+                            break;
+                        case AbilityType.Heal:
+                            Heal(thisIterationTarget, selectedAbility);
+                            break;
+                        case AbilityType.Shield:
+                            Shield(thisIterationTarget, selectedAbility);
+                            break;
+                        default:
+                            Debug.LogError("Ability type not found");
+                            break;
                     }
+                }
             }
             else
             {
-                if (selectedAbility.abilityType is AbilityType.Status)
-                    ApplyStatus(target, selectedAbility);
-                else if (selectedAbility.abilityType is AbilityType.Damage)
-                    Deal(target, selectedAbility);
-                else if (selectedAbility.abilityType is AbilityType.Heal)
-                    Heal(target, selectedAbility);
-                else if (selectedAbility.abilityType is AbilityType.Shield)
-                    Shield(target, selectedAbility);
-                else
+                switch (selectedAbility.abilityType)
                 {
-                    Debug.LogError("Ability type not found");
+                    case AbilityType.Status:
+                        ApplyStatus(target, selectedAbility);
+                        break;
+                    case AbilityType.DamageOnly:
+                        Deal(target, selectedAbility);
+                        break;
+                    case AbilityType.Heal:
+                        Heal(target, selectedAbility);
+                        break;
+                    case AbilityType.Shield:
+                        Shield(target, selectedAbility);
+                        break;
+                    default:
+                        Debug.LogError("Ability type not found");
+                        break;
                 }
             }
         }
@@ -171,7 +185,7 @@ namespace Classes
                     target.DodgeEverythingUntilNextTurn = true;
                     break;
                 case StatusType.Stun:
-                    target.StunnedDurationLeft += selectedStatus.stunDuration;
+                    target.StunDurationLeft += selectedStatus.stunDuration;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(message:"Status type not found", innerException: null);

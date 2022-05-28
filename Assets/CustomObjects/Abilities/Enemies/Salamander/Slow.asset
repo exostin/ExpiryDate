@@ -20,8 +20,8 @@ MonoBehaviour:
   abilityType: 3
   healAmount: 0
   shieldAmount: 0
-  damageAmount: 0
   statusType: 1
-  bleedDuration: 12
-  bleedDmgAmount: 5
+  damageAmount: 400
+  bleedDuration: 50
+  bleedDmgAmount: 200
   stunDuration: 2

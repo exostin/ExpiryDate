@@ -2,7 +2,7 @@ namespace Other.Enums
 {
     public enum AbilityType
     {
-        Damage,
+        DamageOnly,
         Heal,
         Shield,
         Status

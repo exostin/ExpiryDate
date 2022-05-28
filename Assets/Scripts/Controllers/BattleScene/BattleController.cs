@@ -218,7 +218,7 @@ namespace Controllers.BattleScene
                 statusHandler.HandleStatuses(character, out bool skipThisTurn);
                 if (skipThisTurn)
                 {
-                    Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunnedDurationLeft} stun turns left.");
+                    Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunDurationLeft} stun turns left.");
                     continue;
                 }
                 

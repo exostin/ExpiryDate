@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 295840081}
   - component: {fileID: 295840080}
   m_Layer: 5
-  m_Name: CharacterName
+  m_Name: CharacterInspectorHeading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -672,7 +672,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295840078}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -682,7 +682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70.79999, y: 78.4}
+  m_AnchoredPosition: {x: 70.799805, y: 78.4}
   m_SizeDelta: {x: 292.508, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &295840080
@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 390858458}
   - component: {fileID: 390858457}
   m_Layer: 5
-  m_Name: Ability Name
+  m_Name: Inspector header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -956,8 +956,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 8.799988, y: -7.399994}
-  m_SizeDelta: {x: 292.508, y: 50}
+  m_AnchoredPosition: {x: 5.399994, y: -2.600006}
+  m_SizeDelta: {x: 451.883, y: 39.858}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &390858457
 MonoBehaviour:
@@ -2611,8 +2611,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 8.799988, y: 31.73}
-  m_SizeDelta: {x: 292.508, y: 50}
+  m_AnchoredPosition: {x: 5.399994, y: -16.531}
+  m_SizeDelta: {x: 442.224, y: 184.262}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1225489151
 MonoBehaviour:
@@ -3099,7 +3099,7 @@ GameObject:
   - component: {fileID: 1294865459}
   - component: {fileID: 1294865458}
   m_Layer: 5
-  m_Name: Initiative
+  m_Name: CharacterInspectorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4333,11 +4333,11 @@ MonoBehaviour:
   hpSliderText: {fileID: 1954679622}
   shieldSlider: {fileID: 1674766301324700667}
   shieldSliderText: {fileID: 1674766301324700666}
-  characterName: {fileID: 295840080}
+  characterInspectorHeading: {fileID: 295840080}
   smallCharacterArtwork: {fileID: 2054105912}
-  initiative: {fileID: 1294865458}
+  characterInspectorText: {fileID: 1294865458}
   abilityInspector: {fileID: 1781327920}
-  abilityName: {fileID: 390858457}
+  abilityInspectorHeader: {fileID: 390858457}
   abilityDescription: {fileID: 1225489151}
 --- !u!1 &1737486959
 GameObject:

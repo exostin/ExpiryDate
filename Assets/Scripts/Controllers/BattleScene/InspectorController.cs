@@ -1,5 +1,6 @@
 using System.Linq;
 using DisplayObjectData;
+using Other.Enums;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -16,12 +17,12 @@ namespace Controllers.BattleScene
         [SerializeField] private TMP_Text hpSliderText;
         [SerializeField] private Slider shieldSlider;
         [SerializeField] private TMP_Text shieldSliderText;
-        [SerializeField] private TMP_Text characterName;
+        [SerializeField] private TMP_Text characterInspectorHeading;
         [SerializeField] private Image smallCharacterArtwork;
 
         #region Stats
         
-        [SerializeField] private TMP_Text initiative;
+        [SerializeField] private TMP_Text characterInspectorText;
 
         #endregion
         
@@ -31,7 +32,7 @@ namespace Controllers.BattleScene
         #region Ability inspector
         [Header("Ability inspector")]
         [SerializeField] private GameObject abilityInspector;
-        [SerializeField] private TMP_Text abilityName;
+        [SerializeField] private TMP_Text abilityInspectorHeader;
         [SerializeField] private TMP_Text abilityDescription;
 
         #endregion
@@ -68,7 +69,7 @@ namespace Controllers.BattleScene
             characterInspector.SetActive(true);
             
             smallCharacterArtwork.sprite = currentCharacter.artwork;
-            characterName.text = currentCharacter.name;
+            characterInspectorHeading.text = "Active statuses:";
 
             hpSlider.maxValue = currentCharacter.maxHealth;
             shieldSlider.maxValue = currentCharacter.maxShield;
@@ -95,7 +96,17 @@ namespace Controllers.BattleScene
             {
                 foreach (var status in currentCharacter.currentlyAppliedStatuses)
                 {
-                    activeStatusesList += status + "\n";
+                    activeStatusesList += status.ToString();
+                    switch (status)
+                    {
+                        case StatusType.Bleed:
+                            activeStatusesList += $" for {currentCharacter.CumulatedBleedDmg} dmg, {currentCharacter.BleedDurationLeft} turns left";
+                            break;
+                        case StatusType.Stun:
+                            activeStatusesList += $", {currentCharacter.StunDurationLeft} turns left";
+                            break;
+                    }
+                    activeStatusesList += "\n";
                 }
             }
             else
@@ -103,7 +114,7 @@ namespace Controllers.BattleScene
                 activeStatusesList = "None";
             }
             
-            initiative.text = $"Initiative: {currentCharacter.initiative}\nActive statuses: {activeStatusesList}";
+            characterInspectorText.text = $"{activeStatusesList}";
         }
 
         #endregion
@@ -112,8 +123,40 @@ namespace Controllers.BattleScene
 
         private void UpdateAbilityData()
         {
-            abilityName.text = battleController.PlayerSelectedAbility.abilityName;
-            abilityDescription.text = battleController.PlayerSelectedAbility.abilityDescription;
+            var currentAbility = battleController.PlayerSelectedAbility;
+            abilityInspectorHeader.text = "Ability description:";
+            abilityDescription.text = null;
+            switch (currentAbility.abilityType)
+            {
+                case AbilityType.DamageOnly:
+                case AbilityType.Status when currentAbility.statusType is StatusType.Bleed or StatusType.Stun:
+                    abilityDescription.text += $"Damage: {currentAbility.damageAmount}\n";
+                    break;
+                case AbilityType.Heal:
+                    abilityDescription.text += $"Heal: {currentAbility.healAmount} (also alleviates bleeding)\n";
+                    break;
+                case AbilityType.Shield:
+                    abilityDescription.text += $"Shield: {currentAbility.shieldAmount}\n";
+                    break;
+            }
+            
+            if (currentAbility.abilityType is AbilityType.Status)
+            {
+                abilityDescription.text += $"Applies {currentAbility.statusType}";
+                switch (currentAbility.statusType)
+                {
+                    case StatusType.Bleed:
+                        abilityDescription.text += $" for {currentAbility.bleedDuration} turns\n";
+                        break;
+                    case StatusType.Stun:
+                        abilityDescription.text += $" for {currentAbility.stunDuration} turns\n";
+                        break;
+                    case StatusType.Dodge:
+                        abilityDescription.text += " (avoid being targeted until next turn)\n";
+                        break;
+                }
+            }
+            abilityDescription.text += $"\n{currentAbility.abilityDescription}";
         }
 
         private void ShowAbilityData()
