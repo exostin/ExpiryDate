@@ -7,7 +7,7 @@ namespace Controllers.CitybuildingScene
         [SerializeField] private Animation buildingShop;
         // [SerializeField] private Animation notification;
         //private bool notificationActivated;
-        private bool shopActivated;
+        private bool shopActivated = false;
 
         // private void Start()
         // {
@@ -29,8 +29,30 @@ namespace Controllers.CitybuildingScene
                 buildingShop["ShowShop"].speed = -1;
                 buildingShop.Play("ShowShop");
             }
-
+        
             shopActivated = !shopActivated;
+        }
+        
+        public void SetShopVisibility(bool visible)
+        {
+            if(shopActivated == visible) return;
+            
+            if (visible)
+            {
+                // Show
+                buildingShop["ShowShop"].time = 0;
+                buildingShop["ShowShop"].speed = 1;
+                buildingShop.Play("ShowShop");
+            }
+            else
+            {
+                // Hide
+                buildingShop["ShowShop"].time = buildingShop["ShowShop"].length;
+                buildingShop["ShowShop"].speed = -1;
+                buildingShop.Play("ShowShop");
+            }
+
+            shopActivated = visible;
         }
 
         // public void ToggleNotificationVisibility()
