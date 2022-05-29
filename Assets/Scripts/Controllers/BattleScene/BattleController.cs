@@ -93,13 +93,6 @@ namespace Controllers.BattleScene
         #endregion
         private void Start()
         {
-            gm = FindObjectOfType<GameManager>();
-            if (gm == null)
-            {
-                Debug.Log("GameManager not found. Loading Main Menu.");
-                SceneManager.LoadScene(0);
-                return;
-            }
             stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
