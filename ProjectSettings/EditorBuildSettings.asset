@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: 65244f1cbf12124469f53bc8a36aa605
+  - enabled: 1
+    path: Assets/Scenes/DefenderSelection.unity
+    guid: 26807ccb40118a64e9d7a852e4298c55
   m_configObjects: {}
