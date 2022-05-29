@@ -25,8 +25,8 @@ public class BuildingPanelController : MonoBehaviour
 
     private void Start()
     {
-        cbc = GameObject.Find("CitybuildingController").GetComponent<CitybuildingController>();
-        cbm = GameObject.Find("Game Manager").GetComponent<GameManager>().cbm;
+        cbc = FindObjectOfType<CitybuildingController>();
+        cbm = FindObjectOfType<GameManager>().cbm;
 
         acquiredUpgradesText = transform.Find("Panel/AcquiredUpgradesText").GetComponent<TextMeshProUGUI>();
         nextUpgradeText = transform.Find("Panel/NextUpgradeText").GetComponent<TextMeshProUGUI>();
