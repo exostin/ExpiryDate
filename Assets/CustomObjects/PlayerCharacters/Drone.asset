@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: Drone
   m_EditorClassIdentifier: 
   characterName: Drone
-  maxHealth: 1000
-  maxShield: 400
-  initiative: 8
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: 5ded869c628d9684eab3f2365e682167, type: 3}
   artworkPortrait: {fileID: 21300000, guid: cf5157e7ed070ce49bcb85994efa0544, type: 3}
@@ -24,7 +21,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63b649bb46f9aec4397490ced7768d21, type: 2}
   - {fileID: 11400000, guid: ffee4a4f83507b0468e7efdc117ddc41, type: 2}
   - {fileID: 11400000, guid: e323d12b5d15b844da6a7d120875c158, type: 2}
-  currentlyAppliedStatuses: 00000000
+  maxHealth: 1000
+  maxShield: 400
+  initiative: 8
+  chanceToBreakOutOfStun: 36
+  currentlyAppliedStatuses: 
   costTitan: 60
   costWater: 10
   costFood: 10
