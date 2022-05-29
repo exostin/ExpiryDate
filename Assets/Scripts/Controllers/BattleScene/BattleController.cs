@@ -203,7 +203,9 @@ namespace Controllers.BattleScene
             {
                 Character character = battleQueue[index];
                 ThisTurnCharacter = character;
-                statusHandler.HandleStatuses(character, out bool skipThisTurn);
+                Debug.Log($"{character.characterName} turn!");
+                var currentCharGameObject = FindCharactersGameObjectByName(character);
+                statusHandler.HandleStatuses(character, out bool skipThisTurn, currentCharGameObject);
                 if (CheckIfAnySideWon()) break;
                 if (character.Health <= 0)
                 {
@@ -215,9 +217,6 @@ namespace Controllers.BattleScene
                     battleQueue.Remove(character);
                     continue;
                 }
-
-                Debug.Log($"{character.characterName} turn!");
-                var currentChar = FindCharactersGameObjectByName(character);
                 if (skipThisTurn)
                 {
                     Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunDurationLeft} stun turns left.");
@@ -225,7 +224,7 @@ namespace Controllers.BattleScene
                 }
                 
                 // AD HOC, TO BE CHANGED ASAP
-                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
+                currentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
                 if (character.isOwnedByPlayer)
                 {
                     stateController.fsm.ChangeState(StateController.States.PlayerTurn);
@@ -282,7 +281,7 @@ namespace Controllers.BattleScene
                 battleUIController.DisableSelectionIndicators();
                 battleUIController.LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
-                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
+                currentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
 
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
