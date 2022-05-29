@@ -21,7 +21,7 @@ namespace Other.Citybuilding
 
         private void OnMouseEnter()
         {
-            Cursor.SetCursor(cursorPointerTexture, new Vector2(cursorPointerTexture.width / 2f, 0),
+            Cursor.SetCursor(cursorPointerTexture, new Vector2(0, 0),
                 CursorMode.Auto);
         }
 
@@ -32,7 +32,7 @@ namespace Other.Citybuilding
 
         private void OnMouseUpAsButton()
         {
-            building.Upgrade();
+            cbc.SelectBuilding(building);
             cbc.UpdateModels();
         }
     }
