@@ -33,6 +33,8 @@ namespace Controllers.BattleScene
         private Character ThisTurnCharacter { get; set; }
         public Ability PlayerSelectedAbility { get; set; }
 
+        [SerializeField] private Color deadCharacterTint = new Color(166f, 0.33f, 0.33f);
+
         #endregion
 
         #endregion
@@ -215,7 +217,7 @@ namespace Controllers.BattleScene
                     else
                         targetsForPlayerPool.Remove(character);
                     battleQueue.Remove(character);
-                    currentCharGameObject.GetComponentInChildren<Image>().color = new Color(166f, 0.33f, 0.33f);
+                    currentCharGameObject.GetComponentInChildren<Image>().color = deadCharacterTint;
                     continue;
                 }
                 if (skipThisTurn)
