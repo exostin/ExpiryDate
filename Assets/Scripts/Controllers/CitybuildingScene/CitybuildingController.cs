@@ -139,7 +139,10 @@ namespace Controllers
         public void NextDay(bool skipFight)
         {
             cbm.OnNextDay();
-            if (!skipFight) EnterBattleMode();
+            if (!skipFight && cbm.NextEncounter == 0)
+            {
+                EnterBattleMode();
+            }
         }
 
         public void NextDay()

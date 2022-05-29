@@ -137,8 +137,17 @@ namespace Classes.Citybuilding
         public void OnNextDay()
         {
             DefenderBought = false;
+            NextEncounter--;
+            if (NextEncounter == 0) SetNewEncounter();
             RunSimulation();
             Simulation.OnNextDay(this);
+        }
+
+        private void SetNewEncounter()
+        {
+            const int encounter = 5;
+            NextEncounter = encounter;
+            NextEncounterMax = encounter;
         }
 
         #region Levels
