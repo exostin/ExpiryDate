@@ -12,6 +12,8 @@ namespace Controllers
     {
         public StateController stateController;
 
+        public DefenderType[] selectedDefenders;
+
         #region Start/Pause menu
 
         [SerializeField] private GameObject pauseMenu;

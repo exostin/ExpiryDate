@@ -133,7 +133,7 @@ namespace Controllers
         public void EnterBattleMode()
         {
             cbm.Save();
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("DefenderSelection");
         }
 
         public void NextDay(bool skipFight)
