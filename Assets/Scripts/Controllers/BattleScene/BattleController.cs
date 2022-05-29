@@ -127,7 +127,7 @@ namespace Controllers.BattleScene
         /// </summary>
         private void InitializeAllCharactersDefaultStats()
         {
-            foreach (var character in battleQueue) character.Initialize();
+            foreach (Character character in battleQueue) character.Initialize();
         }
 
         /// <summary>

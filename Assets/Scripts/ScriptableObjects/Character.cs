@@ -8,13 +8,24 @@ namespace ScriptableObjects
     public class Character : ScriptableObject
     {
         public string characterName;
-        public int maxHealth;
-        public int maxShield;
-        public int initiative;
         public bool isOwnedByPlayer;
         public Sprite artwork;
+        [Tooltip("Character's small photo that is shown in the character inspector")]
         public Sprite artworkPortrait;
         public Ability[] abilities;
+
+        #region Character Stats
+
+        [Header("Character Stats")]
+        public int maxHealth;
+        public int maxShield;
+        [Tooltip("Value that determines the order of the character in battle queue (higher is faster)")]
+        public int initiative;
+
+        [Tooltip("Chance percentage to break out of stun on each turn")]
+        public int chanceToBreakOutOfStun;
+
+        #endregion
         
         public int Health { get; set; }
         public bool IsDead { get; set; }

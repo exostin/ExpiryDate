@@ -3,6 +3,7 @@ using System.Linq;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
 {
@@ -50,10 +51,21 @@ namespace Controllers.BattleScene
                         }
                         else
                         {
-                            finalText = $"Still stunned!";
-                            skipThisTurn = true;
-                            character.StunDurationLeft--;
-                            Debug.Log($"{character.name} is stunned for: {character.StunDurationLeft} more turns.");
+                            var rollForStunBreak = Random.Range(1f, 100f);
+                            if (rollForStunBreak <= character.chanceToBreakOutOfStun)
+                            {
+                                character.StunDurationLeft = 0;
+                                finalText = $"Broke out of stun!";
+                                character.currentlyAppliedStatuses.Remove(status);
+                                Debug.Log($"{character.name} broke out of stun!");
+                            }
+                            else
+                            {
+                                finalText = $"Still stunned!";
+                                skipThisTurn = true;
+                                character.StunDurationLeft--;
+                                Debug.Log($"{character.name} is stunned for: {character.StunDurationLeft} more turns.");
+                            }
                         }
                         break;
                     }
