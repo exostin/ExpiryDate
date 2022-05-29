@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using DisplayObjectData;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
@@ -215,6 +214,7 @@ namespace Controllers.BattleScene
                     else
                         targetsForPlayerPool.Remove(character);
                     battleQueue.Remove(character);
+                    currentCharGameObject.GetComponentInChildren<Image>().color = new Color(166f, 0.33f, 0.33f);
                     continue;
                 }
                 if (skipThisTurn)
