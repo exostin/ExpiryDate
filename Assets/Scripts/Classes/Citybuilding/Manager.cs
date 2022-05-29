@@ -138,7 +138,7 @@ namespace Classes.Citybuilding
         {
             DefenderBought = false;
             NextEncounter--;
-            if (NextEncounter == 0) SetNewEncounter();
+            if (NextEncounter == -1) SetNewEncounter();
             RunSimulation();
             Simulation.OnNextDay(this);
         }

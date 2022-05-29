@@ -17,7 +17,7 @@ namespace Other.Citybuilding
             slider.minValue = 0;
             slider.maxValue = cbm.NextEncounterMax;
             slider.value = cbm.NextEncounter;
-            slider.transform.Find("Label").GetComponent<TMP_Text>().text = $"{cbm.NextEncounter} days left!";
+            slider.transform.Find("Label").GetComponent<TMP_Text>().text = cbm.NextEncounter != 0 ? $"{cbm.NextEncounter} day(s) left!" : "The big fight is tonight!";
         }
     }
 }
