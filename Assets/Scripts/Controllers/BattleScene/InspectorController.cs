@@ -131,7 +131,7 @@ namespace Controllers.BattleScene
             {
                 case AbilityType.DamageOnly:
                 case AbilityType.Status when currentAbility.statusType is StatusType.Bleed or StatusType.Stun:
-                    abilityDescription.text += $"Damage: {currentAbility.damageAmount}\n";
+                    abilityDescription.text += $"Damage: {currentAbility.minDamageAmount} - {currentAbility.maxDamageAmount}\n";
                     break;
                 case AbilityType.Heal:
                     abilityDescription.text += $"Heal: {currentAbility.healAmount} (also alleviates bleeding)\n";

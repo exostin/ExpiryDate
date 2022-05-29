@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using Other.Enums;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ScriptableObjects
 {
@@ -21,7 +22,8 @@ namespace ScriptableObjects
         [BoxGroup("Status")]
         [ShowIf("abilityType", AbilityType.Status)] public StatusType statusType;
         
-        [ShowIf("IsStunOrBleedOrDamage")] public int damageAmount;
+        [ShowIf("IsStunOrBleedOrDamage")] public int minDamageAmount;
+        [ShowIf("IsStunOrBleedOrDamage")] public int maxDamageAmount;
         
         [BoxGroup("Status")]
         [ShowIf("IsStatusAndBleedIsSelected")] public int bleedDuration;
