@@ -13,7 +13,7 @@ namespace Classes
     {
         private NotificationsHandler notificationHandlerReference;
         private int finalDamageAmount;
-        
+        private int finalHealAmount;
         
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
@@ -26,6 +26,7 @@ namespace Classes
             finalAttackTargets.RemoveAll(x => x.DodgeEverythingUntilNextTurn);
             
             finalDamageAmount = Random.Range(selectedAbility.minDamageAmount, selectedAbility.maxDamageAmount);
+            finalHealAmount = Random.Range(selectedAbility.minHealAmount, selectedAbility.maxHealAmount);
 
             // If the ability should target only own team
             if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates)
@@ -160,16 +161,16 @@ namespace Classes
                 target.BleedDurationLeft = 0;
             }
             
-            if (target.Health + selectedAbility.healAmount > target.maxHealth)
+            if (target.Health + finalHealAmount > target.maxHealth)
             {
                 target.Health = target.maxHealth;
             }
             else
             {
-                target.Health += selectedAbility.healAmount;
+                target.Health += finalHealAmount;
             }
-            VisualizeAction(selectedAbility.abilityType, selectedAbility.healAmount.ToString());
-            Debug.Log($"{target.name} has been healed for {selectedAbility.healAmount}!");
+            VisualizeAction(selectedAbility.abilityType, finalHealAmount.ToString());
+            Debug.Log($"{target.name} has been healed for {finalHealAmount}!");
         }
         private void Shield(Character target, Ability selectedAbility)
         {
@@ -182,7 +183,7 @@ namespace Classes
                 target.ShieldPoints += selectedAbility.shieldAmount;
             }
             VisualizeAction(selectedAbility.abilityType, selectedAbility.shieldAmount.ToString());
-            Debug.Log($"{target.name} has been shielded for {selectedAbility.healAmount}!");
+            Debug.Log($"{target.name} has been shielded for {selectedAbility.shieldAmount}!");
         }
         
 
