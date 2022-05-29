@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Shield
+  m_Name: 1-BasicAtack
   m_EditorClassIdentifier: 
-  abilityName: Shield
-  abilityDescription: Shield one teammate!
-  artwork: {fileID: 21300000, guid: fd96df01631a6b8499e5b098b0d07906, type: 3}
+  abilityName: Basic attack
+  abilityDescription: Attack!
+  artwork: {fileID: 21300000, guid: 69cc5a37216ca494ebfe770a6ff71e03, type: 3}
   soundEffect: {fileID: 0}
-  abilityTarget: 2
-  abilityType: 2
+  abilityTarget: 0
+  abilityType: 3
   healAmount: 0
-  shieldAmount: 500
-  statusType: 2
-  damageAmount: 0
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 100
+  maxDamageAmount: 150
   bleedDuration: 0
   bleedDmgAmount: 0
-  stunDuration: 0
+  stunDuration: 3

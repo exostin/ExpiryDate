@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Special
+  m_Name: 3-Shield
   m_EditorClassIdentifier: 
-  abilityName: Special ability
-  abilityDescription: 
-  artwork: {fileID: 21300000, guid: 7187460dad17fb1429ac6af1d285ff19, type: 3}
+  abilityName: Shield
+  abilityDescription: Shield one teammate!
+  artwork: {fileID: 21300000, guid: fd96df01631a6b8499e5b098b0d07906, type: 3}
   soundEffect: {fileID: 0}
-  abilityTarget: 3
+  abilityTarget: 2
   abilityType: 2
   healAmount: 0
-  shieldAmount: 300
+  shieldAmount: 500
   statusType: 2
   damageAmount: 0
   bleedDuration: 0
