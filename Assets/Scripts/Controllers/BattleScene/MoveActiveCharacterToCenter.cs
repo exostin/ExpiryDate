@@ -13,8 +13,7 @@ namespace Controllers.BattleScene
         {
             originalPosition = gameObject.transform.position;
         }
-
-
+        
         public void MoveToCenter(int option)
         {
             // AD HOC, TO BE CHANGED ASAP 

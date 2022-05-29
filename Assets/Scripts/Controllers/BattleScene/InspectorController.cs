@@ -168,7 +168,7 @@ namespace Controllers.BattleScene
         {
             abilityInspector.SetActive(false);
         }
-
+        
         #endregion
         
     }
