@@ -33,7 +33,6 @@ namespace Other.Citybuilding
         private void OnMouseUpAsButton()
         {
             cbc.SelectBuilding(building);
-            cbc.UpdateModels();
         }
     }
 }
