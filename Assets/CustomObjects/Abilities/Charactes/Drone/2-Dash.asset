@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Basic attack
+  m_Name: 2-Dash
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
-  abilityDescription: Attack!
-  artwork: {fileID: 21300000, guid: 69cc5a37216ca494ebfe770a6ff71e03, type: 3}
+  abilityName: Dash
+  abilityDescription: Dodge!
+  artwork: {fileID: 21300000, guid: 2c5209a4fa3528345b0a5c16e60f6a51, type: 3}
   soundEffect: {fileID: 0}
-  abilityTarget: 0
+  abilityTarget: 4
   abilityType: 3
   healAmount: 0
-  shieldAmount: 0
-  statusType: 0
-  minDamageAmount: 100
-  maxDamageAmount: 150
+  shieldAmount: 13
+  damageAmount: 0
+  statusType: 2
   bleedDuration: 0
   bleedDmgAmount: 0
-  stunDuration: 3
+  stunDuration: 0

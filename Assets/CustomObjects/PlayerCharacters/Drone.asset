@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63b649bb46f9aec4397490ced7768d21, type: 2}
   - {fileID: 11400000, guid: ffee4a4f83507b0468e7efdc117ddc41, type: 2}
   - {fileID: 11400000, guid: e323d12b5d15b844da6a7d120875c158, type: 2}
-  currentlyAppliedStatuses: 
+  currentlyAppliedStatuses: 00000000
   costTitan: 60
   costWater: 10
   costFood: 10
