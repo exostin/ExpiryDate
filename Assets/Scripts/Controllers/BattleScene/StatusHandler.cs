@@ -51,8 +51,8 @@ namespace Controllers.BattleScene
                         }
                         else
                         {
-                            var willBreakOut = Random.Range(1f, 100f);
-                            if (willBreakOut <= character.chanceToBreakOutOfStun)
+                            var rollForStunBreak = Random.Range(1f, 100f);
+                            if (rollForStunBreak <= character.chanceToBreakOutOfStun)
                             {
                                 character.StunDurationLeft = 0;
                                 finalText = $"Broke out of stun!";
