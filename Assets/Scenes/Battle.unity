@@ -4433,6 +4433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f006c9ff7a9039949848581de9e9f2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadCharacterTint: {r: 0.735849, g: 0.26032394, b: 0.26032394, a: 0}
   playerCharacters:
   - {fileID: 7930149751324795174}
   - {fileID: 1570070783}

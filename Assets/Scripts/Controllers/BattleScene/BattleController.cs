@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using DisplayObjectData;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
@@ -33,6 +32,8 @@ namespace Controllers.BattleScene
         public Character PlayerHoveredOverTarget { get; set; }
         private Character ThisTurnCharacter { get; set; }
         public Ability PlayerSelectedAbility { get; set; }
+
+        [SerializeField] private Color deadCharacterTint = new Color(166f, 0.33f, 0.33f);
 
         #endregion
 
@@ -93,6 +94,7 @@ namespace Controllers.BattleScene
         #endregion
         private void Start()
         {
+            gm = FindObjectOfType<GameManager>();
             stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
@@ -215,6 +217,7 @@ namespace Controllers.BattleScene
                     else
                         targetsForPlayerPool.Remove(character);
                     battleQueue.Remove(character);
+                    currentCharGameObject.GetComponentInChildren<Image>().color = deadCharacterTint;
                     continue;
                 }
                 if (skipThisTurn)
