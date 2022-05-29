@@ -8,6 +8,7 @@ namespace Classes.Citybuilding
         public int Level;
         public string ModelName;
         public bool Unlocked = true;
+        public string Description;
 
         public Resources ActualCost => BaseCost * CostMultiplier + CostBonus;
 
