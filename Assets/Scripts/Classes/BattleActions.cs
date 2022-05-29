@@ -5,12 +5,16 @@ using Controllers.BattleScene;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Classes
 {
     public class BattleActions
     {
         private NotificationsHandler notificationHandlerReference;
+        private int finalDamageAmount;
+        
+        
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
         /// </summary>
@@ -20,6 +24,8 @@ namespace Classes
             var finalAttackTargets = new List<Character>();
             finalAttackTargets.AddRange(allCharacters.Where(x => !x.IsDead).ToList());
             finalAttackTargets.RemoveAll(x => x.DodgeEverythingUntilNextTurn);
+            
+            finalDamageAmount = Random.Range(selectedAbility.minDamageAmount, selectedAbility.maxDamageAmount);
 
             // If the ability should target only own team
             if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates)
@@ -124,7 +130,7 @@ namespace Classes
 
         private void Deal(Character target, Ability selectedAbility)
         {
-            if ((target.Health + target.ShieldPoints) - selectedAbility.damageAmount <= 0)
+            if ((target.Health + target.ShieldPoints) - finalDamageAmount <= 0)
             {
                 target.ShieldPoints = 0;
                 target.Health = 0;
@@ -132,19 +138,19 @@ namespace Classes
             }
             else
             {
-                if (target.ShieldPoints - selectedAbility.damageAmount < 0)
+                if (target.ShieldPoints - finalDamageAmount < 0)
                 {
                     target.ShieldPoints = 0;
-                    target.Health -= selectedAbility.damageAmount - target.ShieldPoints;
+                    target.Health -= finalDamageAmount - target.ShieldPoints;
                 }
                 else
                 {
-                    target.ShieldPoints -= selectedAbility.damageAmount;
+                    target.ShieldPoints -= finalDamageAmount;
                 }
             }
 
-            VisualizeAction(selectedAbility.abilityType, selectedAbility.damageAmount.ToString());
-            Debug.Log($"Dealt {selectedAbility.damageAmount} damage to {target.name}!");
+            VisualizeAction(selectedAbility.abilityType, finalDamageAmount.ToString());
+            Debug.Log($"Dealt {finalDamageAmount} damage to {target.name}!");
         }
         private void Heal(Character target, Ability selectedAbility)
         {
@@ -186,13 +192,13 @@ namespace Classes
             {
                 target.currentlyAppliedStatuses.Add(selectedStatus.statusType);
             }
-            string finalText = null;
+            string finalText;
             switch (selectedStatus.statusType)
             {
                 case StatusType.Bleed:
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
-                    finalText = $"-{selectedStatus.damageAmount} HP, Bleed";
+                    finalText = $"-{finalDamageAmount} HP, Bleed";
                     break;
                 case StatusType.Dodge:
                     target.DodgeEverythingUntilNextTurn = true;
@@ -200,7 +206,7 @@ namespace Classes
                     break;
                 case StatusType.Stun:
                     target.StunDurationLeft += selectedStatus.stunDuration;
-                    finalText = $"-{selectedStatus.damageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
+                    finalText = $"-{finalDamageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(message:"Status type not found", innerException: null);
