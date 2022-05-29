@@ -134,7 +134,7 @@ namespace Controllers.BattleScene
                     abilityDescription.text += $"Damage: {currentAbility.minDamageAmount} - {currentAbility.maxDamageAmount}\n";
                     break;
                 case AbilityType.Heal:
-                    abilityDescription.text += $"Heal: {currentAbility.healAmount} (also alleviates bleeding)\n";
+                    abilityDescription.text += $"Heal: {currentAbility.minHealAmount} (also alleviates bleeding)\n";
                     break;
                 case AbilityType.Shield:
                     abilityDescription.text += $"Shield: {currentAbility.shieldAmount}\n";

@@ -17,7 +17,8 @@ namespace ScriptableObjects
         [Header("Logical side")]
         public TargetType abilityTarget;
         public AbilityType abilityType;
-        [ShowIf("abilityType", AbilityType.Heal)] public int healAmount;
+        [ShowIf("abilityType", AbilityType.Heal)] public int minHealAmount;
+        [ShowIf("abilityType", AbilityType.Heal)] public int maxHealAmount;
         [ShowIf("abilityType", AbilityType.Shield)] public int shieldAmount;
         [BoxGroup("Status")]
         [ShowIf("abilityType", AbilityType.Status)] public StatusType statusType;
