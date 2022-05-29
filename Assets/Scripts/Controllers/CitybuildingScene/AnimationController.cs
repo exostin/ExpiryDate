@@ -1,18 +1,18 @@
 using UnityEngine;
 
-namespace Controllers
+namespace Controllers.CitybuildingScene
 {
     public class AnimationController : MonoBehaviour
     {
         [SerializeField] private Animation buildingShop;
-        [SerializeField] private Animation notification;
-        private bool notificationActivated;
+        // [SerializeField] private Animation notification;
+        //private bool notificationActivated;
         private bool shopActivated;
 
-        private void Start()
-        {
-            ToggleNotificationVisibility();
-        }
+        // private void Start()
+        // {
+        //     ToggleNotificationVisibility();
+        // }
 
         public void ToggleShopVisibility()
         {
@@ -33,16 +33,16 @@ namespace Controllers
             shopActivated = !shopActivated;
         }
 
-        public void ToggleNotificationVisibility()
-        {
-            if (!notificationActivated)
-            {
-                notification["ShowNotification"].time = 0;
-                notification["ShowNotification"].speed = 1;
-                notification.Play("ShowNotification");
-            }
-
-            notificationActivated = !notificationActivated;
-        }
+        // public void ToggleNotificationVisibility()
+        // {
+        //     if (!notificationActivated)
+        //     {
+        //         notification["ShowNotification"].time = 0;
+        //         notification["ShowNotification"].speed = 1;
+        //         notification.Play("ShowNotification");
+        //     }
+        //
+        //     notificationActivated = !notificationActivated;
+        // }
     }
 }
