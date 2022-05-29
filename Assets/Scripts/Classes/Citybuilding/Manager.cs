@@ -18,7 +18,8 @@ namespace Classes.Citybuilding
     {
         public bool DefenderBought;
 
-        public uint NextEncounter;
+        public int NextEncounter;
+        public int NextEncounterMax;
 
         public Dictionary<DefenderType, Defender> Defenders = new()
         {
@@ -69,7 +70,8 @@ namespace Classes.Citybuilding
             foreach (var defender in Defenders)
                 defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 0);
 
-            NextEncounter = (uint)PlayerPrefs.GetInt("NextEncounter", 10);
+            NextEncounter = PlayerPrefs.GetInt("NextEncounter", 10);
+            NextEncounterMax = PlayerPrefs.GetInt("NextEncounterMax", 10);
 
             RunSimulation();
         }
@@ -95,7 +97,8 @@ namespace Classes.Citybuilding
             foreach (var defender in Defenders)
                 PlayerPrefs.SetInt($"PlayerDefenders/{defender.Key}", defender.Value.Amount);
             
-            PlayerPrefs.SetInt("NextEncounter", (int)NextEncounter);
+            PlayerPrefs.SetInt("NextEncounter", NextEncounter);
+            PlayerPrefs.SetInt("NextEncounterMax", NextEncounterMax);
         }
 
         public void RunSimulation()
