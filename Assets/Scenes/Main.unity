@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -235,8 +235,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7.081726, y: 97.84015}
-  m_SizeDelta: {x: 65.8367, y: 50.3597}
+  m_AnchoredPosition: {x: -6.595825, y: 104.618866}
+  m_SizeDelta: {x: 68.2371, y: 65.9619}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &22231749
 MonoBehaviour:
@@ -281,7 +281,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 22231750}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 179555045}
+        m_TargetAssemblyTypeName: Controllers.AnimationController, Assembly-CSharp
+        m_MethodName: ToggleShopVisibility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &22231750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,21 +301,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22231747}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 65f922c614e5565498630a4de5dbbf5c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -924,8 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3ad0849769ab840800787219b588ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingShop: {fileID: 1416867400}
-  notification: {fileID: 914172292}
+  buildingShop: {fileID: 500806562}
 --- !u!4 &179555046
 Transform:
   m_ObjectHideFlags: 0
@@ -2083,6 +2094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 500806560}
   - component: {fileID: 500806561}
+  - component: {fileID: 500806562}
   m_Layer: 0
   m_Name: BuildingPanel
   m_TagString: Untagged
@@ -2098,7 +2110,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500806559}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -52.101257, y: -32.293396, z: 8.2542}
+  m_LocalPosition: {x: -52.10126, y: -314.87, z: 8.2542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2120,6 +2132,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85503ab9ba45004293c5581dee2b168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!111 &500806562
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500806559}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: b2d17311c81ec444ba85169f53023ee5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b2d17311c81ec444ba85169f53023ee5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &541778182
 GameObject:
   m_ObjectHideFlags: 0
@@ -6908,7 +6936,7 @@ Animation:
   m_GameObject: {fileID: 1416867398}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 6d96ab61c8b95ce42999f46ae4923d6f, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: c1ce7067927f65f4b8c272b894e830fc, type: 2}
   m_WrapMode: 0
