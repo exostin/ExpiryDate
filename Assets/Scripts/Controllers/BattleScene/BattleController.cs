@@ -92,6 +92,7 @@ namespace Controllers.BattleScene
         #endregion
         private void Start()
         {
+            gm = FindObjectOfType<GameManager>();
             stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
