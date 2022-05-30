@@ -30,6 +30,8 @@ namespace ScriptableObjects
         [Tooltip("Chance percentage to break out of stun on each turn")]
         public int chanceToBreakOutOfStun;
 
+        public bool invulnerableToBleed = false;
+
         #endregion
 
         #region Current game character data
