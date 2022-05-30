@@ -18,6 +18,9 @@ namespace Classes.Citybuilding
     {
         public bool DefenderBought;
 
+        public int NextEncounter;
+        public int NextEncounterMax;
+
         public Dictionary<DefenderType, Defender> Defenders = new()
         {
             {DefenderType.Drone, new Defender(DefenderType.Drone)},
@@ -67,6 +70,9 @@ namespace Classes.Citybuilding
             foreach (var defender in Defenders)
                 defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 0);
 
+            NextEncounter = PlayerPrefs.GetInt("NextEncounter", 10);
+            NextEncounterMax = PlayerPrefs.GetInt("NextEncounterMax", 10);
+
             RunSimulation();
         }
 
@@ -90,6 +96,9 @@ namespace Classes.Citybuilding
 
             foreach (var defender in Defenders)
                 PlayerPrefs.SetInt($"PlayerDefenders/{defender.Key}", defender.Value.Amount);
+            
+            PlayerPrefs.SetInt("NextEncounter", NextEncounter);
+            PlayerPrefs.SetInt("NextEncounterMax", NextEncounterMax);
         }
 
         public void RunSimulation()
@@ -128,8 +137,17 @@ namespace Classes.Citybuilding
         public void OnNextDay()
         {
             DefenderBought = false;
+            NextEncounter--;
+            if (NextEncounter == -1) SetNewEncounter();
             RunSimulation();
             Simulation.OnNextDay(this);
+        }
+
+        private void SetNewEncounter()
+        {
+            const int encounter = 5;
+            NextEncounter = encounter;
+            NextEncounterMax = encounter;
         }
 
         #region Levels

@@ -1,4 +1,5 @@
 using Controllers;
+using Controllers.CitybuildingScene;
 using UnityEngine;
 
 namespace Other.Citybuilding
@@ -8,12 +9,14 @@ namespace Other.Citybuilding
         private Classes.Citybuilding.Building building;
         private CitybuildingController cbc;
         private Texture2D cursorPointerTexture;
+        private AnimationController ac;
 
         private void OnEnable()
         {
             Debug.Log($"OnEnable {gameObject.name}");
 
-            cbc = GameObject.Find("CitybuildingController").GetComponent<CitybuildingController>();
+            cbc = FindObjectOfType<CitybuildingController>();
+            ac = FindObjectOfType<AnimationController>();
 
             cursorPointerTexture = cbc.cursorPointerTexture;
             building = cbc.GameObjectToBuilding(gameObject);
@@ -33,7 +36,7 @@ namespace Other.Citybuilding
         private void OnMouseUpAsButton()
         {
             cbc.SelectBuilding(building);
-            cbc.UpdateModels();
+            ac.SetShopVisibility(true);
         }
     }
 }

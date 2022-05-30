@@ -138,13 +138,22 @@ namespace Controllers
 
         public void NextDay(bool skipFight)
         {
+            var shouldStartFight = cbm.NextEncounter == 0;
             cbm.OnNextDay();
-            if (!skipFight) EnterBattleMode();
+            if (!skipFight && shouldStartFight)
+            {
+                EnterBattleMode();
+            }
+            else
+            {
+                SceneManager.LoadScene("Scenes/Main");
+            }
         }
 
         public void NextDay()
         {
             cbm.Save();
+            Debug.Log("animation here");
             NextDay(false);
         }
 
