@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Shield
+  m_Name: Heal(GR)
   m_EditorClassIdentifier: 
-  abilityName: Forcefield
-  abilityDescription: 'Mech creates a forcefield, protecting it''s allies
-
-'
-  artwork: {fileID: 21300000, guid: 1143e88bff36a654c873edb33aadf04a, type: 3}
-  soundEffect: {fileID: 8300000, guid: 1a6f43f8d9b0a274c9b4e0307bcccf00, type: 3}
-  abilityTarget: 3
-  abilityType: 2
-  minHealAmount: 0
-  maxHealAmount: 0
-  shieldAmount: 300
+  abilityName: 
+  abilityDescription: 
+  artwork: {fileID: 0}
+  soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 1
+  minHealAmount: 180
+  maxHealAmount: 200
+  shieldAmount: 0
   statusType: 0
-  minDamageAmount: 0
-  maxDamageAmount: 0
+  minDamageAmount: 245
+  maxDamageAmount: 265
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0

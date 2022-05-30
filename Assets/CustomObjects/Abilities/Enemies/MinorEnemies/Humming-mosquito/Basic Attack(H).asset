@@ -17,13 +17,13 @@ MonoBehaviour:
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
   abilityTarget: 0
-  abilityType: 0
+  abilityType: 3
   minHealAmount: 0
   maxHealAmount: 0
   shieldAmount: 0
-  statusType: 0
-  minDamageAmount: 0
-  maxDamageAmount: 0
-  bleedDuration: 0
-  bleedDmgAmount: 0
+  statusType: 1
+  minDamageAmount: 20
+  maxDamageAmount: 40
+  bleedDuration: 2
+  bleedDmgAmount: 20
   stunDuration: 0

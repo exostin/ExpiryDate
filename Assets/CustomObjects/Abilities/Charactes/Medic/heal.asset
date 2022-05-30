@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: heal
   m_EditorClassIdentifier: 
-  abilityName: Heal
+  abilityName: Bandage
   abilityDescription: '"you may bandaid the wound, but you can''t unbreak the bones"'
   artwork: {fileID: 21300000, guid: 0d0c261ea6b5f37418a01ac3d15d8154, type: 3}
   soundEffect: {fileID: 8300000, guid: 915fc6320a258f14d8fb9c59ea078374, type: 3}
