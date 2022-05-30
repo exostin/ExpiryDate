@@ -86,7 +86,7 @@ namespace DisplayObjectData
         }
 
         // It's expensive, but we've got no time left, to do it well ☠️
-        public void VisualizeDeathOnDeadCharacters()
+        private void VisualizeDeathOnDeadCharacters()
         {
             if (character.IsDead) image.color = battleController.deadCharacterTint;
         }
