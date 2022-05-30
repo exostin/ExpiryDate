@@ -69,6 +69,12 @@ namespace Other.DefenderSelection
                 .ToList();
             selectedDefenders = gm.cbm.Defenders.ToList().Select(d => DefenderToSimplified(d.Value, 0))
                 .ToList();
+
+            if (availableDefenders.Aggregate(0, (agg, d) => agg + d.Count) < 4)
+            {
+                SceneManager.LoadScene("Scenes/GameOver");
+                return;
+            }
         
             RefreshUI();
         
