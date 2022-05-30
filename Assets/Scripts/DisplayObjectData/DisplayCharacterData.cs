@@ -54,7 +54,7 @@ namespace DisplayObjectData
             BattleController.OnActionMade += UpdateCurrentHpAndShield;
             BattleController.OnStatusHandled += UpdateCurrentHpAndShield;
             Character.OnCharacterDeath += VisualizeDeathOnDeadCharacters;
-            Character.OnCharacterDeath += UnsubscribeFromStatusVisualQues;
+            Character.OnCharacterDeath += UnsubscribeFromStatusVisualQuesIfDead;
         }
 
         private void UpdateCurrentHpAndShield()
@@ -91,8 +91,9 @@ namespace DisplayObjectData
             if (character.IsDead) image.color = battleController.deadCharacterTint;
         }
 
-        private void UnsubscribeFromStatusVisualQues()
+        private void UnsubscribeFromStatusVisualQuesIfDead()
         {
+            if (!character.IsDead) return;
             BattleActions.OnBleedApplied -= ShowBleed;
             BattleActions.OnStunApplied -= ShowStun;
             BattleActions.OnDodgeApplied -= ShowDodge;
