@@ -55,11 +55,6 @@ namespace Other.DefenderSelection
 
         #endregion
 
-        // ------------------------------------------------------------------------------------------------------------
-        // I commented it all because I wanted the game to work until you remake this script
-        // - Damian
-        // ------------------------------------------------------------------------------------------------------------
-        
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();

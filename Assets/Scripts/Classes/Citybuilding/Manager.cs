@@ -124,6 +124,7 @@ namespace Classes.Citybuilding
                     continue;
                 }
                 PlayerPrefs.DeleteKey(key);
+                PlayerPrefs.Save();
             }
         }
 
