@@ -19,7 +19,6 @@ public class BuildingPanelController : MonoBehaviour
     private Manager cbm;
     
     [SerializeField] private TextMeshProUGUI nextUpgradeText;
-    [SerializeField] private TextMeshProUGUI acquiredUpgradesText;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button buyDefenderButton;
 
@@ -44,9 +43,7 @@ public class BuildingPanelController : MonoBehaviour
     private void CbcOnOnBuildingSelected(Building newBuilding)
     {
         building = newBuilding; 
-
-        acquiredUpgradesText.text = building!.BoughtUpgrades.Aggregate("",
-            (acc, upgrade) => upgrade.Description is not null ? acc + upgrade.Description + "\n" : "");
+        
         nextUpgradeText.text = building.NextUpgrade is null ? "No upgrades available" : building.NextUpgrade.Description;
         
         upgradeButton.interactable = building.CanBeUpgraded;
@@ -75,7 +72,7 @@ public class BuildingPanelController : MonoBehaviour
         }
         
         buildingName.text = building.Name;
-        buildingDescription.text = building.Description;
+        buildingDescription.text = building.CurrentUpgrade.Description;
     }
 
     public void UpgradeButtonClicked()
