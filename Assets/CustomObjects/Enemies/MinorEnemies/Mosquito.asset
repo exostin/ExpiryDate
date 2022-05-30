@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: 'Humming Mosquito '
   isOwnedByPlayer: 0
   artwork: {fileID: 21300000, guid: 06778e2f658d92441b2b3d37608e0421, type: 3}
-  artworkPortrait: {fileID: 21300000, guid: 06778e2f658d92441b2b3d37608e0421, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: 43dc15e4c9a6cd44088b56b6abaa5bf6, type: 3}
   abilities:
   - {fileID: 11400000, guid: 578e7e1927b454441b72a844a83bfa51, type: 2}
   - {fileID: 11400000, guid: 22eaeef63dbd5bd4eb9488adc72e7e99, type: 2}

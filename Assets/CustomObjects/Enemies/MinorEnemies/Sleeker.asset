@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Sleeker
   isOwnedByPlayer: 0
   artwork: {fileID: 21300000, guid: 0491d4deaa4f41849b2c52b94bc8fd93, type: 3}
-  artworkPortrait: {fileID: 21300000, guid: 0491d4deaa4f41849b2c52b94bc8fd93, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: 52049f1d49b77704b880a85a29096723, type: 3}
   abilities:
   - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
   - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}

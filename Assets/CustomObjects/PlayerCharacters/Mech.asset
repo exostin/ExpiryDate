@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Mech
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: f9de6015f0181f846a0971030034e9ef, type: 3}
-  artworkPortrait: {fileID: 21300000, guid: f9de6015f0181f846a0971030034e9ef, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: 633a74f36532f8b4b8a4e202afe4c4c1, type: 3}
   abilities:
   - {fileID: 11400000, guid: 4fb6287e48c1eda47930f611238bd392, type: 2}
   - {fileID: 11400000, guid: 4df4a483db6d5e846909684914200983, type: 2}

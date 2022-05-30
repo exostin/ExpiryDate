@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: One-clawed Crab
   isOwnedByPlayer: 0
   artwork: {fileID: 21300000, guid: 56c7c4d528a830448a260ce0e80a57af, type: 3}
-  artworkPortrait: {fileID: 21300000, guid: 56c7c4d528a830448a260ce0e80a57af, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: 1a26cd578f6b09a43b46769e11b23d89, type: 3}
   abilities:
   - {fileID: 11400000, guid: a44d63e40a93b1b49ab37ccd32a8f59c, type: 2}
   - {fileID: 11400000, guid: 5d5c42ba0e84d7a498ea29fc94392afd, type: 2}

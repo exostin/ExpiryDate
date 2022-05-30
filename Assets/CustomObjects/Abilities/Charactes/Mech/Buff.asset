@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Buff
   m_EditorClassIdentifier: 
   abilityName: Buff
-  description: Use your mech-anical powers to buff someone!
-  damage: 0
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 1
-  usedOnlyOnSelf: 0
-  buff: 1
-  heal: 0
-  artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
+  abilityDescription: 
+  artwork: {fileID: 21300000, guid: 1143e88bff36a654c873edb33aadf04a, type: 3}
   soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 0
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 0
+  maxDamageAmount: 0
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

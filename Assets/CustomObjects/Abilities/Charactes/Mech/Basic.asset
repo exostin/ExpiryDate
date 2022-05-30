@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Basic attack
   abilityDescription: 
-  artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
+  artwork: {fileID: 21300000, guid: c21cc776ff92d3b4eba7316d719fbd87, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 0
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
   minDamageAmount: 1
