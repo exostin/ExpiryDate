@@ -7,7 +7,7 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator
     {
         public TitanGenerator(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Titan mine";
+            Name = "Titanium Mine";
             Description = "Used for mining Titan";
             Upgrades = new BuildingUpgrade[]
             {

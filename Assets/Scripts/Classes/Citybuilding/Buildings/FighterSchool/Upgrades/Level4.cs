@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.FighterSchool.Upgrades
                 Titan = 50
             };
             ModelName = "FighterSchool4";
+            Description = "Spear Masters achieved Nirvana, though their definition is different and now posses the knowledge to kill every single living and non-living creature (Unlocks Spear Masters Tier 3 + Their cost is 20% lower)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

@@ -8,6 +8,7 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
         {
             Level = 3;
             ModelName = "Housing3";
+            Description = "There's a bingo session everyday (All other buildings are 10% cheaper)";
             BaseCost = new Resources
             {
                 Titan = 90,

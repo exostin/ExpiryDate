@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
         {
             Level = 1;
             ModelName = "RobotSchool1";
+            Description = "Simple factory for Mechs";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

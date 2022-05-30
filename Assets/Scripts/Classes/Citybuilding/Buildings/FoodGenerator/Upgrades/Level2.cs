@@ -6,6 +6,8 @@ namespace Classes.Citybuilding.Buildings.FoodGenerator.Upgrades
         {
             Level = 2;
             ModelName = "FoodGenerator2";
+            Description =
+                "New fertilizer is being used to make crops plentiful (Production of Energy increased from 10 to 14)";
             Output = new Resources
             {
                 Food = 3

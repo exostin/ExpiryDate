@@ -7,7 +7,7 @@ namespace Classes.Citybuilding.Buildings.RobotSchool
     {
         public RobotSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Robot school";
+            Name = "Factory (Mech)";
             Description = "";
             Upgrades = new BuildingUpgrade[]
             {

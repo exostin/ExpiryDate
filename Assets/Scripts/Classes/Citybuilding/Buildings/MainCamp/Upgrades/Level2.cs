@@ -13,6 +13,7 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
                 Water = 100
             };
             ModelName = "MainCamp2";
+            Description = "Town Hall gives out free candy for Halloween (Unlocks first tier of living quarters)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

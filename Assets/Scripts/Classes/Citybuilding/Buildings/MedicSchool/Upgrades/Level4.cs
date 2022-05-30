@@ -12,6 +12,8 @@ namespace Classes.Citybuilding.Buildings.MedicSchool.Upgrades
                 Water = 40
             };
             ModelName = "MedicSchool4";
+            Description =
+                "Medics ascended into Godhood making their bandages extra good (Unlocks Medics Tier 3  + Their cost is 20% lower)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

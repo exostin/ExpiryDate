@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
         {
             Level = 3;
             ModelName = "EnergyGenerator3";
+            Description = "Moving parts are sprayed with WD-40 (Production of Energy increased from 14 to 16)";
             Output = new Resources
             {
                 Energy = 2

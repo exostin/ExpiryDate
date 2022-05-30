@@ -12,6 +12,8 @@ namespace Classes.Citybuilding.Buildings.FighterSchool.Upgrades
                 Titan = 50
             };
             ModelName = "FighterSchool2";
+            Description =
+                "New combat strategies are used to better prepare new Sword Masters (Unlocks Sword Master Tier 1)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
                 Water = 20
             };
             ModelName = "ShooterSchool3";
+            Description = "Soldiers study weak points of enemies (Unlocks Soldier Tier 2)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

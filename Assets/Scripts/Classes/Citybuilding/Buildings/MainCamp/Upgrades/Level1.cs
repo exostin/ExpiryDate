@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
         {
             Level = 1;
             ModelName = "MainCamp1";
+            Description = "Simple Town Hall";
         }
     }
 }

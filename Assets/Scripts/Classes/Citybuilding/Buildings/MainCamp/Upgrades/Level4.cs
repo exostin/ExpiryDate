@@ -13,6 +13,8 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
                 Water = 100
             };
             ModelName = "MainCamp4";
+            Description =
+                "Town Hall now hosts birthday parties (Unlocks third tier of living quarters, additionally, buff from living quarters is further increased by 1.3x)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
