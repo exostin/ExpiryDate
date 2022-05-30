@@ -26,4 +26,4 @@ MonoBehaviour:
   maxDamageAmount: 150
   bleedDuration: 0
   bleedDmgAmount: 0
-  stunDuration: 3
+  stunDuration: 2

@@ -24,8 +24,8 @@ MonoBehaviour:
   maxHealth: 1000
   maxShield: 400
   initiative: 8
-  chanceToBreakOutOfStun: 36
-  currentlyAppliedStatuses: 
+  chanceToBreakOutOfStun: 44
+  currentlyAppliedStatuses: 01000000
   costTitan: 60
   costWater: 10
   costFood: 10
