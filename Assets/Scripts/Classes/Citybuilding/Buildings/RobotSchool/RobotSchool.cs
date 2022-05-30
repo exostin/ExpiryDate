@@ -9,6 +9,7 @@ namespace Classes.Citybuilding.Buildings.RobotSchool
         {
             Name = "Factory (Mech)";
             Description = "";
+            DefenderType = DefenderType.Mech;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

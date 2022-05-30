@@ -81,6 +81,7 @@ namespace Other.DefenderSelection
         private void AvailableContainerOnDefenderCardClicked(DefenderType type)
         {
             if (selectedDefenders.Aggregate(0, (agg, d) => agg + d.Count) >= 4) return;
+            if (selectedDefenders.FindIndex(d=> d.DefenderType == type && d.Count > 0) != -1) return; // :/
         
             var availableDefender = availableDefenders.Find(d => d.DefenderType == type);
             if (availableDefender.Count <= 0)

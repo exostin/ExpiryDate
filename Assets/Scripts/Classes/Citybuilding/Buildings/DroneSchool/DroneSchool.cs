@@ -9,6 +9,7 @@ namespace Classes.Citybuilding.Buildings.DroneSchool
         {
             Name = "Tech Lab (Support Drone)";
             Description = "Basicly DJI sklep";
+            DefenderType = DefenderType.Drone;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

@@ -9,6 +9,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool
         {
             Name = "Shooting Range (Soldier)";
             Description = "Expect a lot of school shootings";
+            DefenderType = DefenderType.Shooter;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

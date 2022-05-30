@@ -101,7 +101,7 @@ public class BuildingPanelController : MonoBehaviour
         }
         catch (InvalidOperationException e)
         {
-
+            Debug.LogError(e);
             #if UNITY_EDITOR
             EditorUtility.DisplayDialog("Cannot buy defender", e.Message, "OK");
             #endif
