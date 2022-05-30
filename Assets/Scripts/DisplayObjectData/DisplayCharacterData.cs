@@ -1,5 +1,7 @@
 using System;
+using Classes;
 using Controllers.BattleScene;
+using Other.Enums;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -25,9 +27,23 @@ namespace DisplayObjectData
         public delegate void TurnAction();
         public static event TurnAction OnTurnEnd;
 
+        [Header("Status visual cues")]
+        [SerializeField] private GameObject bleed;
+        [SerializeField] private GameObject stun;
+        [SerializeField] private GameObject dodge;
+        
         public void Initialize()
         {
             battleController = FindObjectOfType<BattleController>();
+            
+            // It's expensive, but we've got no time left, to do it well ☠️
+            BattleActions.OnBleedApplied += ShowBleed;
+            BattleActions.OnStunApplied += ShowStun;
+            BattleActions.OnDodgeApplied += ShowDodge;
+            StatusHandler.OnBleedRemoved += HideBleed;
+            StatusHandler.OnStunRemoved += HideStun;
+            StatusHandler.OnDodgeRemoved += HideDodge;
+            
             nameTextContainer.text = character.characterName;
             image.sprite = character.artwork;
             hpSlider.maxValue = character.maxHealth;
@@ -38,6 +54,7 @@ namespace DisplayObjectData
             BattleController.OnActionMade += UpdateCurrentHpAndShield;
             BattleController.OnStatusHandled += UpdateCurrentHpAndShield;
             Character.OnCharacterDeath += VisualizeDeathOnDeadCharacters;
+            Character.OnCharacterDeath += UnsubscribeFromStatusVisualQuesIfDead;
         }
 
         private void UpdateCurrentHpAndShield()
@@ -69,9 +86,57 @@ namespace DisplayObjectData
         }
 
         // It's expensive, but we've got no time left, to do it well ☠️
-        public void VisualizeDeathOnDeadCharacters()
+        private void VisualizeDeathOnDeadCharacters()
         {
             if (character.IsDead) image.color = battleController.deadCharacterTint;
+        }
+
+        private void UnsubscribeFromStatusVisualQuesIfDead()
+        {
+            if (!character.IsDead) return;
+            BattleActions.OnBleedApplied -= ShowBleed;
+            BattleActions.OnStunApplied -= ShowStun;
+            BattleActions.OnDodgeApplied -= ShowDodge;
+            StatusHandler.OnBleedRemoved -= HideBleed;
+            StatusHandler.OnStunRemoved -= HideStun;
+            StatusHandler.OnDodgeRemoved -= HideDodge;
+        }
+        
+        private void ShowBleed()
+        {
+            if (!character.currentlyAppliedStatuses.Contains(StatusType.Bleed)) return;
+            if (bleed.activeSelf) return;
+            bleed.SetActive(true);
+        }
+        private void ShowStun()
+        {
+            if (!character.currentlyAppliedStatuses.Contains(StatusType.Stun)) return;
+            if (stun.activeSelf) return;
+            stun.SetActive(true);
+        }
+        private void ShowDodge()
+        {
+            if (!character.currentlyAppliedStatuses.Contains(StatusType.Dodge)) return;
+            if (dodge.activeSelf) return;
+            dodge.SetActive(true);
+        }
+        
+        private void HideBleed()
+        {
+            if (character.currentlyAppliedStatuses.Contains(StatusType.Bleed)) return;
+            bleed.SetActive(false);
+        }
+        
+        private void HideStun()
+        {
+            if (character.currentlyAppliedStatuses.Contains(StatusType.Stun)) return;
+            stun.SetActive(false);
+        }
+        
+        private void HideDodge()
+        {
+            if (character.currentlyAppliedStatuses.Contains(StatusType.Dodge)) return;
+            dodge.SetActive(false);
         }
     }
 }

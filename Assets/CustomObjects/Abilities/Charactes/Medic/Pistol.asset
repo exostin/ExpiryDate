@@ -15,10 +15,11 @@ MonoBehaviour:
   abilityName: Pistol
   abilityDescription: 
   artwork: {fileID: 21300000, guid: 157a3563131dfee45acbe06d1a333158, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: ebcfb375c2f07c3468300f5022bc8498, type: 3}
   abilityTarget: 0
   abilityType: 0
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
   minDamageAmount: 100

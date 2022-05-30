@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms.DataVisualization.Charting;
 using Controllers.BattleScene;
 using Other.Enums;
 using ScriptableObjects;
@@ -10,12 +9,24 @@ using Random = UnityEngine.Random;
 
 namespace Classes
 {
-    public class BattleActions
+    public class BattleActions : MonoBehaviour
     {
         private NotificationsHandler notificationHandlerReference;
         private int finalDamageAmount;
         private int finalHealAmount;
+
+        public delegate void OnStatusApplied();
+        public static event OnStatusApplied OnBleedApplied;
+        public static event OnStatusApplied OnStunApplied;
+        public static event OnStatusApplied OnDodgeApplied;
         
+        private BattleController battleController;
+
+        private void Start()
+        {
+            battleController = FindObjectOfType<BattleController>();
+        }
+
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
         /// </summary>
@@ -48,6 +59,7 @@ namespace Classes
             {
                 foreach (Character thisIterationTarget in finalAttackTargets)
                 {
+                    AssignNotificationHandlerReference(battleController.FindCharactersGameObjectByName(thisIterationTarget));
                     switch (selectedAbility.abilityType)
                     {
                         case AbilityType.Status:
@@ -72,6 +84,7 @@ namespace Classes
             }
             else
             {
+                AssignNotificationHandlerReference(battleController.FindCharactersGameObjectByName(target));
                 switch (selectedAbility.abilityType)
                 {
                     case AbilityType.Status:
@@ -98,7 +111,7 @@ namespace Classes
         /// This is so wrong my eyes bleed, but we have two days to complete the game... sorry future me and anyone who sees this
         /// </summary>
         /// <param name="character">Character GameObject</param>
-        public void AssignNotificationHandlerReference(GameObject character)
+        private void AssignNotificationHandlerReference(GameObject character)
         {
             notificationHandlerReference = character.GetComponent<NotificationsHandler>();
         }
@@ -212,14 +225,17 @@ namespace Classes
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
                     finalText = $"-{finalDamageAmount} HP, Bleed";
+                    OnBleedApplied?.Invoke();
                     break;
                 case StatusType.Dodge:
                     target.DodgeEverythingUntilNextTurn = true;
                     finalText = "Dodge";
+                    OnDodgeApplied?.Invoke();
                     break;
                 case StatusType.Stun:
                     target.StunDurationLeft += selectedStatus.stunDuration;
                     finalText = $"-{finalDamageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
+                    OnStunApplied?.Invoke();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(message:"Status type not found", innerException: null);

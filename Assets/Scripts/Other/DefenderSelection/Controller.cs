@@ -7,6 +7,7 @@ using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 // All of this should have been done better.
 
@@ -54,7 +55,7 @@ namespace Other.DefenderSelection
 
 
         #endregion
-
+        
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -144,6 +145,40 @@ namespace Other.DefenderSelection
                 {
                     gm.selectedDefenders.Add(DefenderTypeCharacter[selectedDefender.DefenderType]);
                 }
+            }
+            CreateEnemyTeam();
+        }
+
+        private void CreateEnemyTeam()
+        {
+            var randomChoice = Random.Range(0, 2);
+
+            switch (randomChoice)
+            {
+                case 1:
+                    gm.thisEncounterEnemies = new List<Character>
+                    {
+                        crab,
+                        toxicJelly,
+                        octomedusa
+                    };
+                    break;
+                case 2:
+                    gm.thisEncounterEnemies = new List<Character>
+                    {
+                        molerat,
+                        cockroach,
+                        molemother
+                    };
+                    break;
+                case 3:
+                    gm.thisEncounterEnemies = new List<Character>
+                    {
+                        mosquito,
+                        sleeker,
+                        salamander
+                    };
+                    break;
             }
         }
     }
