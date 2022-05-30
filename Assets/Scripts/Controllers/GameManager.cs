@@ -39,7 +39,7 @@ namespace Controllers
                 {fighterCharacter, cbm.Defenders[DefenderType.Fighter]},
                 {shooterCharacter, cbm.Defenders[DefenderType.Shooter]},
                 {medicCharacter, cbm.Defenders[DefenderType.Medic]},
-                {robotCharacter, cbm.Defenders[DefenderType.Robot]},
+                {robotCharacter, cbm.Defenders[DefenderType.Mech]},
                 {droneCharacter, cbm.Defenders[DefenderType.Drone]}
             };
 

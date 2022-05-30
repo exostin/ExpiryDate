@@ -205,6 +205,7 @@ namespace Controllers.BattleScene
             {
                 Character character = battleQueue[index];
                 ThisTurnCharacter = character;
+                PlayerHoveredOverTarget = character;
                 Debug.Log($"{character.characterName} turn!");
                 var currentCharGameObject = FindCharactersGameObjectByName(character);
                 statusHandler.HandleStatuses(character, out bool skipThisTurn, currentCharGameObject);

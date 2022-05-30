@@ -7,7 +7,7 @@ namespace Classes
         Shooter,
         Fighter,
         Medic,
-        Robot,
+        Mech,
         Drone
     }
 
