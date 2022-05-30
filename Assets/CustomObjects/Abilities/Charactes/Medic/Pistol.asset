@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  abilityName: Pistol
-  abilityDescription: 
+  abilityName: Gun Shot
+  abilityDescription: 'Shots his pistol at near enemy
+
+'
   artwork: {fileID: 21300000, guid: 157a3563131dfee45acbe06d1a333158, type: 3}
   soundEffect: {fileID: 8300000, guid: ebcfb375c2f07c3468300f5022bc8498, type: 3}
   abilityTarget: 0

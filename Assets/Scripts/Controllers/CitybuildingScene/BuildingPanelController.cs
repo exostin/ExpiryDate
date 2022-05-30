@@ -19,14 +19,9 @@ public class BuildingPanelController : MonoBehaviour
     private Manager cbm;
     
     [SerializeField] private TextMeshProUGUI nextUpgradeText;
+    [SerializeField] private TextMeshProUGUI acquiredUpgradesText;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button buyDefenderButton;
-
-    [SerializeField] private Cost buyUpgradeCost;
-    [SerializeField] private Cost buyDefenderCost;
-    
-    [SerializeField] private TMP_Text buildingName;
-    [SerializeField] private TMP_Text buildingDescription;
 
     private void Start()
     {
@@ -36,43 +31,20 @@ public class BuildingPanelController : MonoBehaviour
         cbc.OnBuildingSelected += CbcOnOnBuildingSelected;
         // I don't think that we need to unsubscribe from this event in OnDestroy because BuildingPanelController should
         // be destroyed when the CityBuildingController is destroyed (when scene ends).
-        
-        cbc.SelectBuilding(cbm.Simulation.MainCamp);
     }
 
     private void CbcOnOnBuildingSelected(Building newBuilding)
     {
         building = newBuilding; 
-        
+
+        acquiredUpgradesText.text = building!.BoughtUpgrades.Aggregate("",
+            (acc, upgrade) => upgrade.Description is not null ? acc + upgrade.Description + "\n" : "");
         nextUpgradeText.text = building.NextUpgrade is null ? "No upgrades available" : building.NextUpgrade.Description;
         
         upgradeButton.interactable = building.CanBeUpgraded;
 
         var isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
         buyDefenderButton.interactable = isASchool;
-
-        if (building.NextUpgrade is null)
-        {
-            buyUpgradeCost.gameObject.SetActive(false);
-        }
-        else
-        {
-            buyUpgradeCost.gameObject.SetActive(true);
-            buyUpgradeCost.Resources = building.NextUpgrade.ActualCost;
-        }
-
-        if (!isASchool)
-        {
-            buyDefenderCost.gameObject.SetActive(false);
-        }
-        else
-        {
-            buyDefenderCost.gameObject.SetActive(true);
-            buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
-        }
-        
-        buildingName.text = building.Name;
-        buildingDescription.text = building.CurrentUpgrade.Description;
     }
 
     public void UpgradeButtonClicked()
@@ -105,7 +77,6 @@ public class BuildingPanelController : MonoBehaviour
             #if UNITY_EDITOR
             EditorUtility.DisplayDialog("Cannot buy defender", e.Message, "OK");
             #endif
-
         }
     }
 }

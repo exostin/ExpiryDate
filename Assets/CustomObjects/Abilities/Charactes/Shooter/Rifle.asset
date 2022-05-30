@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
-  abilityName: Rifle
+  abilityName: Rifle Shot
   abilityDescription: 
   artwork: {fileID: 21300000, guid: 7a79cbc4b54dedc4e815e32f3ae622fb, type: 3}
   soundEffect: {fileID: 8300000, guid: 65be892ec0299c04d9b574e13d8b37b9, type: 3}
@@ -22,8 +22,8 @@ MonoBehaviour:
   maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
-  minDamageAmount: 450
-  maxDamageAmount: 500
+  minDamageAmount: 350
+  maxDamageAmount: 400
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0

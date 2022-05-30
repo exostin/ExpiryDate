@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: BleedStrike
   m_EditorClassIdentifier: 
-  abilityName: Cut
+  abilityName: Slash Strike
   abilityDescription: Crippling blow that makes the enemy bleed!
   artwork: {fileID: 21300000, guid: 74874a67877a27a43b8e708024590f24, type: 3}
   soundEffect: {fileID: 8300000, guid: d9210bd79ebbd924596842ed5beee599, type: 3}
@@ -24,6 +24,6 @@ MonoBehaviour:
   statusType: 1
   minDamageAmount: 250
   maxDamageAmount: 300
-  bleedDuration: 5
-  bleedDmgAmount: 100
+  bleedDuration: 4
+  bleedDmgAmount: 80
   stunDuration: 0

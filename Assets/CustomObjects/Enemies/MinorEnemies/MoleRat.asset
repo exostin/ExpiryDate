@@ -17,14 +17,15 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: d2d81ad2476f1a24f9eb2652175d1b52, type: 3}
   artworkPortrait: {fileID: 21300000, guid: 8c02078971ef3154c82be40bf5fcdfc5, type: 3}
   abilities:
-  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
-  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
-  - {fileID: 11400000, guid: e3538235a977bd941bab9138447f8d3d, type: 2}
-  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
-  maxHealth: 1200
-  maxShield: 70
+  - {fileID: 11400000, guid: c77f3706337499e4a8c1b2b790e20371, type: 2}
+  - {fileID: 11400000, guid: 485a24e5caeb0ad4f915ca20cb8e8590, type: 2}
+  - {fileID: 11400000, guid: 4838640ead7fb4d4c96a774831202ebb, type: 2}
+  - {fileID: 11400000, guid: 738a3c97abfc5b647af6c3f8f9b624b5, type: 2}
+  maxHealth: 1300
+  maxShield: 100
   initiative: 12
   chanceToBreakOutOfStun: 42
+  invulnerableToBleed: 0
   currentlyAppliedStatuses: 
   costTitan: 0
   costWater: 0

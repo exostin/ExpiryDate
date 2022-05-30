@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: Strong
   m_EditorClassIdentifier: 
-  abilityName: Flamethrower
-  abilityDescription: 
-  artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
-  soundEffect: {fileID: 8300000, guid: 182c62d1c5585274d9d4a18e24f8bdad, type: 3}
+  abilityName: Telsa coil
+  abilityDescription: 'Mech uses it''s Tesla Cannon to zap and paralyze an enemy
+
+'
+  artwork: {fileID: 21300000, guid: 1c4d3771bb1b6cb44b420b5643d87a3e, type: 3}
+  soundEffect: {fileID: 8300000, guid: 1f0450db55ec724419d52bb431a04187, type: 3}
   abilityTarget: 0
   abilityType: 3
   minHealAmount: 0
   maxHealAmount: 0
   shieldAmount: 0
-  statusType: 1
-  minDamageAmount: 0
-  maxDamageAmount: 0
+  statusType: 0
+  minDamageAmount: 200
+  maxDamageAmount: 300
   bleedDuration: 0
   bleedDmgAmount: 0
-  stunDuration: 0
+  stunDuration: 1
