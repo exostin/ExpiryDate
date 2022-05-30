@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2371,7 +2371,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}
   thisEncounterEnemies:
   - {fileID: 11400000, guid: b9d1335e972c84f4bbc8161fa17ed2b0, type: 2}
-  - {fileID: 11400000, guid: 670b266da0e480b4d826c28d8eb5601b, type: 2}
+  - {fileID: 11400000, guid: 8525db7ac0518ea4b8c4225c00bbc6d2, type: 2}
   - {fileID: 11400000, guid: 18a0cbc4401521f4bb31f426f1431c69, type: 2}
   stateController: {fileID: 309716534}
   pauseMenu: {fileID: 1417582643}

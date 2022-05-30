@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: SelfHeal
+  m_Name: Basic Attack(C)
   m_EditorClassIdentifier: 
   abilityName: 
   abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
-  abilityTarget: 4
-  abilityType: 1
-  minHealAmount: 320
-  maxHealAmount: 350
+  abilityTarget: 0
+  abilityType: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
-  minDamageAmount: 0
-  maxDamageAmount: 0
+  minDamageAmount: 130
+  maxDamageAmount: 150
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0
