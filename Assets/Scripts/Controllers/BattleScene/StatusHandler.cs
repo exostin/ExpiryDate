@@ -73,6 +73,7 @@ namespace Controllers.BattleScene
                         throw new ArgumentOutOfRangeException();
                 }
                 currentCharGameObject.GetComponent<NotificationsHandler>().HandleNotification(AbilityType.Status, finalText);
+                if (character.CheckIfDead()) return;
             }
         }
     }
