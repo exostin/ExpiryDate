@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
         {
             Level = 1;
             ModelName = "EnergyGenerator1";
+            Description = "Simple generator (Produces 10 E)";
             Output = new Resources
             {
                 Energy = 5

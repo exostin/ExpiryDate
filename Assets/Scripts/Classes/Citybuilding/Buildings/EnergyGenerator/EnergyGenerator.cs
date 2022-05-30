@@ -7,7 +7,7 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator
     {
         public EnergyGenerator(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Energy Generator";
+            Name = "Generator";
             Description = "10 000 hamsters in a hamster wheel";
             Upgrades = new BuildingUpgrade[]
             {

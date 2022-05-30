@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Controllers
@@ -127,6 +128,11 @@ namespace Controllers
             SavePreferences();
             gameObject.SetActive(false);
             onBackButtonClick?.Invoke();
+        }
+
+        public void Credits()
+        {
+            SceneManager.LoadScene("Scenes/Credits");
         }
 
         public void RestoreDefaults()

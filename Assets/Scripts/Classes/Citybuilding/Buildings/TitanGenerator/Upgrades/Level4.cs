@@ -6,6 +6,8 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator.Upgrades
         {
             Level = 4;
             ModelName = "TitanGenerator4";
+            Description =
+                "Genetically modified bugs are sent out to mines to dig out Titanium (Statistics of Soldiers are increased by 10%)";
             BaseCost = new Resources
             {
                 Water = 40,

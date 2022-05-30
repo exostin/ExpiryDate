@@ -7,8 +7,9 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool
     {
         public ShooterSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Shooter school";
+            Name = "Shooting Range (Soldier)";
             Description = "Expect a lot of school shootings";
+            DefenderType = DefenderType.Shooter;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

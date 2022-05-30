@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: FirstAidKit
   m_EditorClassIdentifier: 
   abilityName: First Aid Kit
-  abilityDescription: 'Medic runs around and heals all team members at once
-
-'
+  abilityDescription: Medic runs around and heals all team members at once
   artwork: {fileID: 21300000, guid: a53fcf8ffcc027f4dbaed7a49899221a, type: 3}
   soundEffect: {fileID: 8300000, guid: 9414f271dad784d4ea3005fe1de4f99c, type: 3}
   abilityTarget: 3

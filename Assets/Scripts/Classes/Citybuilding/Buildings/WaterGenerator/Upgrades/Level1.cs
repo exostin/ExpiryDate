@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
         {
             Level = 1;
             ModelName = "WaterGenerator1";
+            Description = "Simple water treatment station (Produces 10 W)";
             Output = new Resources
             {
                 Water = 5

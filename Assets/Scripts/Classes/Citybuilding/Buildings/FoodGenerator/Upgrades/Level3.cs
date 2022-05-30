@@ -6,6 +6,8 @@ namespace Classes.Citybuilding.Buildings.FoodGenerator.Upgrades
         {
             Level = 3;
             ModelName = "FoodGenerator3";
+            Description =
+                "Farmers are now talking to plants, making them happy (Production of Energy increased from 14 to 16)";
             Output = new Resources
             {
                 Food = 2
