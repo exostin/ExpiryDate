@@ -9,6 +9,7 @@ namespace Classes.Citybuilding.Buildings.MedicSchool
         {
             Name = "Hospital (Medic)";
             Description = "Studia medyczne";
+            DefenderType = DefenderType.Medic;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

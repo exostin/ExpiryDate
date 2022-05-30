@@ -9,6 +9,7 @@ namespace Classes.Citybuilding.Buildings.FighterSchool
         {
             Name = "Training grounds (Spear Master)";
             Description = "Uczą hudo i kutarate";
+            DefenderType = DefenderType.Fighter;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),
