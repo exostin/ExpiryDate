@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2364,6 +2364,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeaf27e0b77537b419aad52f3112f781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedDefenders:
+  - {fileID: 11400000, guid: 93de91982900e554ea4502a157a8d6ac, type: 2}
+  - {fileID: 11400000, guid: 31019430c41a14c47ace8e500f4ec064, type: 2}
+  - {fileID: 11400000, guid: 2f3909f7c609ec641b70d7021260e029, type: 2}
+  - {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}
+  thisEncounterEnemies:
+  - {fileID: 11400000, guid: b9d1335e972c84f4bbc8161fa17ed2b0, type: 2}
+  - {fileID: 11400000, guid: 8525db7ac0518ea4b8c4225c00bbc6d2, type: 2}
+  - {fileID: 11400000, guid: 18a0cbc4401521f4bb31f426f1431c69, type: 2}
   stateController: {fileID: 309716534}
   pauseMenu: {fileID: 1417582643}
   fighterCharacter: {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}

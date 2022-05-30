@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: Shooter
   m_EditorClassIdentifier: 
   characterName: Shooter
-  maxHealth: 1900
-  maxShield: 120
-  initiative: 6
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: 69a1f89476b165f43b96806b0e35cc13, type: 3}
   artworkPortrait: {fileID: 21300000, guid: 2b0f7d60f31930f44a0558e96d8f4ddc, type: 3}
@@ -24,6 +21,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2959002ea9b6874dac657b7718f28ac, type: 2}
   - {fileID: 11400000, guid: f9db6dd3a9bef0645910834acfb7cafd, type: 2}
   - {fileID: 11400000, guid: 337e11826a7e940449b17e4e65647c10, type: 2}
+  maxHealth: 1900
+  maxShield: 120
+  initiative: 6
+  chanceToBreakOutOfStun: 34
   currentlyAppliedStatuses: 
   costTitan: 30
   costWater: 50
