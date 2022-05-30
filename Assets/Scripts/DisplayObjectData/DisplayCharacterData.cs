@@ -40,6 +40,7 @@ namespace DisplayObjectData
             BattleActions.OnBleedApplied += ShowBleed;
             BattleActions.OnStunApplied += ShowStun;
             BattleActions.OnDodgeApplied += ShowDodge;
+            BattleActions.OnHealAppliedToCureBleed += HideBleed;
             StatusHandler.OnBleedRemoved += HideBleed;
             StatusHandler.OnStunRemoved += HideStun;
             StatusHandler.OnDodgeRemoved += HideDodge;
