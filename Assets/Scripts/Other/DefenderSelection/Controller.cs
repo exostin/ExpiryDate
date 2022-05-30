@@ -139,9 +139,9 @@ namespace Other.DefenderSelection
         
             foreach (var selectedDefender in selectedDefenders)
             {
-                for (var i = 0; i <= selectedDefender.Count; i++)
+                for (var i = 0; i < selectedDefender.Count; i++)
                 {
-                    gm.selectedDefenders = gm.selectedDefenders.Append(DefenderTypeCharacter[selectedDefender.DefenderType]).ToList();
+                    gm.selectedDefenders.Add(DefenderTypeCharacter[selectedDefender.DefenderType]);
                 }
             }
         }
