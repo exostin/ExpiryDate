@@ -18,20 +18,15 @@ public class BuildingPanelController : MonoBehaviour
     private CitybuildingController cbc;
     private Manager cbm;
     
-    private TextMeshProUGUI nextUpgradeText;
-    private TextMeshProUGUI acquiredUpgradesText;
-    private Button upgradeButton;
-    private Button buyDefenderButton;
+    [SerializeField] private TextMeshProUGUI nextUpgradeText;
+    [SerializeField] private TextMeshProUGUI acquiredUpgradesText;
+    [SerializeField] private Button upgradeButton;
+    [SerializeField] private Button buyDefenderButton;
 
     private void Start()
     {
         cbc = FindObjectOfType<CitybuildingController>();
         cbm = FindObjectOfType<GameManager>().cbm;
-
-        acquiredUpgradesText = transform.Find("Panel/AcquiredUpgradesText").GetComponent<TextMeshProUGUI>();
-        nextUpgradeText = transform.Find("Panel/NextUpgradeText").GetComponent<TextMeshProUGUI>();
-        upgradeButton = transform.Find("Panel/BuyUpgradeButton").GetComponent<Button>();
-        buyDefenderButton = transform.Find("Panel/BuyDefenderButton").GetComponent<Button>();
 
         cbc.OnBuildingSelected += CbcOnOnBuildingSelected;
         // I don't think that we need to unsubscribe from this event in OnDestroy because BuildingPanelController should
