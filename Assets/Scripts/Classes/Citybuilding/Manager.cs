@@ -20,6 +20,7 @@ namespace Classes.Citybuilding
 
         public int NextEncounter;
         public int NextEncounterMax;
+        public int DaysSurvived;
 
         public Dictionary<DefenderType, Defender> Defenders = new()
         {
@@ -72,6 +73,7 @@ namespace Classes.Citybuilding
 
             NextEncounter = PlayerPrefs.GetInt("NextEncounter", 10);
             NextEncounterMax = PlayerPrefs.GetInt("NextEncounterMax", 10);
+            DaysSurvived = PlayerPrefs.GetInt("DaysSurvived", 0);
 
             RunSimulation();
         }
@@ -99,6 +101,7 @@ namespace Classes.Citybuilding
             
             PlayerPrefs.SetInt("NextEncounter", NextEncounter);
             PlayerPrefs.SetInt("NextEncounterMax", NextEncounterMax);
+            PlayerPrefs.SetInt("DaysSurvived", DaysSurvived);
         }
 
         public void RunSimulation()
@@ -138,6 +141,7 @@ namespace Classes.Citybuilding
         {
             DefenderBought = false;
             NextEncounter--;
+            DaysSurvived++;
             if (NextEncounter == -1) SetNewEncounter();
             RunSimulation();
             Simulation.OnNextDay(this);
