@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: 4-Special
   m_EditorClassIdentifier: 
   abilityName: Special ability
-  abilityDescription: 
+  abilityDescription: Do your favourite party trick firing lasers into the sky to
+    shield all teammates!
   artwork: {fileID: 21300000, guid: 7187460dad17fb1429ac6af1d285ff19, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 3
   abilityType: 2
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 300
   statusType: 2
-  damageAmount: 0
+  minDamageAmount: 0
+  maxDamageAmount: 0
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0

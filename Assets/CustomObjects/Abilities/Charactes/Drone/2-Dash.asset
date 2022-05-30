@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: 2-Dash
   m_EditorClassIdentifier: 
   abilityName: Dash
-  abilityDescription: Dodge!
+  abilityDescription: Use your engines to focus on dodging any attacks!
   artwork: {fileID: 21300000, guid: 2c5209a4fa3528345b0a5c16e60f6a51, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 4
   abilityType: 3
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 13
-  damageAmount: 0
   statusType: 2
+  minDamageAmount: 0
+  maxDamageAmount: 0
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0

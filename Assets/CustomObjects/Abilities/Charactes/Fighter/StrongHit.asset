@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: StrongHit
   m_EditorClassIdentifier: 
   abilityName: Strong hit
-  abilityDescription: 
+  abilityDescription: Bludgeon your enemy with your unyielding strength!
   artwork: {fileID: 21300000, guid: 9ffe7b7cb34f11145a2d227dcb072ace, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 0
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
   minDamageAmount: 320
