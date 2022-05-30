@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.DroneSchool.Upgrades
                 Energy = 50
             };
             ModelName = "DroneSchool3";
+            Description = "Support Drones engines use more weight efficient fuel (Unlocks Support Drone Tier 2)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
         {
             Level = 1;
             ModelName = "Housing1";
+            Description = "Simple living quarters";
             BaseCost = new Resources
             {
                 Titan = 150,

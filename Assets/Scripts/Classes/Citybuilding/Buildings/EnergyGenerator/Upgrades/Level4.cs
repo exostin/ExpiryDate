@@ -6,6 +6,8 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
         {
             Level = 4;
             ModelName = "EnergyGenerator4";
+            Description =
+                "Multiple hamsters and wheels are added for maximum efficiency (Statistics of Support Drones are increased by 10%)";
             BaseCost = new Resources
             {
                 Titan = 20,

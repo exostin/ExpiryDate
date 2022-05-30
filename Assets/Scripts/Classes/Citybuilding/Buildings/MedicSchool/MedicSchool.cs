@@ -7,8 +7,9 @@ namespace Classes.Citybuilding.Buildings.MedicSchool
     {
         public MedicSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Medic school";
+            Name = "Hospital (Medic)";
             Description = "Studia medyczne";
+            DefenderType = DefenderType.Medic;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

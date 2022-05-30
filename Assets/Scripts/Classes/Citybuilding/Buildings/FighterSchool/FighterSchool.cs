@@ -7,8 +7,9 @@ namespace Classes.Citybuilding.Buildings.FighterSchool
     {
         public FighterSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Fighter school";
+            Name = "Training grounds (Spear Master)";
             Description = "Uczą hudo i kutarate";
+            DefenderType = DefenderType.Fighter;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

@@ -13,6 +13,7 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
                 Titan = 80
             };
             ModelName = "RobotSchool2";
+            Description = "Mechs are equipped with newly designed armor (Unlocks Mechs Tier 1)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

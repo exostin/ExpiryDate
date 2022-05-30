@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.FighterSchool.Upgrades
         {
             Level = 1;
             ModelName = "FighterSchool1";
+            Description = "Simple training grounds for Spear Masters";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

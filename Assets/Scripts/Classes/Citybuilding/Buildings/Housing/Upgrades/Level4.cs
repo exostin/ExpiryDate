@@ -6,6 +6,8 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
         {
             Level = 4;
             ModelName = "Housing4";
+            Description =
+                "Living Quarters are now filled up with laughing gas (All other building produce 3 more of their respective material)";
             BaseCost = new Resources
             {
                 Titan = 100,

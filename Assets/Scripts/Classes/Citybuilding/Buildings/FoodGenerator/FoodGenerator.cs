@@ -7,7 +7,7 @@ namespace Classes.Citybuilding.Buildings.FoodGenerator
     {
         public FoodGenerator(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Mutated dogs farm";
+            Name = "Greenhouse";
             Description = "Yummy";
             Upgrades = new BuildingUpgrade[]
             {

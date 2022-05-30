@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.MedicSchool.Upgrades
                 Water = 40
             };
             ModelName = "MedicSchool3";
+            Description = "Medics study biology (Unlocks Medic Tier 2)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

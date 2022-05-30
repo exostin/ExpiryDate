@@ -16,6 +16,14 @@ namespace Controllers
             gm.cbm.Load();
             SceneManager.LoadScene(1);
         }
+        
+        public void NewGameButton()
+        {
+            var gm = FindObjectOfType<GameManager>();
+            gm.cbm.RemoveSave();
+            gm.cbm.Load();
+            SceneManager.LoadScene(1);
+        }
 
         public void ExitButton()
         {

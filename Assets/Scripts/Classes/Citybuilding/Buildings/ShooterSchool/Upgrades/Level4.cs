@@ -12,6 +12,8 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
                 Water = 20
             };
             ModelName = "ShooterSchool4";
+            Description =
+                "Soldiers open their third eye, predicting enemy movements and making their bullets extra deadly (Unlocks Soldiers Tier 3  + Their cost is 20% lower)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

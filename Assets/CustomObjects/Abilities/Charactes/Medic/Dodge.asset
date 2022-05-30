@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: Dodge
   m_EditorClassIdentifier: 
-  abilityName: Dodge
-  abilityDescription: 
+  abilityName: Take Cover
+  abilityDescription: Medic hides behind cover, dodging next attack
   artwork: {fileID: 21300000, guid: 92c03b04279657f4a99ebdfc5fe09630, type: 3}
   soundEffect: {fileID: 8300000, guid: c5da9b52af90bb442a3ef238ab56904e, type: 3}
   abilityTarget: 2

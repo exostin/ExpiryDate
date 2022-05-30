@@ -7,7 +7,7 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator
     {
         public WaterGenerator(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Water pump";
+            Name = "Water Treatment Station";
             Description = "Splashy splash";
             Upgrades = new BuildingUpgrade[]
             {

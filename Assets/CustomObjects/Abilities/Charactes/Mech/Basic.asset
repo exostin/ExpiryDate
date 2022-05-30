@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: Basic
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
-  abilityDescription: 
+  abilityName: Flamethrower
+  abilityDescription: Mech spews flames on single enemy!
   artwork: {fileID: 21300000, guid: c21cc776ff92d3b4eba7316d719fbd87, type: 3}
   soundEffect: {fileID: 8300000, guid: 986ea361a1bdbea49a4570bfbfb489f7, type: 3}
   abilityTarget: 0

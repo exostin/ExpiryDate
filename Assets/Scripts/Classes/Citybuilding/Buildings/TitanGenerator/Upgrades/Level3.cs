@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator.Upgrades
         {
             Level = 3;
             ModelName = "TitanGenerator3";
+            Description = "Titanium-finding technology is being used (Production of Titanium increased from 15 to 20)";
             Output = new Resources
             {
                 Titan = 2

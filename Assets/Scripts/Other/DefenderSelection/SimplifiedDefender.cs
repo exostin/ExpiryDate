@@ -7,12 +7,13 @@ namespace Other.DefenderSelection
         public DefenderType DefenderType { get; }
         public byte Count { get; }
 
-        public string Name => DefenderType.ToString();
+        public string Name;
         
-        public SimplifiedDefender(DefenderType defenderType, byte count)
+        public SimplifiedDefender(DefenderType defenderType, byte count, string name)
         {
             DefenderType = defenderType;
             Count = count;
+            Name = name;
         }
     }
 }

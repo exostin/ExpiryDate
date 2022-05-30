@@ -266,7 +266,7 @@ namespace Controllers.BattleScene
                 if (character.isOwnedByPlayer)
                 {
                     stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                    postProcessingController.ToggleEnemyTurnPostEffects(gm);
+                    // postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     battleUIController.ToggleAbilityButtonsVisibility(true);
                     battleUIController.UpdateSkillButtons(character);
@@ -277,7 +277,7 @@ namespace Controllers.BattleScene
                     //battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(PlayerSelectedTarget));
                     battleActions.MakeAction(PlayerSelectedTarget, PlayerSelectedAbility,
                         soAllCharacters, true);
-                    StartCoroutine(postProcessingController.MakeAttackPostEffects());
+                    // StartCoroutine(postProcessingController.MakeAttackPostEffects());
                     battleUIController.ToggleAbilityButtonsVisibility(false);
                     PlayerSelectedAbility = null;
                     PlayerSelectedTarget = null;
@@ -285,7 +285,7 @@ namespace Controllers.BattleScene
                 else
                 {
                     stateController.fsm.ChangeState(StateController.States.EnemyTurn);
-                    postProcessingController.ToggleEnemyTurnPostEffects(gm);
+                    // postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     
                     var modifiedTargetsOfEnemyPool = targetsForEnemyPool.Where(target =>
@@ -313,7 +313,7 @@ namespace Controllers.BattleScene
                     //battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(enemySelectedTarget));
                     battleActions.MakeAction(enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
-                    StartCoroutine(postProcessingController.MakeAttackPostEffects());
+                    // StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
                 OnActionMade?.Invoke();
                 battleUIController.DisableSelectionIndicators();
