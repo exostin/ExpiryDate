@@ -125,8 +125,10 @@ namespace Other.DefenderSelection
             var selectedDefendersCount = selectedDefenders.ToList().Aggregate(0, (agg, d) => agg + d.Count);
             if (selectedDefendersCount != 4)
             {
+                #if UNITY_EDITOR
                 EditorUtility.DisplayDialog("Przed wyruszeniem w drogę należy zebrać drużynę!",
                     "You have to select 4 defenders before starting battle!", "OK");
+                #endif
                 return;
             }
         
@@ -151,7 +153,7 @@ namespace Other.DefenderSelection
 
         private void CreateEnemyTeam()
         {
-            var randomChoice = Random.Range(0, 2);
+            var randomChoice = Random.Range(0, 3);
 
             switch (randomChoice)
             {
