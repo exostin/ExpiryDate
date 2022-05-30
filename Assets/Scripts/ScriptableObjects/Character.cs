@@ -37,7 +37,7 @@ namespace ScriptableObjects
         #region Current game character data
 
         public int Health { get; set; }
-        public bool IsDead { get; set; }
+        public bool IsDead { get; private set; }
         public int ShieldPoints { get; set; }
         
         #region Statuses
