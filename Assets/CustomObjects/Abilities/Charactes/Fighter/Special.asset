@@ -17,13 +17,13 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: 47942833732ae674ab8e86beddc5dd4b, type: 3}
   soundEffect: {fileID: 8300000, guid: 9316b6b3ef30da24ebd1a8e04d4d5d24, type: 3}
   abilityTarget: 0
-  abilityType: 0
+  abilityType: 3
   minHealAmount: 0
   maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
-  minDamageAmount: 380
-  maxDamageAmount: 500
+  minDamageAmount: 230
+  maxDamageAmount: 250
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 1

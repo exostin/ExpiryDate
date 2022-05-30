@@ -18,7 +18,8 @@ MonoBehaviour:
   soundEffect: {fileID: 0}
   abilityTarget: 3
   abilityType: 1
-  healAmount: 200
+  minHealAmount: 100
+  maxHealAmount: 200
   shieldAmount: 600
   statusType: 2
   minDamageAmount: 0
