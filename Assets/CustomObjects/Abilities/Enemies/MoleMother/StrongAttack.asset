@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: 
   abilityDescription: 
   artwork: {fileID: 0}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: f7c7872da53053142aad15cf3ec8d5fa, type: 3}
   abilityTarget: 0
   abilityType: 3
   minHealAmount: 0

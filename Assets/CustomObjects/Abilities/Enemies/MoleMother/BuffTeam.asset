@@ -15,12 +15,12 @@ MonoBehaviour:
   abilityName: 
   abilityDescription: 
   artwork: {fileID: 0}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: ed39e6e97461af447ae9bca2c685e105, type: 3}
   abilityTarget: 3
-  abilityType: 2
+  abilityType: 1
   minHealAmount: 0
   maxHealAmount: 0
-  shieldAmount: 300
+  shieldAmount: 600
   statusType: 2
   minDamageAmount: 0
   maxDamageAmount: 0

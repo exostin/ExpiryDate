@@ -65,6 +65,12 @@ namespace Other.DefenderSelection
                 .ToList();
             selectedDefenders = gm.cbm.Defenders.ToList().Select(d => DefenderToSimplified(d.Value, 0))
                 .ToList();
+
+            if (availableDefenders.Aggregate(0, (agg, d) => agg + d.Count) < 4)
+            {
+                SceneManager.LoadScene("Scenes/GameOver");
+                return;
+            }
         
             RefreshUI();
         
@@ -81,9 +87,9 @@ namespace Other.DefenderSelection
                 return; // in theory user should not be able to trigger this event if that happens
         
             availableDefenders = availableDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1), d.Name) : d).ToList();
             selectedDefenders = selectedDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1), d.Name) : d).ToList();
         
             RefreshUI();
         }
@@ -95,9 +101,9 @@ namespace Other.DefenderSelection
                 return; // in theory user should not be able to trigger this event if that happens
         
             availableDefenders = availableDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1), d.Name) : d).ToList();
             selectedDefenders = selectedDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1), d.Name) : d).ToList();
         
             RefreshUI();
         }
@@ -108,10 +114,10 @@ namespace Other.DefenderSelection
             selectedContainer.Items = selectedDefenders.ToArray();
         }
         
-        private static SimplifiedDefender DefenderToSimplified(Defender defender, byte? amount = null)
+        private SimplifiedDefender DefenderToSimplified(Defender defender, byte? amount = null)
         {
             amount ??= defender.Amount;
-            return new SimplifiedDefender(defender.Type, (byte) amount);
+            return new SimplifiedDefender(defender.Type, (byte) amount, DefenderTypeCharacter[defender.Type].name);;
         }
         
         public void OnStartButtonClick()
@@ -119,8 +125,10 @@ namespace Other.DefenderSelection
             var selectedDefendersCount = selectedDefenders.ToList().Aggregate(0, (agg, d) => agg + d.Count);
             if (selectedDefendersCount != 4)
             {
+                #if UNITY_EDITOR
                 EditorUtility.DisplayDialog("Przed wyruszeniem w drogę należy zebrać drużynę!",
                     "You have to select 4 defenders before starting battle!", "OK");
+                #endif
                 return;
             }
         
@@ -145,7 +153,7 @@ namespace Other.DefenderSelection
 
         private void CreateEnemyTeam()
         {
-            var randomChoice = Random.Range(0, 2);
+            var randomChoice = Random.Range(0, 3);
 
             switch (randomChoice)
             {
