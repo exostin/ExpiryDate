@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Sidearm shot
   abilityDescription: 
   artwork: {fileID: 21300000, guid: d471d5047ca91b347a75dcc9c49afb7c, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 82d260694f143d94099666bc3c5a4318, type: 3}
   abilityTarget: 0
   abilityType: 0
   minHealAmount: 0

@@ -15,10 +15,11 @@ MonoBehaviour:
   abilityName: Roll
   abilityDescription: 
   artwork: {fileID: 21300000, guid: fefe53db5e820f8459af684742f1c36b, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: e75b099992777c44e88c8709f100a92f, type: 3}
   abilityTarget: 2
   abilityType: 3
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 2
   minDamageAmount: 0
