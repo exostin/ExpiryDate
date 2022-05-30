@@ -87,9 +87,9 @@ namespace Other.DefenderSelection
                 return; // in theory user should not be able to trigger this event if that happens
         
             availableDefenders = availableDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1), d.Name) : d).ToList();
             selectedDefenders = selectedDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1), d.Name) : d).ToList();
         
             RefreshUI();
         }
@@ -101,9 +101,9 @@ namespace Other.DefenderSelection
                 return; // in theory user should not be able to trigger this event if that happens
         
             availableDefenders = availableDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count + 1), d.Name) : d).ToList();
             selectedDefenders = selectedDefenders
-                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1)) : d).ToList();
+                .Select(d => d.DefenderType == type ? new SimplifiedDefender(type, (byte) (d.Count - 1), d.Name) : d).ToList();
         
             RefreshUI();
         }
@@ -114,10 +114,10 @@ namespace Other.DefenderSelection
             selectedContainer.Items = selectedDefenders.ToArray();
         }
         
-        private static SimplifiedDefender DefenderToSimplified(Defender defender, byte? amount = null)
+        private SimplifiedDefender DefenderToSimplified(Defender defender, byte? amount = null)
         {
             amount ??= defender.Amount;
-            return new SimplifiedDefender(defender.Type, (byte) amount);
+            return new SimplifiedDefender(defender.Type, (byte) amount, DefenderTypeCharacter[defender.Type].name);;
         }
         
         public void OnStartButtonClick()

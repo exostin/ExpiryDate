@@ -23,6 +23,9 @@ public class BuildingPanelController : MonoBehaviour
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button buyDefenderButton;
 
+    [SerializeField] private Cost buyUpgradeCost;
+    [SerializeField] private Cost buyDefenderCost;
+
     private void Start()
     {
         cbc = FindObjectOfType<CitybuildingController>();
@@ -31,6 +34,8 @@ public class BuildingPanelController : MonoBehaviour
         cbc.OnBuildingSelected += CbcOnOnBuildingSelected;
         // I don't think that we need to unsubscribe from this event in OnDestroy because BuildingPanelController should
         // be destroyed when the CityBuildingController is destroyed (when scene ends).
+        
+        cbc.SelectBuilding(cbm.Simulation.MainCamp);
     }
 
     private void CbcOnOnBuildingSelected(Building newBuilding)
@@ -45,6 +50,26 @@ public class BuildingPanelController : MonoBehaviour
 
         var isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
         buyDefenderButton.interactable = isASchool;
+
+        if (building.NextUpgrade is null)
+        {
+            buyUpgradeCost.gameObject.SetActive(false);
+        }
+        else
+        {
+            buyUpgradeCost.gameObject.SetActive(true);
+            buyUpgradeCost.Resources = building.NextUpgrade.ActualCost;
+        }
+
+        if (!isASchool)
+        {
+            buyDefenderCost.gameObject.SetActive(false);
+        }
+        else
+        {
+            buyDefenderCost.gameObject.SetActive(true);
+            buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
+        }
     }
 
     public void UpgradeButtonClicked()
