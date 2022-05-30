@@ -50,6 +50,7 @@ namespace Classes
                     switch (selectedAbility.abilityType)
                     {
                         case AbilityType.Status:
+                            Deal(thisIterationTarget,selectedAbility);
                             ApplyStatus(thisIterationTarget, selectedAbility);
                             break;
                         case AbilityType.DamageOnly:
@@ -73,6 +74,7 @@ namespace Classes
                 switch (selectedAbility.abilityType)
                 {
                     case AbilityType.Status:
+                        Deal(target,selectedAbility);
                         ApplyStatus(target, selectedAbility);
                         break;
                     case AbilityType.DamageOnly:
@@ -137,6 +139,7 @@ namespace Classes
         {
             if ((target.Health + target.ShieldPoints) - finalDamageAmount <= 0)
             {
+                target.Health = 0;
                 target.CheckIfDead();
             }
             else
@@ -199,7 +202,6 @@ namespace Classes
             switch (selectedStatus.statusType)
             {
                 case StatusType.Bleed:
-                    target.Health -= finalDamageAmount;
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
                     finalText = $"-{finalDamageAmount} HP, Bleed";
@@ -209,7 +211,6 @@ namespace Classes
                     finalText = "Dodge";
                     break;
                 case StatusType.Stun:
-                    target.Health -= finalDamageAmount;
                     target.StunDurationLeft += selectedStatus.stunDuration;
                     finalText = $"-{finalDamageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
                     break;

@@ -2364,6 +2364,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeaf27e0b77537b419aad52f3112f781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedDefenders:
+  - {fileID: 11400000, guid: 212c70b4ddeb83e4c8dcea27603d03ac, type: 2}
+  - {fileID: 11400000, guid: 2f3909f7c609ec641b70d7021260e029, type: 2}
+  - {fileID: 11400000, guid: 93de91982900e554ea4502a157a8d6ac, type: 2}
+  - {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}
+  thisEncounterEnemies:
+  - {fileID: 11400000, guid: b9d1335e972c84f4bbc8161fa17ed2b0, type: 2}
+  - {fileID: 11400000, guid: 670b266da0e480b4d826c28d8eb5601b, type: 2}
+  - {fileID: 11400000, guid: 18a0cbc4401521f4bb31f426f1431c69, type: 2}
   stateController: {fileID: 309716534}
   pauseMenu: {fileID: 1417582643}
   fighterCharacter: {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}

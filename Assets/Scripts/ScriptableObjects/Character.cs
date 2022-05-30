@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Other.Enums;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ScriptableObjects
 {
@@ -47,14 +48,16 @@ namespace ScriptableObjects
 
         #endregion
         #endregion
-        
-        
+
+        public delegate void CharacterEvent();
+        public static event CharacterEvent OnCharacterDeath;
+
         [Header("Citybuilding")]
         public int costTitan;
         public int costWater;
         public int costFood;
         public int costEnergy;
-        
+
         public void Initialize()
         {
             Health = maxHealth;
@@ -70,10 +73,10 @@ namespace ScriptableObjects
         public bool CheckIfDead()
         {
             if (Health > 0) return false;
-            
             IsDead = true;
             Health = 0;
             ShieldPoints = 0;
+            OnCharacterDeath?.Invoke();
             ClearAllStatuses();
             return true;
         }

@@ -1,3 +1,4 @@
+using System;
 using Controllers.BattleScene;
 using ScriptableObjects;
 using TMPro;
@@ -24,7 +25,7 @@ namespace DisplayObjectData
         public delegate void TurnAction();
         public static event TurnAction OnTurnEnd;
 
-        private void Start()
+        public void Initialize()
         {
             battleController = FindObjectOfType<BattleController>();
             nameTextContainer.text = character.characterName;
@@ -35,6 +36,8 @@ namespace DisplayObjectData
             shieldSlider.value = character.ShieldPoints;
 
             BattleController.OnActionMade += UpdateCurrentHpAndShield;
+            BattleController.OnStatusHandled += UpdateCurrentHpAndShield;
+            Character.OnCharacterDeath += VisualizeDeathOnDeadCharacters;
         }
 
         private void UpdateCurrentHpAndShield()
@@ -44,6 +47,7 @@ namespace DisplayObjectData
             if (character.Health == 0)
             {
                 BattleController.OnActionMade -= UpdateCurrentHpAndShield;
+                BattleController.OnStatusHandled -= UpdateCurrentHpAndShield;
             }
         }
         
@@ -56,7 +60,18 @@ namespace DisplayObjectData
         public void OnPointerEnter(PointerEventData eventData)
         {
             battleController.PlayerHoveredOverTarget = character;
+            ActivateOnHoveredEvent();
+        }
+
+        public static void ActivateOnHoveredEvent()
+        {
             OnHoveredOverCharacter?.Invoke();
+        }
+
+        // It's expensive, but we've got no time left, to do it well ☠️
+        public void VisualizeDeathOnDeadCharacters()
+        {
+            if (character.IsDead) image.color = battleController.deadCharacterTint;
         }
     }
 }

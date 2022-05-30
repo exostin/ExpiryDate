@@ -10,12 +10,15 @@ namespace Controllers
 {
     public class GameManager : MonoBehaviour
     {
+        [Header("Characters")]
+        public List<Character> selectedDefenders;
+        [Tooltip("Third character will always be the BOSS!!!")]
+        public List<Character> thisEncounterEnemies;
+        [Header("Controllers")]
         public StateController stateController;
 
-        public DefenderType[] selectedDefenders;
-
         #region Start/Pause menu
-
+        [Header("Other")]
         [SerializeField] private GameObject pauseMenu;
 
         #endregion

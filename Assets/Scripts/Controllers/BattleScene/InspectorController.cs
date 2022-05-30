@@ -44,6 +44,7 @@ namespace Controllers.BattleScene
             battleController = FindObjectOfType<BattleController>();
             DisplayCharacterData.OnHoveredOverCharacter += UpdateBasicCharacterData;
             BattleController.OnActionMade += LiveUpdateCharacterData;
+            BattleController.OnStatusHandled += LiveUpdateCharacterData;
             BattleController.OnActionMade += HideAbilityData;
             DisplayAbilityData.OnAbilitySelected += UpdateAbilityData;
             DisplayAbilityData.OnAbilitySelected += ShowAbilityData;
@@ -60,7 +61,7 @@ namespace Controllers.BattleScene
         private void UpdateBasicCharacterData()
         {
             currentCharacter = battleController.PlayerHoveredOverTarget;
-            if (currentCharacter == null)
+            if (currentCharacter is null)
             {
                 characterInspector.SetActive(false);
                 return;
