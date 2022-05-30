@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Web.UI.WebControls;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
@@ -9,6 +10,11 @@ namespace Controllers.BattleScene
 {
     public class StatusHandler
     {
+        public delegate void OnStatusRemoved();
+        public static event OnStatusRemoved OnBleedRemoved;
+        public static event OnStatusRemoved OnStunRemoved;
+        public static event OnStatusRemoved OnDodgeRemoved;
+        
         public void HandleStatuses(Character character, out bool skipThisTurn, GameObject currentCharGameObject)
         {
             skipThisTurn = false;
@@ -31,6 +37,7 @@ namespace Controllers.BattleScene
                             Debug.Log("Bleeding stopped!");
                             character.currentlyAppliedStatuses.Remove(status);
                             character.BleedDurationLeft = 0;
+                            OnBleedRemoved?.Invoke();
                         }
                         break;
                     }
@@ -38,6 +45,7 @@ namespace Controllers.BattleScene
                     {
                         character.DodgeEverythingUntilNextTurn = false;
                         finalText = "No longer dodging!";
+                        OnDodgeRemoved?.Invoke();
                         Debug.Log($"{character.name} no longer dodges attacks.");
                         break;
                     }
@@ -47,6 +55,7 @@ namespace Controllers.BattleScene
                         {
                             finalText = $"No longer stunned!";
                             character.currentlyAppliedStatuses.Remove(status);
+                            OnStunRemoved?.Invoke();
                             Debug.Log($"{character.name} is no longer stunned.");
                         }
                         else
@@ -57,6 +66,7 @@ namespace Controllers.BattleScene
                                 character.StunDurationLeft = 0;
                                 finalText = $"Broke out of stun!";
                                 character.currentlyAppliedStatuses.Remove(status);
+                                OnStunRemoved?.Invoke();
                                 Debug.Log($"{character.name} broke out of stun!");
                             }
                             else

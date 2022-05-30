@@ -15,6 +15,12 @@ namespace Classes
         private NotificationsHandler notificationHandlerReference;
         private int finalDamageAmount;
         private int finalHealAmount;
+
+        public delegate void OnStatusApplied();
+        public static event OnStatusApplied OnBleedApplied;
+        public static event OnStatusApplied OnStunApplied;
+        public static event OnStatusApplied OnDodgeApplied;
+
         
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
@@ -212,14 +218,17 @@ namespace Classes
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
                     finalText = $"-{finalDamageAmount} HP, Bleed";
+                    OnBleedApplied?.Invoke();
                     break;
                 case StatusType.Dodge:
                     target.DodgeEverythingUntilNextTurn = true;
                     finalText = "Dodge";
+                    OnDodgeApplied?.Invoke();
                     break;
                 case StatusType.Stun:
                     target.StunDurationLeft += selectedStatus.stunDuration;
                     finalText = $"-{finalDamageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
+                    OnStunApplied?.Invoke();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(message:"Status type not found", innerException: null);
