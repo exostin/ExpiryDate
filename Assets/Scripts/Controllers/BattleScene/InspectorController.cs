@@ -44,6 +44,7 @@ namespace Controllers.BattleScene
             battleController = FindObjectOfType<BattleController>();
             DisplayCharacterData.OnHoveredOverCharacter += UpdateBasicCharacterData;
             BattleController.OnActionMade += LiveUpdateCharacterData;
+            BattleController.OnStatusHandled += LiveUpdateCharacterData;
             BattleController.OnActionMade += HideAbilityData;
             DisplayAbilityData.OnAbilitySelected += UpdateAbilityData;
             DisplayAbilityData.OnAbilitySelected += ShowAbilityData;
@@ -60,7 +61,7 @@ namespace Controllers.BattleScene
         private void UpdateBasicCharacterData()
         {
             currentCharacter = battleController.PlayerHoveredOverTarget;
-            if (currentCharacter == null)
+            if (currentCharacter is null)
             {
                 characterInspector.SetActive(false);
                 return;
@@ -134,7 +135,7 @@ namespace Controllers.BattleScene
                     abilityDescription.text += $"Damage: {currentAbility.minDamageAmount} - {currentAbility.maxDamageAmount}\n";
                     break;
                 case AbilityType.Heal:
-                    abilityDescription.text += $"Heal: {currentAbility.healAmount} (also alleviates bleeding)\n";
+                    abilityDescription.text += $"Heal: {currentAbility.minHealAmount} - {currentAbility.maxHealAmount} (also alleviates bleeding)\n";
                     break;
                 case AbilityType.Shield:
                     abilityDescription.text += $"Shield: {currentAbility.shieldAmount}\n";

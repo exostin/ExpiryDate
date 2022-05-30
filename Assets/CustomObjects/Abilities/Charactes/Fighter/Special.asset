@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Special
   m_EditorClassIdentifier: 
   abilityName: Furious flurry
-  abilityDescription: 
+  abilityDescription: Unleash your rage upon your enemies in a furious salve of strikes!
   artwork: {fileID: 21300000, guid: 47942833732ae674ab8e86beddc5dd4b, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 0
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
   minDamageAmount: 380

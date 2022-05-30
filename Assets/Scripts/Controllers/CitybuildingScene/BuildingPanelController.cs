@@ -46,10 +46,10 @@ public class BuildingPanelController : MonoBehaviour
             (acc, upgrade) => upgrade.Description is not null ? acc + upgrade.Description + "\n" : "");
         nextUpgradeText.text = building.NextUpgrade is null ? "No upgrades available" : building.NextUpgrade.Description;
         
-        upgradeButton.enabled = building.CanBeUpgraded;
+        upgradeButton.interactable = building.CanBeUpgraded;
 
         var isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
-        buyDefenderButton.gameObject.SetActive(isASchool);
+        buyDefenderButton.interactable = isASchool;
     }
 
     public void UpgradeButtonClicked()
@@ -78,7 +78,9 @@ public class BuildingPanelController : MonoBehaviour
         }
         catch (InvalidOperationException e)
         {
+            #if UNITY_EDITOR
             EditorUtility.DisplayDialog("Cannot buy defender", e.Message, "OK");
+            #endif
         }
     }
 }

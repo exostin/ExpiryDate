@@ -19,7 +19,7 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
         {
             base.ApplySideEffects(simulation, building);
 
-            building.cbm.Defenders[DefenderType.Robot].Tier = 1;
+            building.cbm.Defenders[DefenderType.Mech].Tier = 1;
         }
     }
 }

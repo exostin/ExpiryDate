@@ -18,11 +18,12 @@ MonoBehaviour:
   soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 0
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
-  minDamageAmount: 210
-  maxDamageAmount: 260
+  minDamageAmount: 200
+  maxDamageAmount: 240
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0

@@ -19,8 +19,8 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
         {
             base.ApplySideEffects(simulation, building);
 
-            building.cbm.Defenders[DefenderType.Robot].Tier = 3;
-            building.cbm.Defenders[DefenderType.Robot].CostMultiplier = .8f;
+            building.cbm.Defenders[DefenderType.Mech].Tier = 3;
+            building.cbm.Defenders[DefenderType.Mech].CostMultiplier = .8f;
         }
     }
 }
