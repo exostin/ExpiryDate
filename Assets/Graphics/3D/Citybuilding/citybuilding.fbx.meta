@@ -7,28 +7,38 @@ ModelImporter:
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
+      name: 20220220_012717
+    second: {fileID: 2800000, guid: 1975f11e1cda26e448b6b9df5066948a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: artworks-000634652686-jiiksb-t500x500
+    second: {fileID: 2800000, guid: db5b7bf0bc962a640a2bdbe5539815ed, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
       name: b
-    second: {fileID: 2800000, guid: 5cb64151c79a04a4c93332416560c3fd, type: 3}
+    second: {fileID: 2800000, guid: 11dbf2ddab4fb6549b3144baa0024250, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: concrete_floor_worn_001_diff_4k
-    second: {fileID: 2800000, guid: f67f2d75681b3194fb5f7971788c40d5, type: 3}
+    second: {fileID: 2800000, guid: 173c7a4916441db4bb64ed5ce4284458, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: concrete_floor_worn_001_nor_gl_4k
-    second: {fileID: 2800000, guid: 3d7fb9893d36434469367b956e7d419f, type: 3}
+    second: {fileID: 2800000, guid: a5f5456009bea9e44bdb9d43d626cfa4, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: concrete_floor_worn_001_rough_4k
-    second: {fileID: 2800000, guid: f2ce7ba26709a8c4c9aaf1ccbd28128c, type: 3}
+    second: {fileID: 2800000, guid: 0653027485a8641488f07ef11d554b54, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: empty_diff
-    second: {fileID: 2800000, guid: c5153f4d91f69874590d621c970286e2, type: 3}
+      name: obudzsie
+    second: {fileID: 2800000, guid: 46625158ad1d12447a8a3763d6ffc895, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

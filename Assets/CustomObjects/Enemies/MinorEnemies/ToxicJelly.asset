@@ -20,11 +20,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 57db999e05ec6424da84a2f820bbd26a, type: 2}
   - {fileID: 11400000, guid: fc4ad8e15deeb1748a0e0c1adf89fe9e, type: 2}
   - {fileID: 11400000, guid: 0081cb3b1c83ba44495e80f110e96c5b, type: 2}
-  maxHealth: 800
-  maxShield: 35
+  maxHealth: 1600
+  maxShield: 200
   initiative: 12
   chanceToBreakOutOfStun: 45
-  currentlyAppliedStatuses: 00000000
+  invulnerableToBleed: 0
+  currentlyAppliedStatuses: 
   costTitan: 0
   costWater: 0
   costFood: 0

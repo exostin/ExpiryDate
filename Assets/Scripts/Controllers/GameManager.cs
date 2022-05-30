@@ -4,7 +4,6 @@ using Classes;
 using Classes.Citybuilding;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Resources = UnityEngine.Resources;
 
 namespace Controllers
@@ -87,10 +86,5 @@ namespace Controllers
         public Manager cbm;
 
         #endregion
-
-        public void LoadMainMenu()
-        {
-            SceneManager.LoadScene("Scenes/StartMenu");
-        }
     }
 }
