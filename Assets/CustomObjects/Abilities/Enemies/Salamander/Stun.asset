@@ -17,7 +17,7 @@ MonoBehaviour:
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
   abilityTarget: 0
-  abilityType: 0
+  abilityType: 3
   healAmount: 0
   shieldAmount: 0
   statusType: 0
