@@ -25,6 +25,9 @@ public class BuildingPanelController : MonoBehaviour
 
     [SerializeField] private Cost buyUpgradeCost;
     [SerializeField] private Cost buyDefenderCost;
+    
+    [SerializeField] private TMP_Text buildingName;
+    [SerializeField] private TMP_Text buildingDescription;
 
     private void Start()
     {
@@ -70,6 +73,9 @@ public class BuildingPanelController : MonoBehaviour
             buyDefenderCost.gameObject.SetActive(true);
             buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
         }
+        
+        buildingName.text = building.Name;
+        buildingDescription.text = building.Description;
     }
 
     public void UpgradeButtonClicked()
