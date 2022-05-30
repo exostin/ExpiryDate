@@ -15,10 +15,11 @@ MonoBehaviour:
   abilityName: Rifle
   abilityDescription: 
   artwork: {fileID: 21300000, guid: 7a79cbc4b54dedc4e815e32f3ae622fb, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 65be892ec0299c04d9b574e13d8b37b9, type: 3}
   abilityTarget: 0
   abilityType: 0
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
   minDamageAmount: 450

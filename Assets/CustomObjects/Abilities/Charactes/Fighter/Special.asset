@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Furious flurry
   abilityDescription: Unleash your rage upon your enemies in a furious salve of strikes!
   artwork: {fileID: 21300000, guid: 47942833732ae674ab8e86beddc5dd4b, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 9316b6b3ef30da24ebd1a8e04d4d5d24, type: 3}
   abilityTarget: 0
   abilityType: 0
   minHealAmount: 0

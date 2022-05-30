@@ -16,7 +16,7 @@ MonoBehaviour:
   abilityDescription: Do your favourite party trick firing lasers into the sky to
     shield all teammates!
   artwork: {fileID: 21300000, guid: 7187460dad17fb1429ac6af1d285ff19, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 1ce1a354ae989494aab349ddbf71d653, type: 3}
   abilityTarget: 3
   abilityType: 2
   minHealAmount: 0

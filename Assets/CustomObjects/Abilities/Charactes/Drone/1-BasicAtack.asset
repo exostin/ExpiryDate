@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Basic attack
   abilityDescription: Fire a laser to decimate your foes!
   artwork: {fileID: 21300000, guid: 69cc5a37216ca494ebfe770a6ff71e03, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 544a0d171108d4c488e2e2411932f57e, type: 3}
   abilityTarget: 0
   abilityType: 3
   minHealAmount: 0
