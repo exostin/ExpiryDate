@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: 3-Shield
   m_EditorClassIdentifier: 
-  abilityName: Focused Shield
+  abilityName: Shield
   abilityDescription: Shield one teammate!
   artwork: {fileID: 21300000, guid: fd96df01631a6b8499e5b098b0d07906, type: 3}
   soundEffect: {fileID: 8300000, guid: 1ce1a354ae989494aab349ddbf71d653, type: 3}

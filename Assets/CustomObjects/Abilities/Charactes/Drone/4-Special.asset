@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: 4-Special
   m_EditorClassIdentifier: 
-  abilityName: CoatShield
+  abilityName: Special ability
   abilityDescription: Do your favourite party trick firing lasers into the sky to
     shield all teammates!
   artwork: {fileID: 21300000, guid: 7187460dad17fb1429ac6af1d285ff19, type: 3}

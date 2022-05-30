@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Classes.Citybuilding.Buildings.DroneSchool;
 using Classes.Citybuilding.Buildings.EnergyGenerator;
 using Classes.Citybuilding.Buildings.FighterSchool;
@@ -102,6 +103,29 @@ namespace Classes.Citybuilding
             PlayerPrefs.SetInt("NextEncounter", NextEncounter);
             PlayerPrefs.SetInt("NextEncounterMax", NextEncounterMax);
             PlayerPrefs.SetInt("DaysSurvived", DaysSurvived);
+        }
+
+        public void RemoveSave()
+        {
+            var keys = new[]
+            {
+                "PlayerResources/Titan", "PlayerResources/Energy", "PlayerResources/Food", "PlayerResources/Water",
+                "PlayerBuildings/Housing","PlayerBuildings/TitanGenerator","PlayerBuildings/EnergyGenerator","PlayerBuildings/WaterGenerator",
+                "PlayerBuildings/FoodGenerator","PlayerBuildings/FighterSchool","PlayerBuildings/ShooterSchool", "PlayerBuildings/RobotSchool",
+                "PlayerBuildings/DroneSchool","PlayerBuildings/MedicSchool","NextEncounter", "NextEncounterMax","DaysSurvived"
+            };
+            keys = Defenders.Aggregate(keys, (current, defender) => current.Append($"PlayerDefenders/{defender.Key}").ToArray());
+
+            foreach (var key in keys)
+            {
+                if (!PlayerPrefs.HasKey(key))
+                {
+                    Debug.LogWarning($"{key} was not present in PlayerPrefs.");
+                    continue;
+                }
+                PlayerPrefs.DeleteKey(key);
+                PlayerPrefs.Save();
+            }
         }
 
         public void RunSimulation()
