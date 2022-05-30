@@ -132,7 +132,6 @@ namespace Other.DefenderSelection
                 return;
             }
         
-            CreateEnemyTeam();
             SaveToGM();
             SceneManager.LoadScene("Scenes/Battle");
         }
@@ -149,19 +148,40 @@ namespace Other.DefenderSelection
                     gm.selectedDefenders.Add(DefenderTypeCharacter[selectedDefender.DefenderType]);
                 }
             }
+            CreateEnemyTeam();
         }
 
         private void CreateEnemyTeam()
         {
-            var enemyCombinations = new List<List<Character>>
-            {
-                new List<Character> {crab, toxicJelly, octomedusa},
-                new List<Character>() {molerat, cockroach, molemother},
-                new List<Character>(){mosquito, sleeker, salamander}
-            };
+            var randomChoice = Random.Range(0, 3);
 
-            var randomChoice = Random.Range(0, enemyCombinations.Count);
-            gm.thisEncounterEnemies = enemyCombinations[randomChoice];
+            switch (randomChoice)
+            {
+                case 1:
+                    gm.thisEncounterEnemies = new List<Character>
+                    {
+                        crab,
+                        toxicJelly,
+                        octomedusa
+                    };
+                    break;
+                case 2:
+                    gm.thisEncounterEnemies = new List<Character>
+                    {
+                        molerat,
+                        cockroach,
+                        molemother
+                    };
+                    break;
+                case 3:
+                    gm.thisEncounterEnemies = new List<Character>
+                    {
+                        mosquito,
+                        sleeker,
+                        salamander
+                    };
+                    break;
+            }
         }
     }
 }
