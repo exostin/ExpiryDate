@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms.DataVisualization.Charting;
 using Controllers.BattleScene;
 using Other.Enums;
 using ScriptableObjects;
@@ -202,6 +203,12 @@ namespace Classes
             switch (selectedStatus.statusType)
             {
                 case StatusType.Bleed:
+                    if (target.invulnerableToBleed)
+                    {
+                        finalText = "Invulnerable to Bleed";
+                        target.currentlyAppliedStatuses.Remove(selectedStatus.statusType);
+                        break;
+                    }
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
                     finalText = $"-{finalDamageAmount} HP, Bleed";

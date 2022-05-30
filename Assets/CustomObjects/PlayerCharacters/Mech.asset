@@ -25,7 +25,8 @@ MonoBehaviour:
   maxShield: 2000
   initiative: 1
   chanceToBreakOutOfStun: 28
-  currentlyAppliedStatuses: 
+  invulnerableToBleed: 1
+  currentlyAppliedStatuses: 01000000
   costTitan: 140
   costWater: 20
   costFood: 20
