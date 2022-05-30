@@ -25,7 +25,7 @@ namespace Classes.Citybuilding
         {
             {DefenderType.Drone, new Defender(DefenderType.Drone)},
             {DefenderType.Fighter, new Defender(DefenderType.Fighter)},
-            {DefenderType.Robot, new Defender(DefenderType.Robot)},
+            {DefenderType.Mech, new Defender(DefenderType.Mech)},
             {DefenderType.Shooter, new Defender(DefenderType.Shooter)},
             {DefenderType.Medic, new Defender(DefenderType.Medic)}
         };
@@ -42,7 +42,7 @@ namespace Classes.Citybuilding
             $"PlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} " +
             $"Food: {PlayerResources.Food} Water: {PlayerResources.Water}\n" +
             $"Defenders: Drone: {Defenders[DefenderType.Drone].Amount} Fighter: {Defenders[DefenderType.Fighter].Amount} " +
-            $"Robot: {Defenders[DefenderType.Robot].Amount} Shooter: {Defenders[DefenderType.Shooter].Amount} " +
+            $"Robot: {Defenders[DefenderType.Mech].Amount} Shooter: {Defenders[DefenderType.Shooter].Amount} " +
             $"Medic: {Defenders[DefenderType.Medic].Amount}";
 
         public void Load()
