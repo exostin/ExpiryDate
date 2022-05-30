@@ -70,7 +70,7 @@ namespace Classes.Citybuilding
             mainCampLevel = PlayerPrefs.GetInt("PlayerBuildings/MainCamp", 1);
 
             foreach (var defender in Defenders)
-                defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 0);
+                defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 1);
 
             NextEncounter = PlayerPrefs.GetInt("NextEncounter", 10);
             NextEncounterMax = PlayerPrefs.GetInt("NextEncounterMax", 10);
