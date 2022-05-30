@@ -2364,11 +2364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeaf27e0b77537b419aad52f3112f781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedDefenders:
-  - {fileID: 11400000, guid: 212c70b4ddeb83e4c8dcea27603d03ac, type: 2}
-  - {fileID: 11400000, guid: 31019430c41a14c47ace8e500f4ec064, type: 2}
-  - {fileID: 11400000, guid: 2f3909f7c609ec641b70d7021260e029, type: 2}
-  - {fileID: 11400000, guid: 316cd42f932174d4b8b22c858563cdc4, type: 2}
+  selectedDefenders: []
   thisEncounterEnemies:
   - {fileID: 11400000, guid: b9d1335e972c84f4bbc8161fa17ed2b0, type: 2}
   - {fileID: 11400000, guid: 8525db7ac0518ea4b8c4225c00bbc6d2, type: 2}

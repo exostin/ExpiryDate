@@ -46,6 +46,12 @@ namespace Controllers.BattleScene
         private StateController stateController;
         private PostProcessingController postProcessingController;
         private BattleUIController battleUIController;
+        private BattleActions battleActions;
+
+        #endregion
+
+        #region Static
+
         private readonly StatusHandler statusHandler = new();
 
         #endregion
@@ -55,12 +61,6 @@ namespace Controllers.BattleScene
         public List<GameObject> playerCharactersGameObjects;
         public List<GameObject> enemyCharactersGameObjects;
         private List<GameObject> allCharactersGameObjects;
-
-        #endregion
-
-        #region Static class references
-
-        private readonly BattleActions battleActions = new();
 
         #endregion
 
@@ -104,6 +104,7 @@ namespace Controllers.BattleScene
             stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
+            battleActions = FindObjectOfType<BattleActions>();
             
             #region Creating variables related to characters
 
@@ -144,6 +145,9 @@ namespace Controllers.BattleScene
                 displayCharacterDataComponent.character = character;
                 displayCharacterDataComponent.Initialize();
                 index++;
+                
+                // Temporary workaround
+                //if (index == 3) break;
             }
 
             index = 0;
@@ -154,6 +158,9 @@ namespace Controllers.BattleScene
                 displayCharacterDataComponent.character = character;
                 displayCharacterDataComponent.Initialize();
                 index++;
+                
+                // Temporary workaround
+                //if (index == 2) break;
             }
 
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
@@ -267,7 +274,7 @@ namespace Controllers.BattleScene
                     yield return new WaitUntil(() =>
                         stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(PlayerSelectedTarget));
+                    //battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(PlayerSelectedTarget));
                     battleActions.MakeAction(PlayerSelectedTarget, PlayerSelectedAbility,
                         soAllCharacters, true);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
@@ -303,7 +310,7 @@ namespace Controllers.BattleScene
                             break;
                     }
                     
-                    battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(enemySelectedTarget));
+                    //battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(enemySelectedTarget));
                     battleActions.MakeAction(enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
                     StartCoroutine(postProcessingController.MakeAttackPostEffects());
@@ -322,7 +329,7 @@ namespace Controllers.BattleScene
         ///     Search through all attached character GameObjects, and return the one which DisplayCharacterData component has a
         ///     Character scriptable object attached with the same name as the chosen character
         /// </summary>
-        private GameObject FindCharactersGameObjectByName(Character character)
+        public GameObject FindCharactersGameObjectByName(Character character)
         {
             foreach (var g in allCharactersGameObjects.Where(g =>
                          g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
