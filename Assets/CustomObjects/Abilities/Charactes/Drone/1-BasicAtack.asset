@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 1-BasicAtack
   m_EditorClassIdentifier: 
   abilityName: Basic attack
-  abilityDescription: Attack!
+  abilityDescription: Fire a laser to decimate your foes!
   artwork: {fileID: 21300000, guid: 69cc5a37216ca494ebfe770a6ff71e03, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 3
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
   minDamageAmount: 100

@@ -12,7 +12,6 @@ namespace Controllers.BattleScene
     public class BattleUIController : MonoBehaviour
     {
         [SerializeField] private GameObject[] skillButtons;
-        [SerializeField] private GameObject targetIndicator;
         [SerializeField] private GameObject abilityIndicator;
         [SerializeField] private TMP_Text turnCounterText;
         [SerializeField] private GameObject playerWonCanvas;
@@ -43,13 +42,13 @@ namespace Controllers.BattleScene
         public void LetPlayerChooseTarget(bool choice)
         {
             Debug.Log($"Setting interactability with characters to: {choice}");
-            foreach (var g in battleController.BattleQueue.SelectMany(character => battleController.AllCharacters.Where(
+            foreach (GameObject g in battleController.BattleQueue.SelectMany(character => battleController.AllCharactersGameObjects.Where(
                          g =>
                              g.GetComponent<DisplayCharacterData>().character.characterName ==
                              character.characterName)))
                 g.GetComponent<Button>().interactable = choice;
         }
-
+        
         /// <summary>
         ///     Set all ability data to match the character which turn it is
         /// </summary>
@@ -75,7 +74,6 @@ namespace Controllers.BattleScene
         /// </summary>
         public void DisableSelectionIndicators()
         {
-            targetIndicator.SetActive(false);
             abilityIndicator.SetActive(false);
         }
 
@@ -89,7 +87,8 @@ namespace Controllers.BattleScene
             Debug.Log($"Game ended, player won: {battleController.PlayerWon}");
             Instantiate(battleController.PlayerWon ? playerWonCanvas : playerLostCanvas);
             yield return new WaitForSecondsRealtime(2.8f);
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Scenes/Main");
+            SceneManager.UnloadSceneAsync("Scenes/Battle");
             stateController.fsm.ChangeState(StateController.States.Playing);
         }
 

@@ -13,7 +13,7 @@ namespace Classes
     {
         private NotificationsHandler notificationHandlerReference;
         private int finalDamageAmount;
-        
+        private int finalHealAmount;
         
         /// <summary>
         ///     Deploy a chosen action - damage/heal/buff - onto a chosen target
@@ -25,8 +25,12 @@ namespace Classes
             finalAttackTargets.AddRange(allCharacters.Where(x => !x.IsDead).ToList());
             finalAttackTargets.RemoveAll(x => x.DodgeEverythingUntilNextTurn);
             
-            finalDamageAmount = Random.Range(selectedAbility.minDamageAmount, selectedAbility.maxDamageAmount);
-
+            if (selectedAbility.abilityType is AbilityType.DamageOnly ||
+                selectedAbility.statusType is StatusType.Bleed or StatusType.Stun)
+            {
+                finalDamageAmount = Random.Range(selectedAbility.minDamageAmount, selectedAbility.maxDamageAmount);
+            }
+            
             // If the ability should target only own team
             if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates)
             {
@@ -46,12 +50,14 @@ namespace Classes
                     switch (selectedAbility.abilityType)
                     {
                         case AbilityType.Status:
+                            Deal(thisIterationTarget,selectedAbility);
                             ApplyStatus(thisIterationTarget, selectedAbility);
                             break;
                         case AbilityType.DamageOnly:
                             Deal(thisIterationTarget, selectedAbility);
                             break;
                         case AbilityType.Heal:
+                            finalHealAmount = Random.Range(selectedAbility.minHealAmount, selectedAbility.maxHealAmount);
                             Heal(thisIterationTarget, selectedAbility);
                             break;
                         case AbilityType.Shield:
@@ -68,6 +74,7 @@ namespace Classes
                 switch (selectedAbility.abilityType)
                 {
                     case AbilityType.Status:
+                        Deal(target,selectedAbility);
                         ApplyStatus(target, selectedAbility);
                         break;
                     case AbilityType.DamageOnly:
@@ -132,9 +139,8 @@ namespace Classes
         {
             if ((target.Health + target.ShieldPoints) - finalDamageAmount <= 0)
             {
-                target.ShieldPoints = 0;
                 target.Health = 0;
-                target.IsDead = true;
+                target.CheckIfDead();
             }
             else
             {
@@ -160,29 +166,29 @@ namespace Classes
                 target.BleedDurationLeft = 0;
             }
             
-            if (target.Health + selectedAbility.healAmount > target.maxHealth)
+            if (target.Health + finalHealAmount > target.maxHealth)
             {
                 target.Health = target.maxHealth;
             }
             else
             {
-                target.Health += selectedAbility.healAmount;
+                target.Health += finalHealAmount;
             }
-            VisualizeAction(selectedAbility.abilityType, selectedAbility.healAmount.ToString());
-            Debug.Log($"{target.name} has been healed for {selectedAbility.healAmount}!");
+            VisualizeAction(selectedAbility.abilityType, finalHealAmount.ToString());
+            Debug.Log($"{target.name} has been healed for {finalHealAmount}!");
         }
         private void Shield(Character target, Ability selectedAbility)
         {
             if (target.ShieldPoints + selectedAbility.shieldAmount > target.maxShield)
             {
-                target.ShieldPoints= target.maxShield;
+                target.ShieldPoints = target.maxShield;
             }
             else
             {
                 target.ShieldPoints += selectedAbility.shieldAmount;
             }
             VisualizeAction(selectedAbility.abilityType, selectedAbility.shieldAmount.ToString());
-            Debug.Log($"{target.name} has been shielded for {selectedAbility.healAmount}!");
+            Debug.Log($"{target.name} has been shielded for {selectedAbility.shieldAmount}!");
         }
         
 
@@ -213,6 +219,7 @@ namespace Classes
             }
             VisualizeAction(AbilityType.Status, finalText);
             Debug.Log($"Applied {selectedStatus.statusType} to {target}!");
+            target.CheckIfDead();
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using DisplayObjectData;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
@@ -22,7 +21,7 @@ namespace Controllers.BattleScene
         public IEnumerable<Character> SoPlayerCharacters => soPlayerCharacters;
         public IEnumerable<Character> SoEnemyCharacters => soEnemyCharacters;
         public IEnumerable<Character> BattleQueue => battleQueue;
-        public IEnumerable<GameObject> AllCharacters => allCharacters;
+        public IEnumerable<GameObject> AllCharactersGameObjects => allCharactersGameObjects;
 
         #endregion
 
@@ -33,6 +32,7 @@ namespace Controllers.BattleScene
         public Character PlayerHoveredOverTarget { get; set; }
         private Character ThisTurnCharacter { get; set; }
         public Ability PlayerSelectedAbility { get; set; }
+        private GameObject CurrentCharGameObject { get; set; }
 
         #endregion
 
@@ -52,9 +52,9 @@ namespace Controllers.BattleScene
 
         #region GameObject Lists
 
-        public List<GameObject> playerCharacters;
-        public List<GameObject> enemyCharacters;
-        private List<GameObject> allCharacters;
+        public List<GameObject> playerCharactersGameObjects;
+        public List<GameObject> enemyCharactersGameObjects;
+        private List<GameObject> allCharactersGameObjects;
 
         #endregion
 
@@ -73,7 +73,7 @@ namespace Controllers.BattleScene
         private List<Character> soAllCharacters;
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
-
+        
         #endregion
 
         #region Delays, offsets etc.
@@ -83,30 +83,31 @@ namespace Controllers.BattleScene
 
         #endregion
 
+        #region Other
+
+        public Color deadCharacterTint = new Color(166f, 0.33f, 0.33f, 1f);
+
         #endregion
 
         #region Events
 
         public delegate void BattleEvent();
         public static event BattleEvent OnActionMade;
+        public static event BattleEvent OnStatusHandled;
 
+        #endregion
+        
         #endregion
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
-            if (gm == null)
-            {
-                Debug.Log("GameManager not found. Loading Main Menu.");
-                SceneManager.LoadScene(0);
-                return;
-            }
             stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
-
+            
             #region Creating variables related to characters
 
-            allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
+            allCharactersGameObjects = playerCharactersGameObjects.Concat(enemyCharactersGameObjects).ToList();
             ExtractCharactersData();
             CreateTargetPools();
             CreateQueue();
@@ -124,27 +125,37 @@ namespace Controllers.BattleScene
             #region Events config
 
             DisplayCharacterData.OnTurnEnd += EndPlayerTurn;
+            Character.OnCharacterDeath += DisableInteractabilityForCharacter;
 
             #endregion
             StartCoroutine(PlayBattle());
         }
 
         /// <summary>
-        ///     Initialize all characters' default stats (currentHealth = maxHealth etc.)
-        /// </summary>
-        private void InitializeAllCharactersDefaultStats()
-        {
-            foreach (var character in battleQueue) character.Initialize();
-        }
-
-        /// <summary>
-        ///     Extract character scriptable object data from their game objects to their respective lists
+        ///     Extract character scriptable object data from GameManager to their respective lists
         /// </summary>
         private void ExtractCharactersData()
         {
-            foreach (var g in playerCharacters)
-                soPlayerCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
-            foreach (var g in enemyCharacters) soEnemyCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
+            var index = 0;
+            foreach (Character character in gm.selectedDefenders)
+            {
+                soPlayerCharacters.Add(character);
+                var displayCharacterDataComponent = playerCharactersGameObjects[index].GetComponent<DisplayCharacterData>();
+                displayCharacterDataComponent.character = character;
+                displayCharacterDataComponent.Initialize();
+                index++;
+            }
+
+            index = 0;
+            foreach (Character character in gm.thisEncounterEnemies)
+            {
+                soEnemyCharacters.Add(character);
+                var displayCharacterDataComponent = enemyCharactersGameObjects[index].GetComponent<DisplayCharacterData>();
+                displayCharacterDataComponent.character = character;
+                displayCharacterDataComponent.Initialize();
+                index++;
+            }
+
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
         }
 
@@ -166,6 +177,14 @@ namespace Controllers.BattleScene
             battleQueue = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
             // Sort the battle queue by initiative
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
+        }
+        
+        /// <summary>
+        ///     Initialize all characters' default stats (currentHealth = maxHealth etc.)
+        /// </summary>
+        private void InitializeAllCharactersDefaultStats()
+        {
+            foreach (Character character in battleQueue) character.Initialize();
         }
 
         /// <summary>
@@ -211,12 +230,16 @@ namespace Controllers.BattleScene
                 Character character = battleQueue[index];
                 ThisTurnCharacter = character;
                 Debug.Log($"{character.characterName} turn!");
-                var currentCharGameObject = FindCharactersGameObjectByName(character);
-                statusHandler.HandleStatuses(character, out bool skipThisTurn, currentCharGameObject);
+                CurrentCharGameObject = FindCharactersGameObjectByName(character);
+                PlayerHoveredOverTarget = character;
+                DisplayCharacterData.ActivateOnHoveredEvent();
+                statusHandler.HandleStatuses(character, out bool skipThisTurn, CurrentCharGameObject);
+                OnStatusHandled?.Invoke();
                 if (CheckIfAnySideWon()) break;
-                if (character.Health <= 0)
+                if (character.CheckIfDead())
                 {
-                    character.IsDead = true;
+                    // currentCharGameObject.GetComponent<DisplayCharacterData>().VisualizeDeathOnDeadCharacters();
+                    // currentCharGameObject.GetComponent<Button>().interactable = false;
                     if (character.isOwnedByPlayer)
                         targetsForEnemyPool.Remove(character);
                     else
@@ -224,14 +247,15 @@ namespace Controllers.BattleScene
                     battleQueue.Remove(character);
                     continue;
                 }
+                
                 if (skipThisTurn)
                 {
                     Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunDurationLeft} stun turns left.");
                     continue;
                 }
-                
+
                 // AD HOC, TO BE CHANGED ASAP
-                currentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
+                CurrentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
                 if (character.isOwnedByPlayer)
                 {
                     stateController.fsm.ChangeState(StateController.States.PlayerTurn);
@@ -288,7 +312,7 @@ namespace Controllers.BattleScene
                 battleUIController.DisableSelectionIndicators();
                 battleUIController.LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
-                currentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
+                CurrentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
 
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
@@ -300,7 +324,7 @@ namespace Controllers.BattleScene
         /// </summary>
         private GameObject FindCharactersGameObjectByName(Character character)
         {
-            foreach (var g in allCharacters.Where(g =>
+            foreach (var g in allCharactersGameObjects.Where(g =>
                          g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
                 return g;
             // if nothing could be found:
@@ -346,6 +370,11 @@ namespace Controllers.BattleScene
             {
                 Debug.Log("No ability and/or target chosen!");
             }
+        }
+        
+        public void DisableInteractabilityForCharacter()
+        {
+            CurrentCharGameObject.GetComponent<Button>().interactable = false;
         }
     }
 }

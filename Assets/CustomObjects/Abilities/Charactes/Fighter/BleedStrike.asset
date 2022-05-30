@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
   m_Name: BleedStrike
   m_EditorClassIdentifier: 
-  abilityName: Basic attack
-  abilityDescription: Crippling blow!
+  abilityName: Cut
+  abilityDescription: Crippling blow that makes the enemy bleed!
   artwork: {fileID: 21300000, guid: 74874a67877a27a43b8e708024590f24, type: 3}
   soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 3
-  healAmount: 0
+  minHealAmount: 0
+  maxHealAmount: 0
   shieldAmount: 0
   statusType: 1
   minDamageAmount: 250

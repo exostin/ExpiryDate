@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: Cockroach
   m_EditorClassIdentifier: 
   characterName: Cockroach
+  isOwnedByPlayer: 0
+  artwork: {fileID: 21300000, guid: 61e2c006572d1254d94bdf442058e743, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: 61e2c006572d1254d94bdf442058e743, type: 3}
+  abilities:
+  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
+  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
+  - {fileID: 11400000, guid: e3538235a977bd941bab9138447f8d3d, type: 2}
+  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
   maxHealth: 300
   maxShield: 50
   initiative: 12
-  isOwnedByPlayer: 0
-  artwork: {fileID: 21300000, guid: 0491d4deaa4f41849b2c52b94bc8fd93, type: 3}
-  abilities:
-  - {fileID: 11400000, guid: a62c835a440002748b47a208992459d4, type: 2}
+  chanceToBreakOutOfStun: 12
   currentlyAppliedStatuses: 
   costTitan: 0
   costWater: 0
