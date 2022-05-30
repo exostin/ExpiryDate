@@ -90,7 +90,7 @@ namespace Controllers
 
         public void LoadMainMenu()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 4);
+            SceneManager.LoadScene("Scenes/StartMenu");
         }
     }
 }

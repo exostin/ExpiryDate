@@ -132,7 +132,7 @@ namespace Controllers
 
         public void Credits()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 4);
+            SceneManager.LoadScene("Scenes/Credits");
         }
 
         public void RestoreDefaults()
