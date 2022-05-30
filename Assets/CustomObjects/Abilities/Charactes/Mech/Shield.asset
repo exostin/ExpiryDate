@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
-  m_Name: Special
+  m_Name: Shield
   m_EditorClassIdentifier: 
-  abilityName: Telsa coil
+  abilityName: Buff
   abilityDescription: 
-  artwork: {fileID: 21300000, guid: 1c4d3771bb1b6cb44b420b5643d87a3e, type: 3}
-  soundEffect: {fileID: 8300000, guid: 1f0450db55ec724419d52bb431a04187, type: 3}
-  abilityTarget: 0
-  abilityType: 0
+  artwork: {fileID: 21300000, guid: 1143e88bff36a654c873edb33aadf04a, type: 3}
+  soundEffect: {fileID: 8300000, guid: 1a6f43f8d9b0a274c9b4e0307bcccf00, type: 3}
+  abilityTarget: 3
+  abilityType: 2
   minHealAmount: 0
   maxHealAmount: 0
-  shieldAmount: 0
+  shieldAmount: 300
   statusType: 0
   minDamageAmount: 0
   maxDamageAmount: 0
