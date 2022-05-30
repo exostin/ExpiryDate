@@ -19,6 +19,7 @@ namespace Classes
         public static event OnStatusApplied OnBleedApplied;
         public static event OnStatusApplied OnStunApplied;
         public static event OnStatusApplied OnDodgeApplied;
+        public static event OnStatusApplied OnHealAppliedToCureBleed;
         
         private BattleController battleController;
 
@@ -178,6 +179,7 @@ namespace Classes
             {
                 Debug.Log($"Healed bleeding on {target}!");
                 target.BleedDurationLeft = 0;
+                OnHealAppliedToCureBleed?.Invoke();
             }
             
             if (target.Health + finalHealAmount > target.maxHealth)
