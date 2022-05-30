@@ -209,9 +209,9 @@ namespace Controllers.BattleScene
                 var currentCharGameObject = FindCharactersGameObjectByName(character);
                 statusHandler.HandleStatuses(character, out bool skipThisTurn, currentCharGameObject);
                 if (CheckIfAnySideWon()) break;
-                if (character.Health <= 0)
+                
+                if (character.CheckIfDead())
                 {
-                    character.IsDead = true;
                     if (character.isOwnedByPlayer)
                         targetsForEnemyPool.Remove(character);
                     else
@@ -220,6 +220,7 @@ namespace Controllers.BattleScene
                     currentCharGameObject.GetComponentInChildren<Image>().color = deadCharacterTint;
                     continue;
                 }
+                
                 if (skipThisTurn)
                 {
                     Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunDurationLeft} stun turns left.");

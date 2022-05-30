@@ -25,9 +25,12 @@ namespace Classes
             finalAttackTargets.AddRange(allCharacters.Where(x => !x.IsDead).ToList());
             finalAttackTargets.RemoveAll(x => x.DodgeEverythingUntilNextTurn);
             
-            finalDamageAmount = Random.Range(selectedAbility.minDamageAmount, selectedAbility.maxDamageAmount);
-            finalHealAmount = Random.Range(selectedAbility.minHealAmount, selectedAbility.maxHealAmount);
-
+            if (selectedAbility.abilityType is AbilityType.DamageOnly ||
+                selectedAbility.statusType is StatusType.Bleed or StatusType.Stun)
+            {
+                finalDamageAmount = Random.Range(selectedAbility.minDamageAmount, selectedAbility.maxDamageAmount);
+            }
+            
             // If the ability should target only own team
             if (selectedAbility.abilityTarget is TargetType.SingleTeammate or TargetType.MultipleTeammates)
             {
@@ -53,6 +56,7 @@ namespace Classes
                             Deal(thisIterationTarget, selectedAbility);
                             break;
                         case AbilityType.Heal:
+                            finalHealAmount = Random.Range(selectedAbility.minHealAmount, selectedAbility.maxHealAmount);
                             Heal(thisIterationTarget, selectedAbility);
                             break;
                         case AbilityType.Shield:
@@ -133,9 +137,7 @@ namespace Classes
         {
             if ((target.Health + target.ShieldPoints) - finalDamageAmount <= 0)
             {
-                target.ShieldPoints = 0;
-                target.Health = 0;
-                target.IsDead = true;
+                target.CheckIfDead();
             }
             else
             {
@@ -176,7 +178,7 @@ namespace Classes
         {
             if (target.ShieldPoints + selectedAbility.shieldAmount > target.maxShield)
             {
-                target.ShieldPoints= target.maxShield;
+                target.ShieldPoints = target.maxShield;
             }
             else
             {
@@ -197,6 +199,7 @@ namespace Classes
             switch (selectedStatus.statusType)
             {
                 case StatusType.Bleed:
+                    target.Health -= finalDamageAmount;
                     target.BleedDurationLeft += selectedStatus.bleedDuration;
                     target.CumulatedBleedDmg += selectedStatus.bleedDmgAmount;
                     finalText = $"-{finalDamageAmount} HP, Bleed";
@@ -206,6 +209,7 @@ namespace Classes
                     finalText = "Dodge";
                     break;
                 case StatusType.Stun:
+                    target.Health -= finalDamageAmount;
                     target.StunDurationLeft += selectedStatus.stunDuration;
                     finalText = $"-{finalDamageAmount} HP, Stun ({selectedStatus.stunDuration} turns)";
                     break;
@@ -214,6 +218,7 @@ namespace Classes
             }
             VisualizeAction(AbilityType.Status, finalText);
             Debug.Log($"Applied {selectedStatus.statusType} to {target}!");
+            target.CheckIfDead();
         }
     }
 }
