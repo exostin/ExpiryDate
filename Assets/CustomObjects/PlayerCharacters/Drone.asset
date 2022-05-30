@@ -26,7 +26,7 @@ MonoBehaviour:
   initiative: 8
   chanceToBreakOutOfStun: 44
   invulnerableToBleed: 1
-  currentlyAppliedStatuses: 01000000
+  currentlyAppliedStatuses: 
   costTitan: 60
   costWater: 10
   costFood: 10

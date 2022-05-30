@@ -15,15 +15,15 @@ MonoBehaviour:
   abilityName: 
   abilityDescription: 
   artwork: {fileID: 0}
-  soundEffect: {fileID: 8300000, guid: b240285847b937d4cb65ad52248a931c, type: 3}
+  soundEffect: {fileID: 0}
   abilityTarget: 0
   abilityType: 3
   minHealAmount: 0
   maxHealAmount: 0
   shieldAmount: 0
   statusType: 1
-  minDamageAmount: 20
-  maxDamageAmount: 35
+  minDamageAmount: 55
+  maxDamageAmount: 75
   bleedDuration: 2
-  bleedDmgAmount: 60
+  bleedDmgAmount: 90
   stunDuration: 0

@@ -22,8 +22,8 @@ MonoBehaviour:
   maxHealAmount: 0
   shieldAmount: 0
   statusType: 0
-  minDamageAmount: 450
-  maxDamageAmount: 500
+  minDamageAmount: 350
+  maxDamageAmount: 400
   bleedDuration: 0
   bleedDmgAmount: 0
   stunDuration: 0
