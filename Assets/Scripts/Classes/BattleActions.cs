@@ -162,6 +162,7 @@ namespace Classes
                 {
                     target.ShieldPoints = 0;
                     target.Health -= finalDamageAmount - target.ShieldPoints;
+                    target.CheckIfDead();
                 }
                 else
                 {
