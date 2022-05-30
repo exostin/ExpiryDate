@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Kacper Krzy\u017Canowski- 3D models for CityBuilding Scene"
+  m_text: "Kacper Krzy\u017Canowski\n3D models for CityBuilding Scene"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Agata Musia\u0142- development of storyline and game concept, game ideas,
+  m_text: "Agata Musia\u0142\ndevelopment of storyline and game concept, game ideas,
     game balance, game testing, appearance and skills of characters and opponents"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -429,7 +429,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -48}
+  m_AnchoredPosition: {x: 0, y: -19}
   m_SizeDelta: {x: 444.0564, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &388571230
@@ -587,8 +587,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Maciej Trzmiel- recording and editing of the trailer, 3D models for City
-    Building Scene
+  m_text: 'Maciej Trzmiel
+
+    recording and editing of the trailer, 3D models for
+    City Building Scene'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -858,7 +860,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Micha\u0142 Cebula- 2D art (pixelart abilities for characters, characters
+  m_text: "Micha\u0142 Cebula\n2D art (pixelart abilities for characters, characters
     icons), SoundFX for character abilities, game ideas"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -994,7 +996,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jakub Jakubowski- City Building Scene, Defender Selection Scene, game ideas
+  m_text: 'Jakub Jakubowski
+
+    City Building Scene, Defender Selection Scene, game
+    ideas'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1381,7 +1386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Olga \u015Alifirczyk- 2D art (characters and opponents, menu for City
+  m_text: "Olga \u015Alifirczyk\n2D art (characters and opponents, menu for City
     Building Scene, menu for Battle Scene, logo of the game, Main Menu background,
     Battle Scene background, game ideas"
   m_isRightToLeft: 0
@@ -1518,8 +1523,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Damian Dorosz- General team and game direction lead, Battle Scene, State
-    Machine, clean code, work organisation, game ideas '
+  m_text: 'Damian Dorosz
+
+    general team and game direction lead, Battle Scene,
+    State Machine, clean code, work organisation, game ideas '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1654,7 +1661,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\rJakub Sadowski- development of storyline and game concept, game ideas,
+  m_text: "\rJakub Sadowski\ndevelopment of storyline and game concept, game ideas,
     game balance, game testing, appearance and skills of characters and opponents"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
