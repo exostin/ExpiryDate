@@ -14,7 +14,7 @@ namespace Controllers
         {
             var gm = FindObjectOfType<GameManager>();
             gm.cbm.Load();
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Scenes/Main");
         }
         
         public void NewGameButton()
@@ -22,7 +22,7 @@ namespace Controllers
             var gm = FindObjectOfType<GameManager>();
             gm.cbm.RemoveSave();
             gm.cbm.Load();
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Scenes/Main");
         }
 
         public void ExitButton()

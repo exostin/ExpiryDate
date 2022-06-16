@@ -66,7 +66,7 @@ namespace Controllers.BattleScene
 
         #region Scriptable Objects
 
-        // so - scriptable object
+        // "so-" prefix means "scriptable object"
         private readonly List<Character> soPlayerCharacters = new();
         private readonly List<Character> soEnemyCharacters = new();
         private List<Character> battleQueue;
@@ -378,8 +378,8 @@ namespace Controllers.BattleScene
                 Debug.Log("No ability and/or target chosen!");
             }
         }
-        
-        public void DisableInteractabilityForCharacter()
+
+        private void DisableInteractabilityForCharacter()
         {
             CurrentCharGameObject.GetComponent<Button>().interactable = false;
         }
