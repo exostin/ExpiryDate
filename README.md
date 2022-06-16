@@ -1,6 +1,4 @@
 # **ExpiryDate**
-
-![Last commit](https://flat.badgen.net/github/last-commit/exostin/ExpiryDate/main)
 [![Latest release](https://flat.badgen.net/github/release/exostin/ExpiryDate/stable?label=latest+release)](https://github.com/exostin/ExpiryDate/releases/)
 ![Downloads of latest version](https://flat.badgen.net/github/assets-dl/exostin/ExpiryDate/?label=and+its+downloads)
 ![Total downloads](https://img.shields.io/github/downloads/exostin/ExpiryDate/total?color=g&label=total%20downloads&style=flat-square)
