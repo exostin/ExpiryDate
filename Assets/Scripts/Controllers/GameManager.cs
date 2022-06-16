@@ -17,6 +17,10 @@ namespace Controllers
         public List<Character> thisEncounterEnemies;
         [Header("Controllers")]
         public StateController stateController;
+        
+        #region DefenderSelection
+        public int lastEnemyTeam;
+        #endregion
 
         #region Start/Pause menu
         [Header("Other")]
