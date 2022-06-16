@@ -16,13 +16,13 @@ Created in a team of ten as part of a Polish game development championship among
 ## Screenshots
 
 Citybuilding scene overview
-![Citybuilding scene screenshot](Assets\Graphics\2D\Tutorial\Citybuilding.jpg)
+![Citybuilding scene screenshot](/Assets/Graphics/2D/Tutorial/Citybuilding.jpg)
 
 Citybuilding pop-up building inspector
-![Citybuilding ispector](Assets\Graphics\2D\Tutorial\InspectorExample.jpg)
+![Citybuilding ispector](/Assets/Graphics/2D/Tutorial/InspectorExample.jpg)
 
 Battle scene
-![Battle scene screenshot](Assets\Graphics\2D\Tutorial\Battle.jpg)
+![Battle scene screenshot](/Assets/Graphics/2D/Tutorial/Battle.jpg)
 
 ## Technologies Used
 
