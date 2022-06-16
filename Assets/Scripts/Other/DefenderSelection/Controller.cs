@@ -55,7 +55,7 @@ namespace Other.DefenderSelection
 
 
         #endregion
-        
+
         private void Start()
         {
             gm = FindObjectOfType<GameManager>();
@@ -154,8 +154,14 @@ namespace Other.DefenderSelection
 
         private void CreateEnemyTeam()
         {
-            var randomChoice = Random.Range(0, 3);
-
+            int randomChoice;
+            
+            do
+            {
+                randomChoice = Random.Range(0, 3);
+            } while (randomChoice == gm.lastEnemyTeam);
+            
+            gm.lastEnemyTeam = randomChoice;
             switch (randomChoice)
             {
                 case 1:
