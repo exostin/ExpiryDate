@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
+  m_Name: Special Ability
+  m_EditorClassIdentifier: 
+  abilityName: Clean cut
+  abilityDescription: Mech slashes nearby enemy, applying bleed
+  artwork: {fileID: 21300000, guid: 3c149cf67e2aaa346bbf843beb0a554a, type: 3}
+  soundEffect: {fileID: 8300000, guid: 182c62d1c5585274d9d4a18e24f8bdad, type: 3}
+  abilityTarget: 0
+  abilityType: 3
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 1
+  minDamageAmount: 270
+  maxDamageAmount: 330
+  bleedDuration: 3
+  bleedDmgAmount: 100
+  stunDuration: 0

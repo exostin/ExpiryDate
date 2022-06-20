@@ -7,7 +7,7 @@ namespace Classes.Citybuilding.Buildings.MainCamp
     {
         public MainCamp(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Main camp";
+            Name = "Town Hall";
             Description = "The main camp is the center of the city. It is where the citizens live and work.";
             Upgrades = new BuildingUpgrade[]
             {

@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.MedicSchool.Upgrades
                 Water = 40
             };
             ModelName = "MedicSchool2";
+            Description = "Medics wash their hands now (Unlocks Medic Tier 1)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Stun
   m_EditorClassIdentifier: 
   abilityName: 
-  description: 
-  damage: 75
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 3
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 100
+  maxDamageAmount: 160
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 1

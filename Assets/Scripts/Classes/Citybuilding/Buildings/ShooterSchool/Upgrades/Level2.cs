@@ -12,6 +12,7 @@ namespace Classes.Citybuilding.Buildings.ShooterSchool.Upgrades
                 Water = 20
             };
             ModelName = "ShooterSchool2";
+            Description = "Soldiers perform weapon maintenance from now (Unlocks Soldier Tier 1)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

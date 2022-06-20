@@ -18,7 +18,7 @@ namespace Controllers.BattleScene
         /// </summary>
         public void LoseBattle()
         {
-            foreach (var c in battleController.SoPlayerCharacters) c.health = 0;
+            foreach (var c in battleController.SoPlayerCharacters) c.Health = 0;
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
 
@@ -27,7 +27,7 @@ namespace Controllers.BattleScene
         /// </summary>
         public void WinBattle()
         {
-            foreach (var c in battleController.SoEnemyCharacters) c.health = 0;
+            foreach (var c in battleController.SoEnemyCharacters) c.Health = 0;
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
         }
     }

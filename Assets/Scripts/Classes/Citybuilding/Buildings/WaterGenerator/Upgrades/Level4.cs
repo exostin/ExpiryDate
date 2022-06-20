@@ -6,6 +6,8 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
         {
             Level = 4;
             ModelName = "WaterGenerator4";
+            Description =
+                "To maximize quality of water, it's being split into hydrogen and oxygen, then combined again, and only after that minerals are added (Statistics of Medics are increased by 10%)";
             BaseCost = new Resources
             {
                 Titan = 60,

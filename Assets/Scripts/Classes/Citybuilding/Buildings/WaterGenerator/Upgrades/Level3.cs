@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.WaterGenerator.Upgrades
         {
             Level = 3;
             ModelName = "WaterGenerator3";
+            Description = "Water is being sterilized with Gamma Rays (Production of Water increased from 14 to 16)";
             Output = new Resources
             {
                 Water = 2

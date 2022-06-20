@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.MedicSchool.Upgrades
         {
             Level = 1;
             ModelName = "MedicSchool1";
+            Description = "Simple hospital for Medics";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

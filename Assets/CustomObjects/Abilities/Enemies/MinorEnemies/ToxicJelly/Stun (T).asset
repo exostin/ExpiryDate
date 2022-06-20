@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b45e76684a44789a8e226943e81de0, type: 3}
+  m_Name: Stun (T)
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
+  artwork: {fileID: 0}
+  soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 3
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 50
+  maxDamageAmount: 80
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 1

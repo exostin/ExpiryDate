@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Classes.Citybuilding;
@@ -23,7 +24,7 @@ namespace Controllers
         private GameManager gm;
         private Camera mainCamera;
 
-        private Dictionary<Building, GameObject> BuildingsGameObjects => new()
+        public Dictionary<Building, GameObject> BuildingsGameObjects => new()
         {
             {cbm.Simulation.Housing, housing},
             {cbm.Simulation.DroneSchool, droneSchool},
@@ -37,6 +38,8 @@ namespace Controllers
             {cbm.Simulation.FoodGenerator, foodGenerator},
             {cbm.Simulation.MainCamp, mainCamp}
         };
+
+        public Building SelectedBuilding { get; private set; }
 
         private void Start()
         {
@@ -130,18 +133,27 @@ namespace Controllers
         public void EnterBattleMode()
         {
             cbm.Save();
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("DefenderSelection");
         }
 
         public void NextDay(bool skipFight)
         {
+            var shouldStartFight = cbm.NextEncounter == 0;
             cbm.OnNextDay();
-            if (!skipFight) EnterBattleMode();
+            if (!skipFight && shouldStartFight)
+            {
+                EnterBattleMode();
+            }
+            else
+            {
+                SceneManager.LoadScene("Scenes/Main");
+            }
         }
 
         public void NextDay()
         {
             cbm.Save();
+            Debug.Log("animation here");
             NextDay(false);
         }
 
@@ -156,6 +168,14 @@ namespace Controllers
         private GameObject BuildingToGameObject(Building building)
         {
             return BuildingsGameObjects[building];
+        }
+
+        public event Action<Building> OnBuildingSelected;
+
+        public void SelectBuilding(Building building)
+        {
+            SelectedBuilding = building;
+            OnBuildingSelected?.Invoke(building);
         }
 
         public void DebugGiveResources()

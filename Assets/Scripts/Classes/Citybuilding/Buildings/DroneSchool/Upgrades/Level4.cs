@@ -12,6 +12,8 @@ namespace Classes.Citybuilding.Buildings.DroneSchool.Upgrades
                 Energy = 50
             };
             ModelName = "DroneSchool4";
+            Description =
+                "Support Drones achieved sentience making their movement more unpredictable for enemies (Unlocks Support Drones Tier 3  + Their cost is 20% lower)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

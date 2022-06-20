@@ -1,11 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Classes;
 using DisplayObjectData;
+using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Controllers.BattleScene
@@ -20,7 +21,7 @@ namespace Controllers.BattleScene
         public IEnumerable<Character> SoPlayerCharacters => soPlayerCharacters;
         public IEnumerable<Character> SoEnemyCharacters => soEnemyCharacters;
         public IEnumerable<Character> BattleQueue => battleQueue;
-        public IEnumerable<GameObject> AllCharacters => allCharacters;
+        public IEnumerable<GameObject> AllCharactersGameObjects => allCharactersGameObjects;
 
         #endregion
 
@@ -29,7 +30,9 @@ namespace Controllers.BattleScene
         public bool PlayerWon { get; private set; }
         public Character PlayerSelectedTarget { get; set; }
         public Character PlayerHoveredOverTarget { get; set; }
+        private Character ThisTurnCharacter { get; set; }
         public Ability PlayerSelectedAbility { get; set; }
+        private GameObject CurrentCharGameObject { get; set; }
 
         #endregion
 
@@ -43,33 +46,34 @@ namespace Controllers.BattleScene
         private StateController stateController;
         private PostProcessingController postProcessingController;
         private BattleUIController battleUIController;
+        private BattleActions battleActions;
+
+        #endregion
+
+        #region Static
+
+        private readonly StatusHandler statusHandler = new();
 
         #endregion
 
         #region GameObject Lists
 
-        public List<GameObject> playerCharacters;
-        public List<GameObject> enemyCharacters;
-        private List<GameObject> allCharacters;
-
-        #endregion
-
-        #region Static class references
-
-        private readonly BattleActions battleActions = new();
+        public List<GameObject> playerCharactersGameObjects;
+        public List<GameObject> enemyCharactersGameObjects;
+        private List<GameObject> allCharactersGameObjects;
 
         #endregion
 
         #region Scriptable Objects
 
-        // so - scriptable object
+        // "so-" prefix means "scriptable object"
         private readonly List<Character> soPlayerCharacters = new();
         private readonly List<Character> soEnemyCharacters = new();
         private List<Character> battleQueue;
         private List<Character> soAllCharacters;
         private readonly List<Character> targetsForEnemyPool = new();
         private readonly List<Character> targetsForPlayerPool = new();
-
+        
         #endregion
 
         #region Delays, offsets etc.
@@ -79,13 +83,20 @@ namespace Controllers.BattleScene
 
         #endregion
 
+        #region Other
+
+        public Color deadCharacterTint = new Color(166f, 0.33f, 0.33f, 1f);
+
         #endregion
 
         #region Events
 
         public delegate void BattleEvent();
         public static event BattleEvent OnActionMade;
+        public static event BattleEvent OnStatusHandled;
 
+        #endregion
+        
         #endregion
         private void Start()
         {
@@ -93,10 +104,11 @@ namespace Controllers.BattleScene
             stateController = FindObjectOfType<StateController>();
             postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
-
+            battleActions = FindObjectOfType<BattleActions>();
+            
             #region Creating variables related to characters
 
-            allCharacters = playerCharacters.Concat(enemyCharacters).ToList();
+            allCharactersGameObjects = playerCharactersGameObjects.Concat(enemyCharactersGameObjects).ToList();
             ExtractCharactersData();
             CreateTargetPools();
             CreateQueue();
@@ -114,27 +126,43 @@ namespace Controllers.BattleScene
             #region Events config
 
             DisplayCharacterData.OnTurnEnd += EndPlayerTurn;
+            Character.OnCharacterDeath += DisableInteractabilityForCharacter;
 
             #endregion
             StartCoroutine(PlayBattle());
         }
 
         /// <summary>
-        ///     Initialize all characters' default stats (currentHealth = maxHealth etc.)
-        /// </summary>
-        private void InitializeAllCharactersDefaultStats()
-        {
-            foreach (var character in battleQueue) character.Initialize();
-        }
-
-        /// <summary>
-        ///     Extract character scriptable object data from their game objects to their respective lists
+        ///     Extract character scriptable object data from GameManager to their respective lists
         /// </summary>
         private void ExtractCharactersData()
         {
-            foreach (var g in playerCharacters)
-                soPlayerCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
-            foreach (var g in enemyCharacters) soEnemyCharacters.Add(g.GetComponent<DisplayCharacterData>().character);
+            var index = 0;
+            foreach (Character character in gm.selectedDefenders)
+            {
+                soPlayerCharacters.Add(character);
+                var displayCharacterDataComponent = playerCharactersGameObjects[index].GetComponent<DisplayCharacterData>();
+                displayCharacterDataComponent.character = character;
+                displayCharacterDataComponent.Initialize();
+                index++;
+                
+                // Temporary workaround
+                //if (index == 3) break;
+            }
+
+            index = 0;
+            foreach (Character character in gm.thisEncounterEnemies)
+            {
+                soEnemyCharacters.Add(character);
+                var displayCharacterDataComponent = enemyCharactersGameObjects[index].GetComponent<DisplayCharacterData>();
+                displayCharacterDataComponent.character = character;
+                displayCharacterDataComponent.Initialize();
+                index++;
+                
+                // Temporary workaround
+                //if (index == 2) break;
+            }
+
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
         }
 
@@ -157,6 +185,14 @@ namespace Controllers.BattleScene
             // Sort the battle queue by initiative
             battleQueue = battleQueue.OrderByDescending(character => character.initiative).ToList();
         }
+        
+        /// <summary>
+        ///     Initialize all characters' default stats (currentHealth = maxHealth etc.)
+        /// </summary>
+        private void InitializeAllCharactersDefaultStats()
+        {
+            foreach (Character character in battleQueue) character.Initialize();
+        }
 
         /// <summary>
         ///     Checks if either of teams has won (all characters are dead while the other team still stands)
@@ -164,13 +200,13 @@ namespace Controllers.BattleScene
         /// <returns></returns>
         private bool CheckIfAnySideWon()
         {
-            PlayerWon = soPlayerCharacters.Any(character => character.health > 0) &&
-                        soEnemyCharacters.All(character => character.health <= 0);
+            PlayerWon = soPlayerCharacters.Any(character => character.Health > 0) &&
+                        soEnemyCharacters.All(character => character.Health <= 0);
             // returns `true` if any player character is alive while all enemies are dead OR if all player characters are dead while any enemy is alive
-            return (soPlayerCharacters.Any(character => character.health > 0) &&
-                    soEnemyCharacters.All(character => character.health <= 0))
-                   || (soPlayerCharacters.All(character => character.health <= 0) &&
-                       soEnemyCharacters.Any(character => character.health > 0));
+            return (soPlayerCharacters.Any(character => character.Health > 0) &&
+                    soEnemyCharacters.All(character => character.Health <= 0))
+                   || (soPlayerCharacters.All(character => character.Health <= 0) &&
+                       soEnemyCharacters.Any(character => character.Health > 0));
         }
         
         /// <summary>
@@ -199,9 +235,18 @@ namespace Controllers.BattleScene
             for (var index = 0; index < battleQueue.Count; index++)
             {
                 Character character = battleQueue[index];
+                ThisTurnCharacter = character;
+                Debug.Log($"{character.characterName} turn!");
+                CurrentCharGameObject = FindCharactersGameObjectByName(character);
+                PlayerHoveredOverTarget = character;
+                DisplayCharacterData.ActivateOnHoveredEvent();
+                statusHandler.HandleStatuses(character, out bool skipThisTurn, CurrentCharGameObject);
+                OnStatusHandled?.Invoke();
                 if (CheckIfAnySideWon()) break;
-                if (character.isDead)
+                if (character.CheckIfDead())
                 {
+                    // currentCharGameObject.GetComponent<DisplayCharacterData>().VisualizeDeathOnDeadCharacters();
+                    // currentCharGameObject.GetComponent<Button>().interactable = false;
                     if (character.isOwnedByPlayer)
                         targetsForEnemyPool.Remove(character);
                     else
@@ -209,16 +254,19 @@ namespace Controllers.BattleScene
                     battleQueue.Remove(character);
                     continue;
                 }
-
-                Debug.Log($"{character.characterName} turn!");
-                var currentChar = FindCharactersGameObjectByName(character);
+                
+                if (skipThisTurn)
+                {
+                    Debug.Log($"{character.name} is stunned, thus the turn will be skipped. {character.StunDurationLeft} stun turns left.");
+                    continue;
+                }
 
                 // AD HOC, TO BE CHANGED ASAP
-                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
+                CurrentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveToCenter(character.isOwnedByPlayer ? 1 : 2);
                 if (character.isOwnedByPlayer)
                 {
                     stateController.fsm.ChangeState(StateController.States.PlayerTurn);
-                    postProcessingController.ToggleEnemyTurnPostEffects(gm);
+                    // postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
                     battleUIController.ToggleAbilityButtonsVisibility(true);
                     battleUIController.UpdateSkillButtons(character);
@@ -226,9 +274,10 @@ namespace Controllers.BattleScene
                     yield return new WaitUntil(() =>
                         stateController.fsm.State == StateController.States.PlayerFinalizedHisMove);
                     Debug.Log("Player finalized his move!");
-                    battleActions.MakeAction(character, PlayerSelectedTarget, PlayerSelectedAbility,
+                    //battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(PlayerSelectedTarget));
+                    battleActions.MakeAction(PlayerSelectedTarget, PlayerSelectedAbility,
                         soAllCharacters, true);
-                    StartCoroutine(postProcessingController.MakeAttackPostEffects());
+                    // StartCoroutine(postProcessingController.MakeAttackPostEffects());
                     battleUIController.ToggleAbilityButtonsVisibility(false);
                     PlayerSelectedAbility = null;
                     PlayerSelectedTarget = null;
@@ -236,21 +285,41 @@ namespace Controllers.BattleScene
                 else
                 {
                     stateController.fsm.ChangeState(StateController.States.EnemyTurn);
-                    postProcessingController.ToggleEnemyTurnPostEffects(gm);
+                    // postProcessingController.ToggleEnemyTurnPostEffects(gm);
                     yield return new WaitForSecondsRealtime(delayBetweenActions);
-                    var randomTargetIndex = Random.Range(0, targetsForEnemyPool.Count);
-                    var enemySelectedTarget = targetsForEnemyPool[randomTargetIndex];
+                    
+                    var modifiedTargetsOfEnemyPool = targetsForEnemyPool.Where(target =>
+                        !target.DodgeEverythingUntilNextTurn).ToList();
+                    
                     var randomEnemyAbilityIndex = Random.Range(0, character.abilities.Length);
-                    var enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
-                    battleActions.MakeAction(character, enemySelectedTarget, enemySelectedAbility, soAllCharacters,
+                    Ability enemySelectedAbility = character.abilities[randomEnemyAbilityIndex];
+                    
+                    var randomTargetIndex = Random.Range(0, modifiedTargetsOfEnemyPool.Count);
+                    Character enemySelectedTarget;
+                    
+                    switch (enemySelectedAbility.abilityTarget)
+                    {
+                        case TargetType.SelfOnly or TargetType.MultipleTeammates:
+                            enemySelectedTarget = character;
+                            break;
+                        case TargetType.SingleTeammate:
+                            enemySelectedTarget = soEnemyCharacters[randomTargetIndex];
+                            break;
+                        default:
+                            enemySelectedTarget = modifiedTargetsOfEnemyPool[randomTargetIndex];
+                            break;
+                    }
+                    
+                    //battleActions.AssignNotificationHandlerReference(FindCharactersGameObjectByName(enemySelectedTarget));
+                    battleActions.MakeAction(enemySelectedTarget, enemySelectedAbility, soAllCharacters,
                         false);
-                    StartCoroutine(postProcessingController.MakeAttackPostEffects());
+                    // StartCoroutine(postProcessingController.MakeAttackPostEffects());
                 }
                 OnActionMade?.Invoke();
                 battleUIController.DisableSelectionIndicators();
                 battleUIController.LetPlayerChooseTarget(false);
                 yield return new WaitForSecondsRealtime(delayBetweenActions);
-                currentChar.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
+                CurrentCharGameObject.GetComponent<MoveActiveCharacterToCenter>().MoveBack();
             }
 
             stateController.fsm.ChangeState(StateController.States.ReadyForNextTurn);
@@ -260,9 +329,9 @@ namespace Controllers.BattleScene
         ///     Search through all attached character GameObjects, and return the one which DisplayCharacterData component has a
         ///     Character scriptable object attached with the same name as the chosen character
         /// </summary>
-        private GameObject FindCharactersGameObjectByName(Character character)
+        public GameObject FindCharactersGameObjectByName(Character character)
         {
-            foreach (var g in allCharacters.Where(g =>
+            foreach (var g in allCharactersGameObjects.Where(g =>
                          g.GetComponent<DisplayCharacterData>().character.characterName == character.characterName))
                 return g;
             // if nothing could be found:
@@ -275,47 +344,32 @@ namespace Controllers.BattleScene
         /// </summary>
         public void EndPlayerTurn()
         {
-            Debug.Log(
-                "Full end-turn data dump: " +
-                $"State: {stateController.fsm.State}, " +
-                $"Selected ability: {PlayerSelectedAbility}," +
-                $"Selected target: {PlayerSelectedTarget}, is the target dead?: {PlayerSelectedTarget.isDead}, " +
-                $"Targets for player pool: {targetsForPlayerPool}, Targets for enemy pool: {targetsForEnemyPool}" +
-                $"Can the ability target only allies?: {PlayerSelectedAbility.canOnlyTargetOwnCharacters}," +
-                $"Can the ability target only the caster?: {PlayerSelectedAbility.usedOnlyOnSelf}," +
-                $"Does the ability target whole team?: {PlayerSelectedAbility.targetsWholeTeam}," +
-                $"Is the ability a heal?: {PlayerSelectedAbility.heal}, is the ability a buff?: {PlayerSelectedAbility.buff}");
-
             if (stateController.fsm.State == StateController.States.SelectingTarget &&
-                PlayerSelectedAbility != null && PlayerSelectedTarget != null && !PlayerSelectedTarget.isDead)
+                PlayerSelectedAbility != null && PlayerSelectedTarget != null && !PlayerSelectedTarget.IsDead)
             {
+                bool thisAbilityCanOnlyTargetTeammates = PlayerSelectedAbility.abilityTarget is TargetType.MultipleTeammates or TargetType.SingleTeammate;
                 if (targetsForPlayerPool.Contains(PlayerSelectedTarget) &&
-                    !PlayerSelectedAbility.canOnlyTargetOwnCharacters)
+                    !thisAbilityCanOnlyTargetTeammates && PlayerSelectedAbility.abilityTarget is not TargetType.SelfOnly)
                 {
                     Debug.Log("Attacking enemy, setting state to PlayerFinalizedHisMove");
                     stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                 }
                 else
                 {
-                    if (PlayerSelectedTarget.isOwnedByPlayer && PlayerSelectedAbility.canOnlyTargetOwnCharacters)
+                    if (PlayerSelectedTarget.isOwnedByPlayer && thisAbilityCanOnlyTargetTeammates)
                     {
-                        if (PlayerSelectedAbility.buff && PlayerSelectedAbility.usedOnlyOnSelf)
-                        {
-                            Debug.Log("Buffing own character, setting state to PlayerFinalizedHisMove");
-                            stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
-                        }
-                        else
-                        {
-                            Debug.Log(
-                                "Targeting an alive ally with a supportive ability, setting state to PlayerFinalizedHisMove.");
-                            stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
-                        }
+                        Debug.Log("Character used an ability on a teammate");
+                        stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
+                    }
+                    else if (PlayerSelectedTarget == ThisTurnCharacter &&
+                             PlayerSelectedAbility.abilityTarget == TargetType.SelfOnly)
+                    {
+                        Debug.Log("Character used an ability on self");
+                        stateController.fsm.ChangeState(StateController.States.PlayerFinalizedHisMove);
                     }
                     else
                     {
-                        Debug.Log(PlayerSelectedTarget.isDead
-                            ? "You somehow selected a dead target!"
-                            : "Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
+                        Debug.Log("Wrong target! You targeted: not a targetable enemy/ally with an ability that's not supportive");
                     }
                 }
             }
@@ -323,6 +377,11 @@ namespace Controllers.BattleScene
             {
                 Debug.Log("No ability and/or target chosen!");
             }
+        }
+
+        private void DisableInteractabilityForCharacter()
+        {
+            CurrentCharGameObject.GetComponent<Button>().interactable = false;
         }
     }
 }

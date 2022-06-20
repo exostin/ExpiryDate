@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: StrongAttack
   m_EditorClassIdentifier: 
   abilityName: 
-  description: 
-  damage: 175
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
+  abilityTarget: 0
+  abilityType: 3
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 1
+  minDamageAmount: 270
+  maxDamageAmount: 340
+  bleedDuration: 3
+  bleedDmgAmount: 90
+  stunDuration: 2

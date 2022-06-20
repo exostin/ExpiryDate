@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: DamageAll
   m_EditorClassIdentifier: 
   abilityName: 
-  description: 
-  damage: 40
-  targetsWholeTeam: 1
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
+  abilityTarget: 1
+  abilityType: 0
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 220
+  maxDamageAmount: 240
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

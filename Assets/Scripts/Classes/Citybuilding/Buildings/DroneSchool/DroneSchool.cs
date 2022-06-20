@@ -7,8 +7,9 @@ namespace Classes.Citybuilding.Buildings.DroneSchool
     {
         public DroneSchool(int level, Action<int> setLevel) : base(level, setLevel)
         {
-            Name = "Drone school";
+            Name = "Tech Lab (Support Drone)";
             Description = "Basicly DJI sklep";
+            DefenderType = DefenderType.Drone;
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

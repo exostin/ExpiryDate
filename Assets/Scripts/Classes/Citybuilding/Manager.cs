@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Classes.Citybuilding.Buildings.DroneSchool;
 using Classes.Citybuilding.Buildings.EnergyGenerator;
 using Classes.Citybuilding.Buildings.FighterSchool;
@@ -18,11 +19,15 @@ namespace Classes.Citybuilding
     {
         public bool DefenderBought;
 
+        public int NextEncounter;
+        public int NextEncounterMax;
+        public int DaysSurvived;
+
         public Dictionary<DefenderType, Defender> Defenders = new()
         {
             {DefenderType.Drone, new Defender(DefenderType.Drone)},
             {DefenderType.Fighter, new Defender(DefenderType.Fighter)},
-            {DefenderType.Robot, new Defender(DefenderType.Robot)},
+            {DefenderType.Mech, new Defender(DefenderType.Mech)},
             {DefenderType.Shooter, new Defender(DefenderType.Shooter)},
             {DefenderType.Medic, new Defender(DefenderType.Medic)}
         };
@@ -39,7 +44,7 @@ namespace Classes.Citybuilding
             $"PlayerResources: Titan: {PlayerResources.Titan} Energy: {PlayerResources.Energy} " +
             $"Food: {PlayerResources.Food} Water: {PlayerResources.Water}\n" +
             $"Defenders: Drone: {Defenders[DefenderType.Drone].Amount} Fighter: {Defenders[DefenderType.Fighter].Amount} " +
-            $"Robot: {Defenders[DefenderType.Robot].Amount} Shooter: {Defenders[DefenderType.Shooter].Amount} " +
+            $"Robot: {Defenders[DefenderType.Mech].Amount} Shooter: {Defenders[DefenderType.Shooter].Amount} " +
             $"Medic: {Defenders[DefenderType.Medic].Amount}";
 
         public void Load()
@@ -65,7 +70,11 @@ namespace Classes.Citybuilding
             mainCampLevel = PlayerPrefs.GetInt("PlayerBuildings/MainCamp", 1);
 
             foreach (var defender in Defenders)
-                defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 0);
+                defender.Value.Amount = (byte) PlayerPrefs.GetInt($"PlayerDefenders/{defender.Key}", 1);
+
+            NextEncounter = PlayerPrefs.GetInt("NextEncounter", 10);
+            NextEncounterMax = PlayerPrefs.GetInt("NextEncounterMax", 10);
+            DaysSurvived = PlayerPrefs.GetInt("DaysSurvived", 0);
 
             RunSimulation();
         }
@@ -90,6 +99,33 @@ namespace Classes.Citybuilding
 
             foreach (var defender in Defenders)
                 PlayerPrefs.SetInt($"PlayerDefenders/{defender.Key}", defender.Value.Amount);
+            
+            PlayerPrefs.SetInt("NextEncounter", NextEncounter);
+            PlayerPrefs.SetInt("NextEncounterMax", NextEncounterMax);
+            PlayerPrefs.SetInt("DaysSurvived", DaysSurvived);
+        }
+
+        public void RemoveSave()
+        {
+            var keys = new[]
+            {
+                "PlayerResources/Titan", "PlayerResources/Energy", "PlayerResources/Food", "PlayerResources/Water",
+                "PlayerBuildings/Housing","PlayerBuildings/TitanGenerator","PlayerBuildings/EnergyGenerator","PlayerBuildings/WaterGenerator",
+                "PlayerBuildings/FoodGenerator","PlayerBuildings/FighterSchool","PlayerBuildings/ShooterSchool", "PlayerBuildings/RobotSchool",
+                "PlayerBuildings/DroneSchool","PlayerBuildings/MedicSchool","NextEncounter", "NextEncounterMax","DaysSurvived"
+            };
+            keys = Defenders.Aggregate(keys, (current, defender) => current.Append($"PlayerDefenders/{defender.Key}").ToArray());
+
+            foreach (var key in keys)
+            {
+                if (!PlayerPrefs.HasKey(key))
+                {
+                    Debug.LogWarning($"{key} was not present in PlayerPrefs.");
+                    continue;
+                }
+                PlayerPrefs.DeleteKey(key);
+                PlayerPrefs.Save();
+            }
         }
 
         public void RunSimulation()
@@ -128,8 +164,18 @@ namespace Classes.Citybuilding
         public void OnNextDay()
         {
             DefenderBought = false;
+            NextEncounter--;
+            DaysSurvived++;
+            if (NextEncounter == -1) SetNewEncounter();
             RunSimulation();
             Simulation.OnNextDay(this);
+        }
+
+        private void SetNewEncounter()
+        {
+            const int encounter = 5;
+            NextEncounter = encounter;
+            NextEncounterMax = encounter;
         }
 
         #region Levels

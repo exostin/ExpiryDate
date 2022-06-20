@@ -4,30 +4,28 @@ using Classes;
 using Classes.Citybuilding;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Resources = UnityEngine.Resources;
 
 namespace Controllers
 {
     public class GameManager : MonoBehaviour
     {
+        [Header("Characters")]
+        public List<Character> selectedDefenders;
+        [Tooltip("Third character will always be the BOSS!!!")]
+        public List<Character> thisEncounterEnemies;
+        [Header("Controllers")]
         public StateController stateController;
-
-        #region Start/Pause menu
         
-        [SerializeField] private GameObject pauseMenu;
-        
+        #region DefenderSelection
+        public int lastEnemyTeam;
         #endregion
 
-        #region CityBuilding
+        #region Start/Pause menu
+        [Header("Other")]
+        [SerializeField] private GameObject pauseMenu;
 
-        [SerializeField] private Character fighterCharacter;
-        [SerializeField] private Character shooterCharacter;
-        [SerializeField] private Character medicCharacter;
-        [SerializeField] private Character robotCharacter;
-        [SerializeField] private Character droneCharacter;
-
-        public Manager cbm;
-        
         #endregion
 
         private void Start()
@@ -36,7 +34,7 @@ namespace Controllers
                 .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
                 .GetComponent<SettingsMenuController>()
                 .Initialize();
-                
+
             //stateController = GameObject.FindGameObjectWithTag("StateController").GetComponent<StateController>();
             stateController = FindObjectOfType<StateController>();
 
@@ -49,7 +47,7 @@ namespace Controllers
                 {fighterCharacter, cbm.Defenders[DefenderType.Fighter]},
                 {shooterCharacter, cbm.Defenders[DefenderType.Shooter]},
                 {medicCharacter, cbm.Defenders[DefenderType.Medic]},
-                {robotCharacter, cbm.Defenders[DefenderType.Robot]},
+                {robotCharacter, cbm.Defenders[DefenderType.Mech]},
                 {droneCharacter, cbm.Defenders[DefenderType.Drone]}
             };
 
@@ -80,6 +78,23 @@ namespace Controllers
                     .FirstOrDefault(g => g.CompareTag("PauseMenuSettingsMenu"))!
                     .GetComponent<SettingsMenuController>().SavePreferences();
             pauseMenu.SetActive(!pauseMenu.activeSelf);
+        }
+
+        #region CityBuilding
+
+        [SerializeField] private Character fighterCharacter;
+        [SerializeField] private Character shooterCharacter;
+        [SerializeField] private Character medicCharacter;
+        [SerializeField] private Character robotCharacter;
+        [SerializeField] private Character droneCharacter;
+
+        public Manager cbm;
+
+        #endregion
+
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene("Scenes/StartMenu");
         }
     }
 }

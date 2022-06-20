@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator.Upgrades
         {
             Level = 1;
             ModelName = "TitanGenerator1";
+            Description = "Simple titanium mine (Produces 12 T)";
             Output = new Resources
             {
                 Titan = 8

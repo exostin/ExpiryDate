@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Grenade
   m_EditorClassIdentifier: 
   abilityName: Grenade
-  description: '*Take cover!*'
-  damage: 350
-  targetsWholeTeam: 1
-  canOnlyTargetOwnCharacters: 0
-  usedOnlyOnSelf: 0
-  buff: 0
-  heal: 0
+  abilityDescription: 
   artwork: {fileID: 21300000, guid: 583f40db3629cb9429fb32508e07c53f, type: 3}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 54a90d2706f0de148a00b2d5c5fa6899, type: 3}
+  abilityTarget: 1
+  abilityType: 0
+  minHealAmount: 0
+  maxHealAmount: 0
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 80
+  maxDamageAmount: 150
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

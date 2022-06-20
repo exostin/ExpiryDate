@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: SelfHeal
   m_EditorClassIdentifier: 
   abilityName: 
-  description: 
-  damage: -350
-  targetsWholeTeam: 0
-  canOnlyTargetOwnCharacters: 1
-  usedOnlyOnSelf: 1
-  buff: 0
-  heal: 1
+  abilityDescription: 
   artwork: {fileID: 0}
   soundEffect: {fileID: 0}
+  abilityTarget: 4
+  abilityType: 1
+  minHealAmount: 320
+  maxHealAmount: 350
+  shieldAmount: 0
+  statusType: 0
+  minDamageAmount: 0
+  maxDamageAmount: 0
+  bleedDuration: 0
+  bleedDmgAmount: 0
+  stunDuration: 0

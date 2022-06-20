@@ -13,13 +13,14 @@ namespace Classes.Citybuilding.Buildings.RobotSchool.Upgrades
                 Titan = 80
             };
             ModelName = "RobotSchool3";
+            Description = "Mechs are using more inhumane methods to power their batteries (Unlocks Mechs Tier 2)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
         {
             base.ApplySideEffects(simulation, building);
 
-            building.cbm.Defenders[DefenderType.Robot].Tier = 2;
+            building.cbm.Defenders[DefenderType.Mech].Tier = 2;
         }
     }
 }

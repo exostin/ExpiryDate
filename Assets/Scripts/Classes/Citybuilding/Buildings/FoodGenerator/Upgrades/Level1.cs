@@ -6,6 +6,7 @@ namespace Classes.Citybuilding.Buildings.FoodGenerator.Upgrades
         {
             Level = 1;
             ModelName = "FoodGenerator1";
+            Description = "Simple greenhouse (Produces 10 F)";
             Output = new Resources
             {
                 Food = 5

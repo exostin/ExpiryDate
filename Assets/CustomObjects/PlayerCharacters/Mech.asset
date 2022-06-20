@@ -13,18 +13,21 @@ MonoBehaviour:
   m_Name: Mech
   m_EditorClassIdentifier: 
   characterName: Mech
-  maxHealth: 3400
-  initiative: 1
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: f9de6015f0181f846a0971030034e9ef, type: 3}
+  artworkPortrait: {fileID: 21300000, guid: 633a74f36532f8b4b8a4e202afe4c4c1, type: 3}
   abilities:
   - {fileID: 11400000, guid: 4fb6287e48c1eda47930f611238bd392, type: 2}
   - {fileID: 11400000, guid: 4df4a483db6d5e846909684914200983, type: 2}
   - {fileID: 11400000, guid: 1731e5b6b15de1644b510ccd034ffdf7, type: 2}
-  - {fileID: 11400000, guid: 05d3635297e0c0d439c071a919495115, type: 2}
+  - {fileID: 11400000, guid: 31e7d8a7454532041a649fdf955198e0, type: 2}
+  maxHealth: 3400
+  maxShield: 2000
+  initiative: 1
+  chanceToBreakOutOfStun: 28
+  invulnerableToBleed: 1
+  currentlyAppliedStatuses: 
   costTitan: 140
   costWater: 20
   costFood: 20
   costEnergy: 100
-  health: 1000
-  isDead: 0
