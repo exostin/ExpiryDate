@@ -18,7 +18,7 @@ namespace RewrittenTurnBasedBattleSystem
         public void PerformAction()
         {
             character.abilities[0].Perform();
-            if (OnActionFinished != null) OnActionFinished();
+            OnActionFinished?.Invoke();
         }
     }
 }

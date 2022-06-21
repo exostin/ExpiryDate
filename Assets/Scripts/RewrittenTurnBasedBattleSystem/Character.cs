@@ -4,7 +4,7 @@ namespace RewrittenTurnBasedBattleSystem
 {
     public class Character : MonoBehaviour
     {
-        public bool IsAlive;
+        public bool IsAlive { get; set; }
         public IAbility[] abilities => new IAbility[] { new DebugAbility() };
         public int initiative;
     }

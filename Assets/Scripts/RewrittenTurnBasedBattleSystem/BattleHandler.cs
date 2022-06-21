@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem
@@ -18,7 +19,7 @@ namespace RewrittenTurnBasedBattleSystem
         [ContextMenu("Tick")]
         public void Tick()
         {
-            if(activeCharacter == null)
+            if (activeCharacter == null)
             {
                 activeCharacter = turnResolver.GetCurrentActive();
                 StartTurn();
@@ -35,25 +36,9 @@ namespace RewrittenTurnBasedBattleSystem
         private void ActiveCharacter_OnActionFinished()
         {
             activeCharacter = null;
-            bool playerTeamWon = true;
-            foreach(Character character in enemyTeam.characters)
-            {
-                if (character.IsAlive)
-                {
-                    playerTeamWon = false;
-                    break;
-                }
-            }
-            bool enemyTeamWon = true;
-            foreach (Character character in playerTeam.characters)
-            {
-                if (character.IsAlive)
-                {
-                    enemyTeamWon = false;
-                    break;
-                }
-            }
-            if(playerTeamWon || enemyTeamWon)
+            var playerTeamWon = enemyTeam.characters.All(character => !character.IsAlive);
+            var enemyTeamWon = playerTeam.characters.All(character => !character.IsAlive);
+            if (playerTeamWon || enemyTeamWon)
             {
                 PlayerTeamWon = playerTeamWon;
                 OnBattleEnded();

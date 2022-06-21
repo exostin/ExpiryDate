@@ -145,9 +145,6 @@ namespace Controllers.BattleScene
                 displayCharacterDataComponent.character = character;
                 displayCharacterDataComponent.Initialize();
                 index++;
-                
-                // Temporary workaround
-                //if (index == 3) break;
             }
 
             index = 0;
@@ -158,9 +155,6 @@ namespace Controllers.BattleScene
                 displayCharacterDataComponent.character = character;
                 displayCharacterDataComponent.Initialize();
                 index++;
-                
-                // Temporary workaround
-                //if (index == 2) break;
             }
 
             soAllCharacters = soPlayerCharacters.Concat(soEnemyCharacters).ToList();
