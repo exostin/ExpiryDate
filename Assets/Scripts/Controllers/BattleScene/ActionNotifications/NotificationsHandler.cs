@@ -1,18 +1,25 @@
 using System;
-using System.Collections;
 using Other.Enums;
+using TMPro;
 using UnityEngine;
 
-namespace Controllers.BattleScene
+namespace Controllers.BattleScene.ActionNotifications
 {
     public class NotificationsHandler : MonoBehaviour
     {
-        [SerializeField] private TMPro.TMP_ColorGradient healColor;
-        [SerializeField] private TMPro.TMP_ColorGradient damageColor;
-        [SerializeField] private TMPro.TMP_ColorGradient shieldColor;
-        [SerializeField] private TMPro.TMP_ColorGradient statusColor;
-        [SerializeField] private TMPro.TMP_Text notificationText;
-        [SerializeField] private float desiredFontSize = 2.6f;
+        [SerializeField] private TMP_ColorGradient healColor;
+        [SerializeField] private TMP_ColorGradient damageColor;
+        [SerializeField] private TMP_ColorGradient shieldColor;
+        [SerializeField] private TMP_ColorGradient statusColor;
+        
+        private TMP_Text notificationText;
+        private ITextAnimation actionNotificationAnimation;
+
+        private void Awake()
+        {
+            actionNotificationAnimation = GetComponent<ITextAnimation>();
+            notificationText = GetComponent<TMP_Text>();
+        }
 
         public void HandleNotification(AbilityType abilityType, string value)
         {
@@ -38,24 +45,7 @@ namespace Controllers.BattleScene
                     throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
 
-            StartCoroutine(NotificationPopupAnimation());
-        }
-
-        private IEnumerator NotificationPopupAnimation()
-        {
-            for (var i = desiredFontSize; i < 3.5f; i += 0.05f)
-            {
-                notificationText.fontSize = i;
-                yield return new WaitForSecondsRealtime(0.02f);
-            }
-            yield return new WaitForSecondsRealtime(0.05f);
-            for (var i = 3.5f; i > desiredFontSize; i -= 0.1f)
-            {
-                notificationText.fontSize = i;
-                yield return new WaitForSecondsRealtime(0.02f);
-            }
-
-            notificationText.text = null;
+            StartCoroutine(actionNotificationAnimation.Play(notificationText));
         }
     }
 }
