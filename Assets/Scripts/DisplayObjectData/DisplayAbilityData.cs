@@ -1,3 +1,4 @@
+using System;
 using Controllers.BattleScene;
 using Other.Enums;
 using ScriptableObjects;
@@ -17,8 +18,7 @@ namespace DisplayObjectData
 
         private BattleController battleController;
         
-        public delegate void AbilityEvent();
-        public static event AbilityEvent OnAbilitySelected;
+        public static event Action OnAbilitySelected;
 
         private void Start()
         {

@@ -59,11 +59,11 @@ namespace Classes.Citybuilding
             Simulated = true;
         }
 
-        public void OnNextDay(Manager cbm)
+        public void OnNextDay(Manager cityBuildingManager)
         {
-            foreach (var building in Buildings)
+            foreach (Building building in Buildings)
             {
-                building.cbm = cbm;
+                building.cbm = cityBuildingManager;
                 building.OnNextDay();
             }
         }

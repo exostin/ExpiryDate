@@ -61,8 +61,6 @@ namespace Controllers
                 };
 
             #endregion
-
-            // TODO: Copy costs from excel, make ui for buying defenders
         }
 
         public void TogglePauseMenu()

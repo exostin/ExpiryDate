@@ -8,7 +8,7 @@ namespace Classes.Citybuilding.Buildings.Housing
         public Housing(int level, Action<int> setLevel) : base(level, setLevel)
         {
             Name = "Living Quarters";
-            Description = "Dla twoich niewolników <3";
+            Description = "No dying here!";
             Upgrades = new BuildingUpgrade[]
             {
                 new Level0(),

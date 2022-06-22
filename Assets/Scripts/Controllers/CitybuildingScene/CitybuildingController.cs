@@ -7,16 +7,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Resources = Classes.Citybuilding.Resources;
 
-namespace Controllers
+namespace Controllers.CitybuildingScene
 {
     public class CitybuildingController : MonoBehaviour
     {
         [SerializeField] private GameObject citybuilding;
 
-        [SerializeField] private GameObject titanAmount;
-        [SerializeField] private GameObject waterAmount;
-        [SerializeField] private GameObject energyAmount;
-        [SerializeField] private GameObject foodAmount;
+        [SerializeField] private TMP_Text titanAmount;
+        [SerializeField] private TMP_Text waterAmount;
+        [SerializeField] private TMP_Text energyAmount;
+        [SerializeField] private TMP_Text foodAmount;
 
         [SerializeField] public Texture2D cursorPointerTexture;
 
@@ -59,14 +59,14 @@ namespace Controllers
 
         private void Update()
         {
-            if (gm == null) return;
+            if (gm is null) return;
 
             #region Updating UI
 
-            titanAmount.GetComponent<TextMeshProUGUI>().text = cbm.PlayerResources.Titan.ToString();
-            waterAmount.GetComponent<TextMeshProUGUI>().text = cbm.PlayerResources.Water.ToString();
-            energyAmount.GetComponent<TextMeshProUGUI>().text = cbm.PlayerResources.Energy.ToString();
-            foodAmount.GetComponent<TextMeshProUGUI>().text = cbm.PlayerResources.Food.ToString();
+            titanAmount.text = cbm.PlayerResources.Titan.ToString();
+            waterAmount.text = cbm.PlayerResources.Water.ToString();
+            energyAmount.text = cbm.PlayerResources.Energy.ToString();
+            foodAmount.text = cbm.PlayerResources.Food.ToString();
 
             #endregion
         }
@@ -120,9 +120,9 @@ namespace Controllers
 
             #region Check if all buildings have models
 
-            if (droneSchool == null || energyGenerator == null || fighterSchool == null || foodGenerator == null ||
-                mainCamp == null || medicSchool == null || robotSchool == null || shooterSchool == null ||
-                titanGenerator == null || waterGenerator == null || mainCamp == null)
+            if (droneSchool is null || energyGenerator is null || fighterSchool is null || foodGenerator is null ||
+                mainCamp is null || medicSchool is null || robotSchool is null || shooterSchool is null ||
+                titanGenerator is null || waterGenerator is null || mainCamp is null)
                 Debug.LogError("Not all buildings were found.");
 
             #endregion

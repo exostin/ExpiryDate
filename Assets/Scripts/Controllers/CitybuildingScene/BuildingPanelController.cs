@@ -5,6 +5,7 @@ using Classes.Citybuilding.Buildings.FighterSchool;
 using Classes.Citybuilding.Buildings.RobotSchool;
 using Classes.Citybuilding.Buildings.ShooterSchool;
 using Controllers;
+using Controllers.CitybuildingScene;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
@@ -42,35 +43,40 @@ public class BuildingPanelController : MonoBehaviour
 
     private void CbcOnOnBuildingSelected(Building newBuilding)
     {
-        building = newBuilding; 
-        
-        nextUpgradeText.text = building.NextUpgrade is null ? "No upgrades available" : building.NextUpgrade.Description;
-        
-        upgradeButton.interactable = building.CanBeUpgraded;
+        building = newBuilding;
 
-        var isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
-        buyDefenderButton.interactable = isASchool;
+        if (building?.NextUpgrade != null)
+        {
+            nextUpgradeText.text = building is {NextUpgrade: null}
+                ? "No upgrades available"
+                : building.NextUpgrade.Description;
 
-        if (building.NextUpgrade is null)
-        {
-            buyUpgradeCost.gameObject.SetActive(false);
-        }
-        else
-        {
-            buyUpgradeCost.gameObject.SetActive(true);
-            buyUpgradeCost.Resources = building.NextUpgrade.ActualCost;
+            upgradeButton.interactable = building.CanBeUpgraded;
+
+            var isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
+            buyDefenderButton.interactable = isASchool;
+
+            if (building.NextUpgrade is null)
+            {
+                buyUpgradeCost.gameObject.SetActive(false);
+            }
+            else
+            {
+                buyUpgradeCost.gameObject.SetActive(true);
+                buyUpgradeCost.Resources = building.NextUpgrade.ActualCost;
+            }
+
+            if (!isASchool)
+            {
+                buyDefenderCost.gameObject.SetActive(false);
+            }
+            else
+            {
+                buyDefenderCost.gameObject.SetActive(true);
+                buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
+            }
         }
 
-        if (!isASchool)
-        {
-            buyDefenderCost.gameObject.SetActive(false);
-        }
-        else
-        {
-            buyDefenderCost.gameObject.SetActive(true);
-            buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
-        }
-        
         buildingName.text = building.Name;
         buildingDescription.text = building.CurrentUpgrade.Description;
     }

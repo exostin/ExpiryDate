@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 
-namespace Controllers.BattleScene
+namespace Controllers.BattleScene.Postprocessing
 {
     public class PostProcessingController : MonoBehaviour
     {
+        // I had to scrap all of this, because the effects were sickening to most people, and we had no time to adjust them
+        
+        
         // [SerializeField] private Volume postprocessingVolume;
         // // [SerializeField] private float defaultVignetteIntensity = 0.328f;
         // // [SerializeField] private float enemyTurnVignetteIntensity = 0.532f;
@@ -21,11 +20,8 @@ namespace Controllers.BattleScene
         // {
         //     GetPostProcessingReferences();
         // }
-
-        /// <summary>
-        ///     Get references to post processing components
-        /// </summary>
-        /// <exception cref="NullReferenceException"></exception>
+        
+        
         // private void GetPostProcessingReferences()
         // {
         //     var postprocessingVolumeProfile = postprocessingVolume.GetComponent<Volume>()?.profile;

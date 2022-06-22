@@ -1,19 +1,19 @@
 using System;
 using System.Linq;
-using System.Web.UI.WebControls;
+using Controllers.BattleScene.ActionNotifications;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Controllers.BattleScene
+namespace Controllers.BattleScene.Statuses
 {
     public class StatusHandler
     {
-        public delegate void OnStatusRemoved();
-        public static event OnStatusRemoved OnBleedRemoved;
-        public static event OnStatusRemoved OnStunRemoved;
-        public static event OnStatusRemoved OnDodgeRemoved;
+        public delegate void StatusRemoved();
+        public static event StatusRemoved OnBleedRemoved;
+        public static event StatusRemoved OnStunRemoved;
+        public static event StatusRemoved OnDodgeRemoved;
         
         public void HandleStatuses(Character character, out bool skipThisTurn, GameObject currentCharGameObject)
         {
@@ -82,7 +82,7 @@ namespace Controllers.BattleScene
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                currentCharGameObject.GetComponent<NotificationsHandler>().HandleNotification(AbilityType.Status, finalText);
+                currentCharGameObject.GetComponentInChildren<NotificationsHandler>().HandleNotification(AbilityType.Status, finalText);
                 if (character.CheckIfDead()) return;
             }
         }

@@ -13,7 +13,7 @@ namespace Classes.Citybuilding.Buildings.FighterSchool.Upgrades
             };
             ModelName = "FighterSchool3";
             Description =
-                "Sword Masters are equiped with newer, stronger, shinier weapons(Unlocks Sword Master Tier 2)";
+                "Sword Masters are equipped with newer, stronger, shinier weapons(Unlocks Sword Master Tier 2)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)

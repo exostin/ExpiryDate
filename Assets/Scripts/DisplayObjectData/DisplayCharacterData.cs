@@ -1,6 +1,8 @@
 using System;
 using Classes;
+using Classes.BattleScene;
 using Controllers.BattleScene;
+using Controllers.BattleScene.Statuses;
 using Other.Enums;
 using ScriptableObjects;
 using TMPro;
@@ -21,8 +23,7 @@ namespace DisplayObjectData
 
         private BattleController battleController;
         
-        public delegate void SelectedCharacter();
-        public static event SelectedCharacter OnHoveredOverCharacter;
+        public static event Action OnHoveredOverCharacter;
         
         public delegate void TurnAction();
         public static event TurnAction OnTurnEnd;
