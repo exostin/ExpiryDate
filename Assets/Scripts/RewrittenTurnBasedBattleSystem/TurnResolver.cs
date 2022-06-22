@@ -5,8 +5,8 @@ namespace RewrittenTurnBasedBattleSystem
 {
     public class TurnResolver : MonoBehaviour
     {
-        public Team playerTeam;
-        public Team enemyTeam;
+        public Team playerTeam { get; set; }
+        public Team enemyTeam { get; set; }
 
         private Team lastSelectedTeam = null;
 

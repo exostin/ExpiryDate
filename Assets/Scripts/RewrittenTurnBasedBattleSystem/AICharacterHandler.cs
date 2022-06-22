@@ -27,7 +27,7 @@ namespace RewrittenTurnBasedBattleSystem
         private IEnumerator PerformActionCoroutine()
         {
             yield return new WaitForSeconds(1);
-            character.abilities[0].Perform();
+            character.Abilities[0].Perform(character);
             OnActionFinished?.Invoke();
         }
     }

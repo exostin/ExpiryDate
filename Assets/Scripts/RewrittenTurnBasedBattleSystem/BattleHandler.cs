@@ -16,7 +16,11 @@ namespace RewrittenTurnBasedBattleSystem
 
         public bool PlayerTeamWon { get; private set; }
 
-        [ContextMenu("Tick")]
+        public void Prepare()
+        {
+            turnResolver.playerTeam = playerTeam;
+            turnResolver.enemyTeam = enemyTeam;
+        }
         public void Tick()
         {
             if (activeCharacter == null)
@@ -28,7 +32,7 @@ namespace RewrittenTurnBasedBattleSystem
 
         private void StartTurn()
         {
-            Debug.Log($"Turn of: {activeCharacter.Character.gameObject}");
+            Debug.Log($"Turn of: {activeCharacter.Character.CharacterData.characterName}");
             activeCharacter.OnActionFinished += ActiveCharacter_OnActionFinished;
             activeCharacter.PerformAction();
         }
@@ -36,8 +40,8 @@ namespace RewrittenTurnBasedBattleSystem
         private void ActiveCharacter_OnActionFinished()
         {
             activeCharacter = null;
-            var playerTeamWon = enemyTeam.characters.All(character => !character.IsAlive);
-            var enemyTeamWon = playerTeam.characters.All(character => !character.IsAlive);
+            var playerTeamWon = enemyTeam.characters.All(character => !character.IsDead);
+            var enemyTeamWon = playerTeam.characters.All(character => !character.IsDead);
             if (playerTeamWon || enemyTeamWon)
             {
                 PlayerTeamWon = playerTeamWon;

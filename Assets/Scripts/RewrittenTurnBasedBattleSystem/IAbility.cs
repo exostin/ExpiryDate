@@ -1,7 +1,9 @@
-﻿namespace RewrittenTurnBasedBattleSystem
+﻿using UnityEngine;
+using ScriptableObjects;
+namespace RewrittenTurnBasedBattleSystem
 {
     public interface IAbility
     {
-        void Perform();
+        void Perform(Character target);
     }
 }
