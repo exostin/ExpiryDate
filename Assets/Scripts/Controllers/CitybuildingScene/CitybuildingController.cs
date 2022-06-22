@@ -111,6 +111,7 @@ namespace Controllers.CitybuildingScene
                     else if (child.name.StartsWith("TitanGenerator")) titanGenerator = child.gameObject;
                     else if (child.name.StartsWith("WaterGenerator")) waterGenerator = child.gameObject;
                     else if (child.name.StartsWith("Housing")) housing = child.gameObject;
+                    else Debug.Log("Unknown building: " + child.name);
 
                     Debug.Log($"Showing {child.name}");
                     child.gameObject.SetActive(true);
@@ -122,7 +123,7 @@ namespace Controllers.CitybuildingScene
 
             if (droneSchool is null || energyGenerator is null || fighterSchool is null || foodGenerator is null ||
                 mainCamp is null || medicSchool is null || robotSchool is null || shooterSchool is null ||
-                titanGenerator is null || waterGenerator is null || mainCamp is null)
+                titanGenerator is null || waterGenerator is null || mainCamp is null || housing is null)
                 Debug.LogError("Not all buildings were found.");
 
             #endregion
