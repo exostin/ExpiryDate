@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Controllers.BattleScene
+namespace Controllers.BattleScene.Inspector
 {
     public class InspectorController : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Controllers.BattleScene
+namespace Controllers.BattleScene.Debugging
 {
     public class BattleDebugController : MonoBehaviour
     {

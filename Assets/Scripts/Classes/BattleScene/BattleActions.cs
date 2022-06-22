@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Controllers.BattleScene;
+using Controllers.BattleScene.ActionNotifications;
 using Other.Enums;
 using ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Classes
+namespace Classes.BattleScene
 {
     public class BattleActions : MonoBehaviour
     {
@@ -15,11 +16,11 @@ namespace Classes
         private int finalDamageAmount;
         private int finalHealAmount;
 
-        public delegate void OnStatusApplied();
-        public static event OnStatusApplied OnBleedApplied;
-        public static event OnStatusApplied OnStunApplied;
-        public static event OnStatusApplied OnDodgeApplied;
-        public static event OnStatusApplied OnHealAppliedToCureBleed;
+        public delegate void StatusApplied();
+        public static event StatusApplied OnBleedApplied;
+        public static event StatusApplied OnStunApplied;
+        public static event StatusApplied OnDodgeApplied;
+        public static event StatusApplied OnHealAppliedToCureBleed;
         
         private BattleController battleController;
 
@@ -114,7 +115,7 @@ namespace Classes
         /// <param name="character">Character GameObject</param>
         private void AssignNotificationHandlerReference(GameObject character)
         {
-            notificationHandlerReference = character.GetComponent<NotificationsHandler>();
+            notificationHandlerReference = character.GetComponentInChildren<NotificationsHandler>();
         }
 
         private void VisualizeAction(AbilityType abilityType, string value)

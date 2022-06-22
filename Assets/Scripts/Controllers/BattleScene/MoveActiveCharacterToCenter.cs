@@ -16,7 +16,6 @@ namespace Controllers.BattleScene
         
         public void MoveToCenter(int option)
         {
-            // AD HOC, TO BE CHANGED ASAP 
             gameObject.transform.localPosition = option == 1
                 ? new Vector2(spotlightLocationForPlayerCharacters, gameObject.transform.localPosition.y)
                 : new Vector2(spotlightLocationForEnemies, gameObject.transform.localPosition.y);

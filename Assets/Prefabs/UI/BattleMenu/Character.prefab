@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 172701202209746659}
   - component: {fileID: 1480910949546992145}
   - component: {fileID: 4431838473483986297}
+  - component: {fileID: 1235699158284006815}
+  - component: {fileID: 7954276483908537698}
   m_Layer: 0
   m_Name: ActionNotification
   m_TagString: Untagged
@@ -135,6 +137,35 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1235699158284006815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748128531640299263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f992af7983dc9488705274f40344a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healColor: {fileID: 11400000, guid: df4e0c5a4594855488601984d8f3e90e, type: 2}
+  damageColor: {fileID: 11400000, guid: 7cb69edc5a69f184e8b38452a3b12eeb, type: 2}
+  shieldColor: {fileID: 11400000, guid: 130df4d6507a5944198794f8d62a808f, type: 2}
+  statusColor: {fileID: 11400000, guid: 131801574db2ec747abd5adefa72c87b, type: 2}
+--- !u!114 &7954276483908537698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748128531640299263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e7fc96f32a4c9bb08552d6014ea70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desiredFontSize: 2.6
 --- !u!1 &1099753038407266620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,7 +1281,6 @@ GameObject:
   - component: {fileID: 5569147763304218032}
   - component: {fileID: 5165604296157246782}
   - component: {fileID: 9154881126928865205}
-  - component: {fileID: 3768517115653418818}
   m_Layer: 5
   m_Name: Character
   m_TagString: Untagged
@@ -1382,21 +1412,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeCharacterIndicator: {fileID: 4179265416750018321}
---- !u!114 &3768517115653418818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7930149751661933923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70f992af7983dc9488705274f40344a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healColor: {fileID: 11400000, guid: df4e0c5a4594855488601984d8f3e90e, type: 2}
-  damageColor: {fileID: 11400000, guid: 7cb69edc5a69f184e8b38452a3b12eeb, type: 2}
-  shieldColor: {fileID: 11400000, guid: 130df4d6507a5944198794f8d62a808f, type: 2}
-  statusColor: {fileID: 11400000, guid: 131801574db2ec747abd5adefa72c87b, type: 2}
-  notificationText: {fileID: 4431838473483986297}
-  desiredFontSize: 2.6

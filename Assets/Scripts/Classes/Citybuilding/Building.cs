@@ -35,7 +35,7 @@ namespace Classes.Citybuilding
 
         public virtual void ApplySideEffects(Simulation simulation)
         {
-            foreach (var upgrade in BoughtUpgrades)
+            foreach (BuildingUpgrade upgrade in BoughtUpgrades)
                 upgrade.ApplySideEffects(simulation, this);
         }
 

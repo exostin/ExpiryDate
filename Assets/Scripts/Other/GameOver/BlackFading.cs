@@ -7,6 +7,7 @@ namespace Other.GameOver
 {
     public class BlackFading : MonoBehaviour
     {
+        private GameManager gm;
         private float alpha = 1.5f;
 
         private Image image;
@@ -14,6 +15,7 @@ namespace Other.GameOver
         private void Start()
         {
             image = gameObject.GetComponent<Image>();
+            gm = FindObjectOfType<GameManager>();
         }
 
         private void Update()
@@ -27,7 +29,7 @@ namespace Other.GameOver
 
             if (alpha < -1)
             {
-                FindObjectOfType<GameManager>().cbm.RemoveSave();
+                gm.cbm.RemoveSave();
                 SceneManager.LoadScene("Scenes/StartMenu");
                 gameObject.SetActive(false);
             };

@@ -6,7 +6,7 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
         {
             Level = 2;
             ModelName = "EnergyGenerator2";
-            Description = "Generators are more areo-dynamic (Production of Water increased from 10 to 14)";
+            Description = "Generators are more aerodynamic (Production of Water increased from 10 to 14)";
             Output = new Resources
             {
                 Energy = 3

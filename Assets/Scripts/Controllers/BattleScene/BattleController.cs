@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Classes;
+using Classes.BattleScene;
+using Controllers.BattleScene.Statuses;
 using DisplayObjectData;
 using Other.Enums;
 using ScriptableObjects;
@@ -16,8 +17,7 @@ namespace Controllers.BattleScene
         #region Properties
 
         #region Iterate-through-only lists
-
-        // Could be used here depending on need: IReadOnlyCollection/IReadOnlyList/IEnumerable
+        
         public IEnumerable<Character> SoPlayerCharacters => soPlayerCharacters;
         public IEnumerable<Character> SoEnemyCharacters => soEnemyCharacters;
         public IEnumerable<Character> BattleQueue => battleQueue;
@@ -44,7 +44,7 @@ namespace Controllers.BattleScene
 
         private GameManager gm;
         private StateController stateController;
-        private PostProcessingController postProcessingController;
+        //private PostProcessingController postProcessingController;
         private BattleUIController battleUIController;
         private BattleActions battleActions;
 
@@ -102,7 +102,7 @@ namespace Controllers.BattleScene
         {
             gm = FindObjectOfType<GameManager>();
             stateController = FindObjectOfType<StateController>();
-            postProcessingController = FindObjectOfType<PostProcessingController>();
+            //postProcessingController = FindObjectOfType<PostProcessingController>();
             battleUIController = FindObjectOfType<BattleUIController>();
             battleActions = FindObjectOfType<BattleActions>();
             
@@ -118,7 +118,7 @@ namespace Controllers.BattleScene
 
             #region UI elements
 
-            battleUIController.LetPlayerChooseTarget(false);
+            battleUIController.LetPlayerChooseTarget(false); 
             battleUIController.ToggleAbilityButtonsVisibility(false);
 
             #endregion

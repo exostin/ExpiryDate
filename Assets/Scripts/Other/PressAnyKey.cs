@@ -3,36 +3,39 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PressAnyKey : MonoBehaviour
+namespace Other
 {
-    private const float DottingInterval = 0.6f;
-    public TextMeshProUGUI pressAnyKeyText;
-    private string _dots;
-    private bool _dottingRunning = true;
-
-    private void Start()
+    public class PressAnyKey : MonoBehaviour
     {
-        StartCoroutine(AnyKeyDotting());
-    }
+        private const float DottingInterval = 0.6f;
+        public TextMeshProUGUI pressAnyKeyText;
+        private string _dots;
+        private bool _dottingRunning = true;
 
-    private void Update()
-    {
-        if (Input.anyKeyDown)
+        private void Start()
         {
-            _dottingRunning = false;
-            SceneManager.LoadScene(1);
+            StartCoroutine(AnyKeyDotting());
         }
-    }
 
-    private IEnumerator AnyKeyDotting()
-    {
-        while (_dottingRunning)
-            for (var i = 0; i < 4; i++)
+        private void Update()
+        {
+            if (Input.anyKeyDown)
             {
-                _dots = new string('.', i);
-                pressAnyKeyText.SetText("Press any key to continue" + _dots);
-
-                yield return new WaitForSeconds(DottingInterval);
+                _dottingRunning = false;
+                SceneManager.LoadScene(1);
             }
+        }
+
+        private IEnumerator AnyKeyDotting()
+        {
+            while (_dottingRunning)
+                for (var i = 0; i < 4; i++)
+                {
+                    _dots = new string('.', i);
+                    pressAnyKeyText.SetText("Press any key to continue" + _dots);
+
+                    yield return new WaitForSeconds(DottingInterval);
+                }
+        }
     }
 }
