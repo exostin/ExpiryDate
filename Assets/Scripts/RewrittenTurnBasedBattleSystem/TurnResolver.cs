@@ -3,25 +3,23 @@ using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem
 {
-    public class TurnResolver : MonoBehaviour
+    public class TurnResolver
     {
-        public Team playerTeam { get; set; }
-        public Team enemyTeam { get; set; }
-
-        private Team lastSelectedTeam = null;
+        public MonoBehaviour CoroutineInvoker { get; set; }
+        private Team lastSelectedTeam;
+        public Team PlayerTeam { get; set; }
+        public Team EnemyTeam { get; set; }
 
         internal ICharacterHandler GetCurrentActive()
         {
-            if(lastSelectedTeam == null || lastSelectedTeam == enemyTeam)
+            if (lastSelectedTeam == null || lastSelectedTeam == EnemyTeam)
             {
-                lastSelectedTeam = playerTeam;
-                return new PlayerCharacterHandler(playerTeam.characters.First());
+                lastSelectedTeam = PlayerTeam;
+                return new PlayerCharacterHandler(PlayerTeam.characters.First());
             }
-            else
-            {
-                lastSelectedTeam = enemyTeam;
-                return new AICharacterHandler(enemyTeam.characters.First(), this);
-            }
+
+            lastSelectedTeam = EnemyTeam;
+            return new AICharacterHandler(EnemyTeam.characters.First(), CoroutineInvoker);
         }
     }
 }

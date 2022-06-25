@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using Other.Enums;
 using RewrittenTurnBasedBattleSystem.ScriptableObjects;
@@ -31,8 +32,7 @@ namespace RewrittenTurnBasedBattleSystem
         #endregion
         
         public CharacterData CharacterData { get; set; }
-        public delegate void CharacterEvent();
-        public static event CharacterEvent OnCharacterDeath;
+        public static event Action OnCharacterDeath;
         
         public void Initialize()
         {
@@ -46,7 +46,7 @@ namespace RewrittenTurnBasedBattleSystem
             StunDurationLeft = 0;
         }
 
-        public bool CheckIfDead()
+        private bool CheckIfDead()
         {
             if (Health > 0) return false;
             
@@ -65,6 +65,28 @@ namespace RewrittenTurnBasedBattleSystem
             CumulatedBleedDmg = 0;
             DodgeEverythingUntilNextTurn = false;
             StunDurationLeft = 0;
+        }
+
+        public void TakeDamage(int damageToDeal)
+        {
+            if ((Health + ShieldPoints) - damageToDeal <= 0)
+            {
+                Health = 0;
+                CheckIfDead();
+            }
+            else
+            {
+                if (ShieldPoints - damageToDeal < 0)
+                {
+                    ShieldPoints = 0;
+                    Health -= damageToDeal - ShieldPoints;
+                }
+                else
+                {
+                    ShieldPoints -= damageToDeal;
+                }
+            }
+            Debug.Log($"Dealt {damageToDeal} damage to {CharacterData.characterName}!");
         }
     }
 }

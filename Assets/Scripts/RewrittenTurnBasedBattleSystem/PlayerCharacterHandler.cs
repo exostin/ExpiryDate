@@ -4,19 +4,18 @@ namespace RewrittenTurnBasedBattleSystem
 {
     internal class PlayerCharacterHandler : ICharacterHandler
     {
-        public Character Character => character;
-        private Character character;
-        
         public PlayerCharacterHandler(Character character)
         {
-            this.character = character;
+            Character = character;
         }
+
+        public Character Character { get; }
 
         public event Action OnActionFinished;
 
         public void PerformAction()
         {
-            character.Abilities[0].Perform(character);
+            Character.Abilities[0].Perform(Character);
             OnActionFinished?.Invoke();
         }
     }

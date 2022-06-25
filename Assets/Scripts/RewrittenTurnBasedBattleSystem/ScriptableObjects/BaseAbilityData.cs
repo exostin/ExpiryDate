@@ -1,8 +1,6 @@
-using NaughtyAttributes;
-using Other.Enums;
 using UnityEngine;
 
-namespace RewrittenTurnBasedBattleSystem
+namespace RewrittenTurnBasedBattleSystem.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "New ability", menuName = "Ability")]
     public class BaseAbilityData : ScriptableObject

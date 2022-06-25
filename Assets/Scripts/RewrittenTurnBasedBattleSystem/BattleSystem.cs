@@ -6,25 +6,29 @@ namespace RewrittenTurnBasedBattleSystem
 {
     public class BattleSystem : MonoBehaviour
     {
-        [SerializeField] private BattleHandler battleHandler;
+        [SerializeField] private CharacterData[] playerTeamData;
+        [SerializeField] private CharacterData[] enemyTeamData;
+        private readonly BattleHandler battleHandler = new();
         private readonly TeamSpawner teamSpawner = new();
 
-        [SerializeField] CharacterData[] playerTeam;
-        [SerializeField] CharacterData[] enemyTeam;
-        [ContextMenu("Start battle")]
-        void StartBattle()
+        private void Start()
         {
-            battleHandler.playerTeam = teamSpawner.SpawnTeam(playerTeam);
-            battleHandler.enemyTeam = teamSpawner.SpawnTeam(enemyTeam);
-            battleHandler.Prepare();
+            battleHandler.AssignCoroutineInvokerReference(this);
         }
+
+        [ContextMenu("Prepare")]
+        private void Prepare()
+        {
+            battleHandler.PlayerTeam = teamSpawner.SpawnTeam(playerTeamData);
+            battleHandler.EnemyTeam = teamSpawner.SpawnTeam(enemyTeamData);
+        }
+
         [ContextMenu("Tick")]
-        void Tick()
+        private void Tick()
         {
             battleHandler.Tick();
         }
 
         private event Action OnBattleEnded;
-        
     }
 }

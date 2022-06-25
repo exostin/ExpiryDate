@@ -152,10 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b5cef29e4d4987b468bd0ef05f5b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleHandler: {fileID: 1139259453}
-  playerTeam:
+  playerTeamData:
   - {fileID: 11400000, guid: 1d97aa8c4b95e6644ae338388ab68514, type: 2}
-  enemyTeam:
+  enemyTeamData:
   - {fileID: 11400000, guid: 1d97aa8c4b95e6644ae338388ab68514, type: 2}
 --- !u!4 &814766626
 Transform:
@@ -166,64 +165,6 @@ Transform:
   m_GameObject: {fileID: 814766624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2133.5662, y: 44.068317, z: -144.59789}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1139259451
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1139259454}
-  - component: {fileID: 1139259453}
-  - component: {fileID: 1139259452}
-  m_Layer: 0
-  m_Name: BattleHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1139259452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139259451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebbc4c46517626944bcf72ffdd8e1f99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1139259453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139259451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2306639fdc08c574cb79840f9918f2be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnResolver: {fileID: 1139259452}
---- !u!4 &1139259454
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139259451}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 303.63004, y: 252.8237, z: 11.629395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

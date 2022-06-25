@@ -5,15 +5,18 @@ namespace RewrittenTurnBasedBattleSystem.IAbilities
 {
     public class DamageSingleEnemyAbility : IAbility
     {
+        public DamageSingleEnemyAbilityData AbilityData { get; set; }
+        
         public DamageSingleEnemyAbility(DamageSingleEnemyAbilityData abilityData)
         {
             this.AbilityData = abilityData;
         }
-        public DamageSingleEnemyAbilityData AbilityData { get; set; }
         
         public void Perform(Character target)
         {
-            Debug.Log($"Dealt {AbilityData.minDamageAmount} damage to {target}");
+            int damageToDeal = Random.Range(AbilityData.minDamageAmount, AbilityData.maxDamageAmount);
+            target.TakeDamage(damageToDeal);
+            Debug.Log($"Dealt {damageToDeal} damage to {target.CharacterData.characterName}, {target.Health}/{target.CharacterData.maxHealth} health remaining");
         }
     }
 }
