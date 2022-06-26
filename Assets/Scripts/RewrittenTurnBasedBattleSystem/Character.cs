@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using Other.Enums;
 using RewrittenTurnBasedBattleSystem.ScriptableObjects;
 using UnityEngine;
@@ -17,10 +16,10 @@ namespace RewrittenTurnBasedBattleSystem
         
         public int Health { get; set; }
         public int ShieldPoints { get; set; }
+        public int Initiative { get; set; }
         public bool IsDead { get; set; }
         public IAbility[] Abilities { get; set; }
-        public int Initiative { get; set; }
-        
+
         #region Statuses
         
         public List<StatusType> currentlyAppliedStatuses;
@@ -71,7 +70,6 @@ namespace RewrittenTurnBasedBattleSystem
         {
             if ((Health + ShieldPoints) - damageToDeal <= 0)
             {
-                Health = 0;
                 CheckIfDead();
             }
             else
@@ -79,14 +77,44 @@ namespace RewrittenTurnBasedBattleSystem
                 if (ShieldPoints - damageToDeal < 0)
                 {
                     ShieldPoints = 0;
-                    Health -= damageToDeal - ShieldPoints;
+                    Health -= (damageToDeal - ShieldPoints);
                 }
                 else
                 {
                     ShieldPoints -= damageToDeal;
                 }
             }
-            Debug.Log($"Dealt {damageToDeal} damage to {CharacterData.characterName}!");
+            Debug.Log($"{CharacterData.characterName} took {damageToDeal} damage! Health: {Health}/{CharacterData.maxHealth}");
+            
+        }
+
+        public void Heal(int healAmount)
+        {
+            if (currentlyAppliedStatuses.Contains(StatusType.Bleed))
+            {
+                Debug.Log($"Healed bleeding on {CharacterData.characterName}!");
+                BleedDurationLeft = 0;
+                //OnHealAppliedToCureBleed?.Invoke();
+            }
+            
+            if (Health + healAmount > CharacterData.maxHealth)
+            {
+                Health = CharacterData.maxHealth;
+            }
+            else
+            {
+                Health += healAmount;
+            }
+            //VisualizeAction(selectedAbility.abilityType, healAmount.ToString());
+            Debug.Log($"{CharacterData.characterName} has been healed for {healAmount}!");
+        }
+
+        public void ApplyStun(int abilityDataStunDuration)
+        {
+            currentlyAppliedStatuses.Add(StatusType.Stun);
+            StunDurationLeft += abilityDataStunDuration;
+            //OnStunApplied?.Invoke();
+            Debug.Log($"{CharacterData.characterName} has been stunned for {abilityDataStunDuration}!");
         }
     }
 }

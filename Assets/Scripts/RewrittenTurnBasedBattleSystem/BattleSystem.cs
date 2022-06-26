@@ -7,7 +7,7 @@ namespace RewrittenTurnBasedBattleSystem
     public class BattleSystem : MonoBehaviour
     {
         [SerializeField] private CharacterData[] playerTeamData;
-        [SerializeField] private CharacterData[] enemyTeamData;
+        [SerializeField] private CharacterData[] aiTeamData;
         private readonly BattleHandler battleHandler = new();
         private readonly TeamSpawner teamSpawner = new();
 
@@ -20,7 +20,7 @@ namespace RewrittenTurnBasedBattleSystem
         private void Prepare()
         {
             battleHandler.PlayerTeam = teamSpawner.SpawnTeam(playerTeamData);
-            battleHandler.EnemyTeam = teamSpawner.SpawnTeam(enemyTeamData);
+            battleHandler.AITeam = teamSpawner.SpawnTeam(aiTeamData);
         }
 
         [ContextMenu("Tick")]

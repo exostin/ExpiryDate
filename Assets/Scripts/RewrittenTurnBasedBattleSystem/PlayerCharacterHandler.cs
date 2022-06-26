@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Management;
 
 namespace RewrittenTurnBasedBattleSystem
 {
@@ -10,12 +11,14 @@ namespace RewrittenTurnBasedBattleSystem
         }
 
         public Character Character { get; }
+        public Team PlayerTeam { get; set; }
+        public Team AITeam { get; set; }
 
         public event Action OnActionFinished;
 
         public void PerformAction()
         {
-            Character.Abilities[0].Perform(Character);
+            Character.Abilities[0].Perform(PlayerTeam, AITeam, AITeam.characters[0]);
             OnActionFinished?.Invoke();
         }
     }

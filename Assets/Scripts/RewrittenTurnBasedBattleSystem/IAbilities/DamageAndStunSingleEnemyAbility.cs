@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using Other.Enums;
 using RewrittenTurnBasedBattleSystem.ScriptableObjects.BaseAbilityData_ChildClasses;
 using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem.IAbilities
 {
-    public class DamageSingleEnemyAbility : IAbility
+    public class DamageAndStunSingleEnemyAbility : IAbility
     {
-        private DamageSingleEnemyAbilityData AbilityData { get;}
+        private DamageAndStunSingleTargetAbilityData AbilityData { get;}
         
-        public DamageSingleEnemyAbility(DamageSingleEnemyAbilityData abilityData)
+        public DamageAndStunSingleEnemyAbility(DamageAndStunSingleTargetAbilityData abilityData)
         {
             this.AbilityData = abilityData;
         }
@@ -18,6 +19,7 @@ namespace RewrittenTurnBasedBattleSystem.IAbilities
             var damageToDeal = Random.Range(AbilityData.minDamageAmount, AbilityData.maxDamageAmount);
             Debug.Log($"Used {AbilityData.name} on {selectedTarget.CharacterData.characterName}");
             selectedTarget.TakeDamage(damageToDeal);
+            selectedTarget.ApplyStun(AbilityData.stunDuration);
         }
     }
 }

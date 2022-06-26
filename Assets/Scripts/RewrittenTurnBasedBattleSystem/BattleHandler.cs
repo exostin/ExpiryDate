@@ -8,7 +8,7 @@ namespace RewrittenTurnBasedBattleSystem
     {
         private ICharacterHandler activeCharacter;
         public Team PlayerTeam { get; set; }
-        public Team EnemyTeam { get; set; }
+        public Team AITeam { get; set; }
         public bool PlayerTeamWon { get; private set; }
         private TurnResolver TurnResolver { get; } = new();
         public event Action OnBattleEnded = delegate { };
@@ -17,8 +17,10 @@ namespace RewrittenTurnBasedBattleSystem
         {
             if (activeCharacter != null) return;
             TurnResolver.PlayerTeam = PlayerTeam;
-            TurnResolver.EnemyTeam = EnemyTeam;
+            TurnResolver.AITeam = AITeam;
             activeCharacter = TurnResolver.GetCurrentActive();
+            activeCharacter.PlayerTeam = PlayerTeam;
+            activeCharacter.AITeam = AITeam;
             StartTurn();
         }
 
@@ -32,7 +34,7 @@ namespace RewrittenTurnBasedBattleSystem
         private void ActiveCharacter_OnActionFinished()
         {
             activeCharacter = null;
-            var playerTeamWon = EnemyTeam.characters.All(character => character.IsDead);
+            var playerTeamWon = AITeam.characters.All(character => character.IsDead);
             var enemyTeamWon = PlayerTeam.characters.All(character => character.IsDead);
             if (playerTeamWon || enemyTeamWon)
             {

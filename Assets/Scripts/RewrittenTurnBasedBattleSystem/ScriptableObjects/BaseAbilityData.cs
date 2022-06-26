@@ -1,3 +1,4 @@
+using Other.Enums;
 using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem.ScriptableObjects
@@ -10,7 +11,7 @@ namespace RewrittenTurnBasedBattleSystem.ScriptableObjects
         [TextArea] public string abilityDescription;
         public Sprite artwork;
         public AudioClip soundEffect;
-        
+
         // [Header("Logical side")]
         // public TargetType abilityTarget;
         // public AbilityType abilityType;

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using RewrittenTurnBasedBattleSystem.ScriptableObjects;
-using RewrittenTurnBasedBattleSystem.ScriptableObjects.AbilityTypes;
 using UnityEditor;
 
 namespace RewrittenTurnBasedBattleSystem
@@ -14,11 +13,10 @@ namespace RewrittenTurnBasedBattleSystem
             Team team = new();
             foreach (CharacterData character in charactersData)
             {
-                var createdCharacter = characterFactory.CreateCharacter(character);
+                Character createdCharacter = characterFactory.CreateCharacter(character);
                 createdCharacter.Initialize();
                 team.characters.Add(createdCharacter);
             }
-
             return team;
         }
     }

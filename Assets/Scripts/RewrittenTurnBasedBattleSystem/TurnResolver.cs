@@ -8,18 +8,18 @@ namespace RewrittenTurnBasedBattleSystem
         public MonoBehaviour CoroutineInvoker { get; set; }
         private Team lastSelectedTeam;
         public Team PlayerTeam { get; set; }
-        public Team EnemyTeam { get; set; }
+        public Team AITeam { get; set; }
 
         internal ICharacterHandler GetCurrentActive()
         {
-            if (lastSelectedTeam == null || lastSelectedTeam == EnemyTeam)
+            if (lastSelectedTeam == null || lastSelectedTeam == AITeam)
             {
                 lastSelectedTeam = PlayerTeam;
                 return new PlayerCharacterHandler(PlayerTeam.characters.First());
             }
 
-            lastSelectedTeam = EnemyTeam;
-            return new AICharacterHandler(EnemyTeam.characters.First(), CoroutineInvoker);
+            lastSelectedTeam = AITeam;
+            return new AICharacterHandler(AITeam.characters.First(), CoroutineInvoker);
         }
     }
 }

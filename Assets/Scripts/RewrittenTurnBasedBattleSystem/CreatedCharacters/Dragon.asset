@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5ecb3e9c7774c3eb545672ee91d62bb, type: 3}
-  m_Name: Drone
+  m_Name: Dragon
   m_EditorClassIdentifier: 
-  characterName: Drone0
-  isOwnedByPlayer: 1
-  artwork: {fileID: 21300000, guid: 5ded869c628d9684eab3f2365e682167, type: 3}
-  artworkPortrait: {fileID: 21300000, guid: cf5157e7ed070ce49bcb85994efa0544, type: 3}
+  characterName: Dragon0
+  isOwnedByPlayer: 0
+  artwork: {fileID: 0}
+  artworkPortrait: {fileID: 0}
   abilities:
   - {fileID: 11400000, guid: 4346d6cdd82b08744a9f902ec00fe036, type: 2}
   - {fileID: 11400000, guid: b29d7fdf63e2ab243bc577f80c14de3e, type: 2}
   - {fileID: 11400000, guid: ce486f66d590dc34a80d796e5e7d2d37, type: 2}
   - {fileID: 11400000, guid: ed3e9dc4713dc894a8e8c23d79bc0cc1, type: 2}
-  maxHealth: 800
-  maxShield: 500
-  baseInitiative: 5
-  chanceToBreakOutOfStun: 60
-  invulnerableToBleed: 1
+  maxHealth: 1000
+  maxShield: 100
+  baseInitiative: 10
+  chanceToBreakOutOfStun: 40
+  invulnerableToBleed: 0

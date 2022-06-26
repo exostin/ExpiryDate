@@ -154,8 +154,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTeamData:
   - {fileID: 11400000, guid: 1d97aa8c4b95e6644ae338388ab68514, type: 2}
-  enemyTeamData:
-  - {fileID: 11400000, guid: 1d97aa8c4b95e6644ae338388ab68514, type: 2}
+  - {fileID: 11400000, guid: 1f777cc69f832ee478671ba5ab0d1482, type: 2}
+  - {fileID: 11400000, guid: c82964e7fa4c089408b9a32dce08bf32, type: 2}
+  aiTeamData:
+  - {fileID: 11400000, guid: 83814e4f057cf214c9e3684ce507efed, type: 2}
+  - {fileID: 11400000, guid: d478a9a00686fad4cab232d9a124d362, type: 2}
+  - {fileID: 11400000, guid: 692b18c14af43124f849e8daa30c1340, type: 2}
 --- !u!4 &814766626
 Transform:
   m_ObjectHideFlags: 0

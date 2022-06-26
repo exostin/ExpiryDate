@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5ecb3e9c7774c3eb545672ee91d62bb, type: 3}
-  m_Name: Drone
+  m_Name: Drone 2
   m_EditorClassIdentifier: 
-  characterName: Drone0
+  characterName: Drone2
   isOwnedByPlayer: 1
   artwork: {fileID: 21300000, guid: 5ded869c628d9684eab3f2365e682167, type: 3}
   artworkPortrait: {fileID: 21300000, guid: cf5157e7ed070ce49bcb85994efa0544, type: 3}
