@@ -14,6 +14,7 @@ namespace Classes.Citybuilding.Buildings.TitanGenerator.Upgrades
                 Energy = 50,
                 Food = 20
             };
+            Output = new Resources();
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
