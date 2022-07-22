@@ -45,36 +45,33 @@ public class BuildingPanelController : MonoBehaviour
     {
         building = newBuilding;
 
-        if (building?.NextUpgrade != null)
+        nextUpgradeText.text = building is {NextUpgrade: null}
+            ? "No upgrades available"
+            : building!.NextUpgrade!.Description;
+
+        upgradeButton.interactable = building.CanBeUpgraded;
+
+        bool isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
+        buyDefenderButton.interactable = isASchool;
+
+        if (building.NextUpgrade is null)
         {
-            nextUpgradeText.text = building is {NextUpgrade: null}
-                ? "No upgrades available"
-                : building.NextUpgrade.Description;
+            buyUpgradeCost.gameObject.SetActive(false);
+        }
+        else
+        {
+            buyUpgradeCost.gameObject.SetActive(true);
+            buyUpgradeCost.Resources = building.NextUpgrade.ActualCost;
+        }
 
-            upgradeButton.interactable = building.CanBeUpgraded;
-
-            var isASchool = building is DroneSchool or FighterSchool or ShooterSchool or RobotSchool;
-            buyDefenderButton.interactable = isASchool;
-
-            if (building.NextUpgrade is null)
-            {
-                buyUpgradeCost.gameObject.SetActive(false);
-            }
-            else
-            {
-                buyUpgradeCost.gameObject.SetActive(true);
-                buyUpgradeCost.Resources = building.NextUpgrade.ActualCost;
-            }
-
-            if (!isASchool)
-            {
-                buyDefenderCost.gameObject.SetActive(false);
-            }
-            else
-            {
-                buyDefenderCost.gameObject.SetActive(true);
-                buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
-            }
+        if (!isASchool)
+        {
+            buyDefenderCost.gameObject.SetActive(false);
+        }
+        else
+        {
+            buyDefenderCost.gameObject.SetActive(true);
+            buyDefenderCost.Resources = cbm.Defenders[building.DefenderType].ActualCost;
         }
 
         buildingName.text = building.Name;
