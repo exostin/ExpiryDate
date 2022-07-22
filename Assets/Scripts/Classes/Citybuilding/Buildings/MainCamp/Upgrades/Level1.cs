@@ -6,7 +6,13 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
         {
             Level = 1;
             ModelName = "MainCamp1";
-            Description = "Simple Town Hall";
+            Description = "Simple Town Hall (Unlocks first tier of living quarters)";
+        }
+        
+        public override void ApplySideEffects(Simulation simulation, Building building)
+        {
+            base.ApplySideEffects(simulation, building);
+            simulation.Housing.Upgrades[1].Unlocked = true;
         }
     }
 }

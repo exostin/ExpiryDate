@@ -13,13 +13,13 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
                 Water = 100
             };
             ModelName = "MainCamp2";
-            Description = "Town Hall gives out free candy for Halloween (Unlocks first tier of living quarters)";
+            Description = "Town Hall gives out free candy for Halloween (Unlocks second tier of living quarters)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
         {
             base.ApplySideEffects(simulation, building);
-            simulation.Housing.Upgrades[1].Unlocked = true;
+            simulation.Housing.Upgrades[2].Unlocked = true;
         }
     }
 }
