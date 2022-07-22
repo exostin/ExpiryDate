@@ -96,6 +96,7 @@ namespace Classes.Citybuilding
             PlayerPrefs.SetInt("PlayerBuildings/RobotSchool", robotSchoolLevel);
             PlayerPrefs.SetInt("PlayerBuildings/DroneSchool", droneSchoolLevel);
             PlayerPrefs.SetInt("PlayerBuildings/MedicSchool", medicSchoolLevel);
+            PlayerPrefs.SetInt("PlayerBuildings/MainCamp", mainCampLevel);
 
             foreach (var defender in Defenders)
                 PlayerPrefs.SetInt($"PlayerDefenders/{defender.Key}", defender.Value.Amount);
@@ -112,7 +113,7 @@ namespace Classes.Citybuilding
                 "PlayerResources/Titan", "PlayerResources/Energy", "PlayerResources/Food", "PlayerResources/Water",
                 "PlayerBuildings/Housing","PlayerBuildings/TitanGenerator","PlayerBuildings/EnergyGenerator","PlayerBuildings/WaterGenerator",
                 "PlayerBuildings/FoodGenerator","PlayerBuildings/FighterSchool","PlayerBuildings/ShooterSchool", "PlayerBuildings/RobotSchool",
-                "PlayerBuildings/DroneSchool","PlayerBuildings/MedicSchool","NextEncounter", "NextEncounterMax","DaysSurvived"
+                "PlayerBuildings/DroneSchool","PlayerBuildings/MedicSchool", "PlayerBuildings/MainCamp","NextEncounter", "NextEncounterMax","DaysSurvived"
             };
             keys = Defenders.Aggregate(keys, (current, defender) => current.Append($"PlayerDefenders/{defender.Key}").ToArray());
 
