@@ -24,7 +24,7 @@ namespace Classes.Citybuilding.Buildings.Housing.Upgrades
             base.ApplySideEffects(simulation, building);
             foreach (var otherBuilding in simulation.Buildings.ToList()
                          .FindAll(el => el is not Housing && el.NextUpgrade is not null))
-                building.NextUpgrade!.CostMultiplier *= .9f;
+                otherBuilding.NextUpgrade!.CostMultiplier *= .9f;
         }
     }
 }
