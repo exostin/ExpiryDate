@@ -13,13 +13,13 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
                 Water = 100
             };
             ModelName = "MainCamp3";
-            Description = "Town Hall gets rid of all corruption and nepotism (Unlocks second tier of living quarters)";
+            Description = "Town Hall gets rid of all corruption and nepotism (Unlocks third tier of living quarters)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
         {
             base.ApplySideEffects(simulation, building);
-            simulation.Housing.Upgrades[2].Unlocked = true;
+            simulation.Housing.Upgrades[3].Unlocked = true;
         }
     }
 }

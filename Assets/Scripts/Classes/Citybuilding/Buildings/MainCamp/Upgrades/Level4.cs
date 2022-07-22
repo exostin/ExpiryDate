@@ -14,13 +14,13 @@ namespace Classes.Citybuilding.Buildings.MainCamp.Upgrades
             };
             ModelName = "MainCamp4";
             Description =
-                "Town Hall now hosts birthday parties (Unlocks third tier of living quarters, additionally, buff from living quarters is further increased by 1.3x)";
+                "Town Hall now hosts birthday parties (Unlocks fourth tier of living quarters, additionally, buff from living quarters is further increased by 1.3x)";
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
         {
             base.ApplySideEffects(simulation, building);
-            simulation.Housing.Upgrades[3].Unlocked = true;
+            simulation.Housing.Upgrades[4].Unlocked = true;
             foreach (var generatorBuilding in simulation.GeneratorBuildings) generatorBuilding.OutputMultiplier *= 1.3f;
         }
     }
