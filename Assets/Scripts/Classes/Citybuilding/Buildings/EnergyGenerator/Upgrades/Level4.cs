@@ -14,6 +14,7 @@ namespace Classes.Citybuilding.Buildings.EnergyGenerator.Upgrades
                 Water = 40,
                 Food = 50
             };
+            Output = new Resources();
         }
 
         public override void ApplySideEffects(Simulation simulation, Building building)
