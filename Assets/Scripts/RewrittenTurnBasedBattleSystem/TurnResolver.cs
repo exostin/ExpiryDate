@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem
 {
@@ -9,17 +8,34 @@ namespace RewrittenTurnBasedBattleSystem
         private Team lastSelectedTeam;
         public Team PlayerTeam { get; set; }
         public Team AITeam { get; set; }
-
+        
+        private int lastPlayerCharacterIndex = 0;
+        private int lastEnemyCharacterIndex = 0;
+        
         internal ICharacterHandler GetCurrentActive()
         {
-            if (lastSelectedTeam == null || lastSelectedTeam == AITeam)
+            Character activeCharacter;
+            if (lastSelectedTeam is null || lastSelectedTeam == AITeam)
             {
                 lastSelectedTeam = PlayerTeam;
-                return new PlayerCharacterHandler(PlayerTeam.characters.First());
+                activeCharacter = PlayerTeam.characters[lastEnemyCharacterIndex];
+                IncrementCharacterIndex(PlayerTeam, ref lastPlayerCharacterIndex);
+                return new PlayerCharacterHandler(activeCharacter);
             }
-
+            
             lastSelectedTeam = AITeam;
-            return new AICharacterHandler(AITeam.characters.First(), CoroutineInvoker);
+            activeCharacter = AITeam.characters[lastEnemyCharacterIndex];
+            IncrementCharacterIndex(AITeam, ref lastEnemyCharacterIndex);
+            return new AICharacterHandler(activeCharacter, CoroutineInvoker);
+        }
+
+        private void IncrementCharacterIndex(Team team, ref int index)
+        {
+            index++;
+            if (index > team.characters.Count - 1)
+            {
+                index = 0;
+            }
         }
     }
 }
