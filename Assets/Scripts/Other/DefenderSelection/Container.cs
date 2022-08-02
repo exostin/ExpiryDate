@@ -7,7 +7,6 @@ namespace Other.DefenderSelection
     public class Container : MonoBehaviour
     {
         [SerializeField] private GameObject defenderCardPrefab;
-        
         private SimplifiedDefender[] items;
 
         public SimplifiedDefender[] Items

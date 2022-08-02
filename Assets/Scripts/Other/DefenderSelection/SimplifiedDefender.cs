@@ -1,5 +1,4 @@
 using Classes;
-
 namespace Other.DefenderSelection
 {
     public class SimplifiedDefender
@@ -8,7 +7,7 @@ namespace Other.DefenderSelection
         public byte Count { get; }
 
         public string Name;
-        
+
         public SimplifiedDefender(DefenderType defenderType, byte count, string name)
         {
             DefenderType = defenderType;

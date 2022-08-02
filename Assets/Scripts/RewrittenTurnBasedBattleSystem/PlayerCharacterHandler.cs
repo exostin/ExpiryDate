@@ -10,6 +10,8 @@ namespace RewrittenTurnBasedBattleSystem
             Character = character;
         }
 
+        private IPlayerBattleUI playerBattleUI;
+
         public Character Character { get; }
         public Team PlayerTeam { get; set; }
         public Team AITeam { get; set; }

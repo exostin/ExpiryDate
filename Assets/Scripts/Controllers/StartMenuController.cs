@@ -14,7 +14,7 @@ namespace Controllers
         {
             var gm = FindObjectOfType<GameManager>();
             gm.cbm.Load();
-            SceneManager.LoadScene("Scenes/Main");
+            SceneManager.LoadScene("DefenderSelection");
         }
         
         public void NewGameButton()
