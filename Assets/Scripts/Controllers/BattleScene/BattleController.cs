@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Classes.BattleScene;
 using Controllers.BattleScene.Statuses;
+using Controllers.BattleScene.UI;
 using DisplayObjectData;
 using Other.Enums;
 using ScriptableObjects;

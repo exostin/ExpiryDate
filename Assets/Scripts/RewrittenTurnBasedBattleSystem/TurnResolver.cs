@@ -1,26 +1,40 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem
 {
-    public class TurnResolver : MonoBehaviour
+    public class TurnResolver
     {
-        public Team playerTeam;
-        public Team enemyTeam;
-
-        private Team lastSelectedTeam = null;
-
+        public MonoBehaviour CoroutineInvoker { get; set; }
+        private Team lastSelectedTeam;
+        public Team PlayerTeam { get; set; }
+        public Team AITeam { get; set; }
+        
+        private int lastPlayerCharacterIndex = 0;
+        private int lastEnemyCharacterIndex = 0;
+        
         internal ICharacterHandler GetCurrentActive()
         {
-            if(lastSelectedTeam == null || lastSelectedTeam == enemyTeam)
+            Character activeCharacter;
+            if (lastSelectedTeam is null || lastSelectedTeam == AITeam)
             {
-                lastSelectedTeam = playerTeam;
-                return new PlayerCharacterHandler(playerTeam.characters.First());
+                lastSelectedTeam = PlayerTeam;
+                activeCharacter = PlayerTeam.characters[lastEnemyCharacterIndex];
+                IncrementCharacterIndex(PlayerTeam, ref lastPlayerCharacterIndex);
+                return new PlayerCharacterHandler(activeCharacter);
             }
-            else
+            
+            lastSelectedTeam = AITeam;
+            activeCharacter = AITeam.characters[lastEnemyCharacterIndex];
+            IncrementCharacterIndex(AITeam, ref lastEnemyCharacterIndex);
+            return new AICharacterHandler(activeCharacter, CoroutineInvoker);
+        }
+
+        private void IncrementCharacterIndex(Team team, ref int index)
+        {
+            index++;
+            if (index > team.characters.Count - 1)
             {
-                lastSelectedTeam = enemyTeam;
-                return new AICharacterHandler(enemyTeam.characters.First(), this);
+                index = 0;
             }
         }
     }

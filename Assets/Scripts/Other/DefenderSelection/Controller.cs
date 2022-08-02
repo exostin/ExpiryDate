@@ -4,9 +4,9 @@ using System.Linq;
 using Classes;
 using Controllers;
 using ScriptableObjects;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 // All of this should have been done better.
@@ -29,7 +29,8 @@ namespace Other.DefenderSelection
 
         [SerializeField] private Container availableContainer;
         [SerializeField] private Container selectedContainer;
-
+        [SerializeField] private Button startButton;
+        
         public List<SimplifiedDefender> availableDefenders;
         public List<SimplifiedDefender> selectedDefenders;
         
@@ -113,26 +114,18 @@ namespace Other.DefenderSelection
         {
             availableContainer.Items = availableDefenders.ToArray();
             selectedContainer.Items = selectedDefenders.ToArray();
+            var selectedDefendersCount = selectedDefenders.ToList().Aggregate(0, (agg, d) => agg + d.Count);
+            startButton.interactable = selectedDefendersCount == 4;
         }
         
         private SimplifiedDefender DefenderToSimplified(Defender defender, byte? amount = null)
         {
             amount ??= defender.Amount;
-            return new SimplifiedDefender(defender.Type, (byte) amount, DefenderTypeCharacter[defender.Type].name);;
+            return new SimplifiedDefender(defender.Type, (byte) amount, DefenderTypeCharacter[defender.Type].name);
         }
         
         public void OnStartButtonClick()
         {
-            var selectedDefendersCount = selectedDefenders.ToList().Aggregate(0, (agg, d) => agg + d.Count);
-            if (selectedDefendersCount != 4)
-            {
-                #if UNITY_EDITOR
-                EditorUtility.DisplayDialog("Przed wyruszeniem w drogę należy zebrać drużynę!",
-                    "You have to select 4 defenders before starting battle!", "OK");
-                #endif
-                return;
-            }
-        
             SaveToGM();
             SceneManager.LoadScene("Scenes/Battle");
         }

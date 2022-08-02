@@ -1,23 +1,26 @@
 ﻿using System;
+using System.Management;
 
 namespace RewrittenTurnBasedBattleSystem
 {
     internal class PlayerCharacterHandler : ICharacterHandler
     {
-        private Character character;
-
         public PlayerCharacterHandler(Character character)
         {
-            this.character = character;
+            Character = character;
         }
 
-        public Character Character => character;
+        private IPlayerBattleUI playerBattleUI;
+
+        public Character Character { get; }
+        public Team PlayerTeam { get; set; }
+        public Team AITeam { get; set; }
 
         public event Action OnActionFinished;
 
         public void PerformAction()
         {
-            character.abilities[0].Perform();
+            Character.Abilities[0].Perform(PlayerTeam, AITeam, AITeam.characters[0]);
             OnActionFinished?.Invoke();
         }
     }

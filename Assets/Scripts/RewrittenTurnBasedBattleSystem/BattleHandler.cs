@@ -4,31 +4,29 @@ using UnityEngine;
 
 namespace RewrittenTurnBasedBattleSystem
 {
-    internal class BattleHandler : MonoBehaviour
+    internal class BattleHandler
     {
-        public TurnResolver turnResolver;
-        public Team playerTeam;
-        public Team enemyTeam;
-
         private ICharacterHandler activeCharacter;
-
+        public Team PlayerTeam { get; set; }
+        public Team AITeam { get; set; }
+        public bool PlayerTeamWon { get; private set; }
+        private TurnResolver TurnResolver { get; } = new();
         public event Action OnBattleEnded = delegate { };
 
-        public bool PlayerTeamWon { get; private set; }
-
-        [ContextMenu("Tick")]
         public void Tick()
         {
-            if (activeCharacter == null)
-            {
-                activeCharacter = turnResolver.GetCurrentActive();
-                StartTurn();
-            }
+            if (activeCharacter != null) return;
+            TurnResolver.PlayerTeam = PlayerTeam;
+            TurnResolver.AITeam = AITeam;
+            activeCharacter = TurnResolver.GetCurrentActive();
+            activeCharacter.PlayerTeam = PlayerTeam;
+            activeCharacter.AITeam = AITeam;
+            StartTurn();
         }
 
         private void StartTurn()
         {
-            Debug.Log($"Turn of: {activeCharacter.Character.gameObject}");
+            Debug.Log($"Turn of: {activeCharacter.Character.CharacterData.characterName}");
             activeCharacter.OnActionFinished += ActiveCharacter_OnActionFinished;
             activeCharacter.PerformAction();
         }
@@ -36,14 +34,19 @@ namespace RewrittenTurnBasedBattleSystem
         private void ActiveCharacter_OnActionFinished()
         {
             activeCharacter = null;
-            var playerTeamWon = enemyTeam.characters.All(character => !character.IsAlive);
-            var enemyTeamWon = playerTeam.characters.All(character => !character.IsAlive);
+            var playerTeamWon = AITeam.characters.All(character => character.IsDead);
+            var enemyTeamWon = PlayerTeam.characters.All(character => character.IsDead);
             if (playerTeamWon || enemyTeamWon)
             {
                 PlayerTeamWon = playerTeamWon;
-                OnBattleEnded();
+                OnBattleEnded?.Invoke();
                 Debug.Log($"Battle Ended, {(PlayerTeamWon ? "player" : "enemy")} won");
             }
+        }
+        
+        public void AssignCoroutineInvokerReference(MonoBehaviour coroutineInvoker)
+        {
+            TurnResolver.CoroutineInvoker = coroutineInvoker;
         }
     }
 }

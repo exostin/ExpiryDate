@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Controllers.BattleScene
+namespace Controllers.BattleScene.UI
 {
     public class BattleUIController : MonoBehaviour
     {

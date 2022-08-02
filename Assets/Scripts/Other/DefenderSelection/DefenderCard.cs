@@ -18,10 +18,8 @@ namespace Other.DefenderSelection
             if (Defender.Count <= 0) gameObject.SetActive(false);
             
             var nameText = transform.Find("Name").GetComponent<TMP_Text>();
-            var countText = transform.Find("Count").GetComponent<TMP_Text>();
-            
+
             nameText.text = Defender.Name;
-            countText.text =  'x' + Defender.Count.ToString();
         }
         
         public event Action<DefenderType> OnClicked;
