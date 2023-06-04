@@ -989,7 +989,7 @@ MonoBehaviour:
   waterAmount: {fileID: 596562244}
   energyAmount: {fileID: 267083754}
   foodAmount: {fileID: 1426034228}
-  cursorPointerTexture: {fileID: 2800000, guid: 6ecac1507a193e64aa4f113caa509982, type: 3}
+  cursorPointerTexture: {fileID: 2800000, guid: e77461e9969732f49a43a87f799d3ed5, type: 3}
 --- !u!1 &207652865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7343298385946337101, guid: b92c8aa9af3f206468441729f77deeeb, type: 3}

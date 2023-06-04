@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: ExpiryDateTeam
   productName: Expiry Date
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: eb09d5b52dba8ea4cbe3ac13df9949dd, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1
