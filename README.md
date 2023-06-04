@@ -4,7 +4,7 @@
 ![Total downloads](https://img.shields.io/github/downloads/exostin/ExpiryDate/total?color=g&label=total%20downloads&style=flat-square)
 
 City builder game mixed with a battle system inspired by Darkest Dungeon, set during a climatic calamity with a hint of fantasy.
-Created in a team of ten as part of a Polish game development championship among highschool students - [“Turniej Trójgamiczny”](https://www.t3g.pl/).
+Created in a team of ten as part of a nationwide game development championship among high school students – [“Turniej Trójgamiczny”](https://www.t3g.pl/).
 
 ## Table of Contents
 
@@ -13,14 +13,14 @@ Created in a team of ten as part of a Polish game development championship among
 
 ## Screenshots
 
+Battle scene overview
+![Battle scene screenshot](/Assets/Graphics/2D/Tutorial/Battle.jpg)
+
 Citybuilding scene overview
 ![Citybuilding scene screenshot](/Assets/Graphics/2D/Tutorial/Citybuilding.jpg)
 
 Citybuilding pop-up building inspector
 ![Citybuilding ispector](/Assets/Graphics/2D/Tutorial/InspectorExample.jpg)
-
-Battle scene
-![Battle scene screenshot](/Assets/Graphics/2D/Tutorial/Battle.jpg)
 
 ## Technologies Used
 
