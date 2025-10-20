@@ -155,4 +155,6 @@ sysinfo.txt
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+[*]/Credits.unity
+
 # End of https://www.toptal.com/developers/gitignore/api/unity,rider
